@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import type { Course } from '../../types'
 import { ProgressBar, Card } from '../../ui'
 import { ROUTES } from '../../constants/routes'
-import { formatDuration, formatNumber } from '../../lib/format'
+import { DiscountLine } from '../catalog/DiscountLine'
+import { formatDuration, formatNumber, formatRupees } from '../../lib/format'
 import { cn } from '../../lib/cn'
 
 interface CourseCardProps {
@@ -66,7 +67,19 @@ export function CourseCard({ course, className }: CourseCardProps) {
               </span>
             </div>
 
-            {/* Tags — the 198px content column on a phone has no room for these */}
+            {/* One short tag on a phone — "Selling Fast" alone would eat the
+                198px content column, so it degrades to "Hot". */}
+            {(course.isNew || course.isBestseller) && (
+              <span className={cn(
+                'sm:hidden text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded shrink-0 border',
+                course.isNew
+                  ? 'bg-accent/10 text-accent border-accent/20'
+                  : 'bg-amber-500/10 text-amber-500 border-amber-500/20'
+              )}>
+                {course.isNew ? 'New' : 'Hot'}
+              </span>
+            )}
+
             <div className="hidden sm:flex flex-wrap items-center justify-end gap-1.5 flex-shrink-0">
               {course.isBestseller && (
                 <span className="bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded">
@@ -123,39 +136,28 @@ export function CourseCard({ course, className }: CourseCardProps) {
 
           {/* Price & Action — phones put the struck price inline beside the
               payable one; there is no room for the stacked treatment. */}
-          <div className="flex sm:hidden items-center justify-between gap-2">
-            <div className="flex items-baseline gap-1.5 min-w-0">
-              <span className="text-slate-400 text-[11px] font-medium line-through shrink-0">
-                ₹{Math.round(course.price / 0.9).toLocaleString('en-IN')}
+          <div className="sm:hidden">
+            <DiscountLine price={course.price} size="sm" className="mb-1" />
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-white font-bold text-base tracking-tight tabular-nums">
+                {formatRupees(course.price)}
               </span>
-              <span className="text-white font-bold text-base tracking-tight">
-                ₹{course.price.toLocaleString('en-IN')}
+              <span className={cn(
+                'text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg shrink-0',
+                inProgress
+                  ? 'bg-white/5 text-white border border-white/10'
+                  : 'bg-accent text-[#060b1a]'
+              )}>
+                {inProgress ? 'Continue' : 'Enroll'}
               </span>
             </div>
-            <span className={cn(
-              'text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg shrink-0',
-              inProgress
-                ? 'bg-white/5 text-white border border-white/10'
-                : 'bg-accent text-[#060b1a]'
-            )}>
-              {inProgress ? 'Continue' : 'Enroll'}
-            </span>
           </div>
 
           <div className="hidden sm:flex pt-3 border-t border-white/5 items-end justify-between gap-2">
             <div className="flex flex-col min-w-0">
-              {/* Struck original + discount sit above, so the payable price
-                  lands on the baseline beside the CTA. */}
-              <div className="flex items-center gap-1.5 mb-1">
-                <span className="text-slate-400 text-xs font-medium line-through">
-                  ₹{Math.round(course.price / 0.9).toLocaleString('en-IN')}
-                </span>
-                <span className="text-emerald-400 text-[10px] font-bold bg-emerald-400/10 px-2 py-0.5 rounded leading-none">
-                  10% OFF
-                </span>
-              </div>
-              <span className="text-white font-bold text-xl tracking-tight leading-none">
-                ₹{course.price.toLocaleString('en-IN')}
+              <DiscountLine price={course.price} className="mb-1" />
+              <span className="text-white font-bold text-xl tracking-tight leading-none tabular-nums">
+                {formatRupees(course.price)}
               </span>
             </div>
 

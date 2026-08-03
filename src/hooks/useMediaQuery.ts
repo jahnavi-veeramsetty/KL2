@@ -22,3 +22,9 @@ export function useMediaQuery(query: string): boolean {
 
 /** Matches Tailwind's `lg` breakpoint — the point where the sidebar is docked. */
 export const DESKTOP_QUERY = '(min-width: 1024px)'
+
+/**
+ * Matches Tailwind's `sm` breakpoint — where CardGrid goes to two columns and
+ * the catalog stops using shelves.
+ */
+export const SM_QUERY = '(min-width: 640px)'

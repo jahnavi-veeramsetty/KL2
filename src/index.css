@@ -58,4 +58,35 @@
   /* Hide scrollbars globally while keeping scroll functionality */
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Scroll pane whose scrollbar only shows while the pointer is over it.
+     The gutter is always reserved and only the thumb's colour changes, so
+     hovering never reflows the content — which is what happens if you toggle
+     scrollbar-width between none and thin. */
+  .scroll-hover {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .scroll-hover:hover,
+  .scroll-hover:focus-within {
+    scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+  }
+  .scroll-hover::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scroll-hover::-webkit-scrollbar-track { background: transparent; }
+  .scroll-hover::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    border-radius: 999px;
+  }
+  .scroll-hover:hover::-webkit-scrollbar-thumb,
+  .scroll-hover:focus-within::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
+    background-clip: content-box;
+  }
+  .scroll-hover:hover::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.34);
+    background-clip: content-box;
+  }
+
 }

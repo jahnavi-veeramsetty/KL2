@@ -41,12 +41,12 @@ export default function AppLayout({ variant = 'default' }: { variant?: LayoutVar
   if (variant === 'fixed') {
     return (
       <div
-        className="h-screen w-full overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        className="h-[100dvh] w-full overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
         style={{ paddingLeft }}
       >
         <SideNav />
         <BottomNav />
-        <div className="flex flex-col h-screen w-full pb-[72px] lg:pb-0">
+        <div className="flex flex-col h-[100dvh] w-full pb-[72px] lg:pb-0">
           <TopBar />
           <Suspense fallback={<ContentFallback />}>
             <Outlet />

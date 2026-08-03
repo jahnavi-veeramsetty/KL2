@@ -1,7 +1,15 @@
 import { useState } from 'react';
 import { useCountdown } from '../../hooks/useCountdown';
+import { dailyChallenges } from '../../data';
+import { buildDailyIndex, toISODate } from '../../lib/daily';
 
+/**
+ * A day cell has four states, not two. A bare red dot on every past day
+ * contradicted the streak shown beside it, because most days simply have no
+ * challenge scheduled — that is not the same as one being missed.
+ */
 export default function DailyCalendar() {
+  const dailyIndex = buildDailyIndex(dailyChallenges);
   const [currentDate, setCurrentDate] = useState(new Date());
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -76,8 +84,22 @@ export default function DailyCalendar() {
           const isToday = thisDate.getTime() === today.getTime();
           const isPast = thisDate < today;
           const isFuture = thisDate > today;
+
+          // undefined = no challenge ran that day, which is neither solved nor missed
+          const solved = dailyIndex.get(toISODate(thisDate));
+          const marker =
+            isPast && solved === true
+              ? { className: 'bg-green-400 shadow-[0_0_5px_rgba(74,222,128,0.8)]', label: 'solved' }
+              : isPast && solved === false
+                ? { className: 'bg-red-500 shadow-[0_0_5px_rgba(239,68,68,0.8)]', label: 'missed' }
+                : null;
+
           return (
-            <div key={day} className="flex flex-col items-center justify-start h-8">
+            <div
+              key={day}
+              className="flex flex-col items-center justify-start h-8"
+              title={marker ? `${day}: ${marker.label}` : undefined}
+            >
               {isToday ? (
                 <svg className="w-6 h-6 text-blue-500 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
@@ -85,7 +107,7 @@ export default function DailyCalendar() {
               ) : (
                 <>
                   <span className={isFuture ? 'text-gray-600' : 'text-gray-300'}>{day}</span>
-                  {isPast && <div className="w-1 h-1 rounded-full bg-red-500 mt-1 shadow-[0_0_4px_rgba(239,68,68,0.8)]" />}
+                  {marker && <div className={`w-1 h-1 rounded-full mt-1 ${marker.className}`} />}
                 </>
               )}
             </div>

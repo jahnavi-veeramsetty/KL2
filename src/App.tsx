@@ -74,9 +74,13 @@ function App() {
               />
 
               {/* App chrome mounts once; only the outlet swaps */}
-              <Route element={<AppLayout />}>
-                <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
+              {/* Chrome only — these pages manage their own width and background */}
+              <Route element={<AppLayout variant="bare" />}>
+                <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+                <Route path={ROUTES.SETTINGS} element={<ProfileSettingsPage />} />
+              </Route>
 
+              <Route element={<AppLayout />}>
                 <Route path={ROUTES.COURSES} element={<CoursesPage />} />
                 <Route path="/courses/:courseId" element={<CourseDetailPage />} />
                 <Route path={ROUTES.MASTERCLASSES} element={<MasterclassesPage />} />
@@ -92,14 +96,13 @@ function App() {
                 <Route path={ROUTES.ARCADE} element={<ArcadePage />} />
               </Route>
 
-              {/* Chrome only — these pages manage their own width and background */}
-              <Route element={<AppLayout variant="bare" />}>
-                <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-                <Route path={ROUTES.SETTINGS} element={<ProfileSettingsPage />} />
-              </Route>
-
               {/* Full-height, non-scrolling shell */}
               <Route element={<AppLayout variant="fixed" />}>
+                {/* Dashboard needs a non-scrolling shell: its two columns own
+                    their own scrollbars, and it reaches the viewport edge so
+                    the activity rail can dock right like the sidebar docks
+                    left. */}
+                <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
                 <Route path={ROUTES.PRACTICE} element={<PracticePage />} />
                 <Route path={ROUTES.PLAYGROUND} element={<PlaygroundPage />} />
               </Route>

@@ -31,3 +31,18 @@ export function formatNumber(n: number): string {
 export function padTwo(n: number): string {
   return n.toString().padStart(2, '0')
 }
+
+/**
+ * Catalog prices are quoted as a flat discount off a notional list price. Kept
+ * here so the struck-through figure and the "N% OFF" chip can never drift apart
+ * between the desktop card, the mobile row and the shelf tile.
+ */
+export const DISCOUNT_PERCENT = 10
+
+export function listPrice(price: number): number {
+  return Math.round(price / (1 - DISCOUNT_PERCENT / 100))
+}
+
+export function formatRupees(amount: number): string {
+  return `₹${amount.toLocaleString('en-IN')}`
+}

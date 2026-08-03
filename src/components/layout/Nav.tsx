@@ -29,7 +29,7 @@ function KLMLogo() {
     <Link
       to="/"
       aria-label="KLM — Go to homepage"
-      className="group flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 rounded-lg translate-y-1.5 md:translate-y-2"
+      className="group flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 rounded-lg md:translate-y-2"
     >
       <img src={logo} alt="Knowvation Learnings Logo" className="h-8 md:h-10 w-auto object-contain" />
     </Link>
@@ -63,13 +63,13 @@ function HamburgerIcon({ open }: { open: boolean }) {
   return (
     <div className="relative w-5 h-4 flex flex-col justify-between" aria-hidden="true">
       <span
-        className={`block h-0.5 w-full bg-brand-neutral rounded transition-all duration-300 origin-center ${open ? "rotate-45 translate-y-[7px]" : ""}`}
+        className={`block h-0.5 w-full bg-tertiary rounded transition-all duration-300 origin-center ${open ? "rotate-45 translate-y-[7px]" : ""}`}
       />
       <span
-        className={`block h-0.5 w-full bg-brand-neutral rounded transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`}
+        className={`block h-0.5 w-full bg-tertiary rounded transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`}
       />
       <span
-        className={`block h-0.5 w-full bg-brand-neutral rounded transition-all duration-300 origin-center ${open ? "-rotate-45 -translate-y-[7px]" : ""}`}
+        className={`block h-0.5 w-full bg-tertiary rounded transition-all duration-300 origin-center ${open ? "-rotate-45 -translate-y-[7px]" : ""}`}
       />
     </div>
   );
@@ -147,7 +147,7 @@ export default function Nav() {
             {isAuthenticated ? (
               <Link
                 to={ROUTES.DASHBOARD}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white border border-white/20 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-250 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 shadow-sm"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white border border-white/20 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-250 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 shadow-sm"
               >
                 Dashboard
               </Link>
@@ -155,7 +155,7 @@ export default function Nav() {
               <Link
                 to={ROUTES.LOGIN}
                 id="nav-signin-btn"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-brand-tertiary border border-brand-tertiary/25 bg-brand-tertiary/5 backdrop-blur-sm hover:bg-brand-tertiary/12 hover:border-brand-tertiary/45 hover:scale-[1.03] hover:-translate-y-px active:scale-100 transition-all duration-250 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 shadow-sm hover:shadow-brand-tertiary/10"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-brand-tertiary border border-brand-tertiary/25 bg-brand-tertiary/5 backdrop-blur-sm hover:bg-brand-tertiary/12 hover:border-brand-tertiary/45 hover:scale-[1.03] hover:-translate-y-px active:scale-100 transition-all duration-250 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 shadow-sm hover:shadow-brand-tertiary/10"
               >
                 Sign In
                 <svg
@@ -180,7 +180,7 @@ export default function Nav() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-menu"
               onClick={() => setMobileOpen((prev) => !prev)}
-              className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60"
+              className="md:hidden flex items-center justify-center w-11 h-11 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60"
             >
               <HamburgerIcon open={mobileOpen} />
             </button>
@@ -192,10 +192,13 @@ export default function Nav() {
           id="mobile-nav-menu"
           role="navigation"
           aria-label="Mobile navigation"
-          className={`md:hidden overflow-hidden transition-all duration-400 ease-in-out ${mobileOpen ? "max-h-72 opacity-100 pb-4" : "max-h-0 opacity-0"
+          className={`md:hidden overflow-hidden transition-all duration-400 ease-in-out ${mobileOpen ? "max-h-96 opacity-100 pb-4" : "max-h-0 opacity-0"
             }`}
         >
-          <div className="flex flex-col gap-1 pt-2 border-t border-white/10">
+          {/* The bar itself is transparent by design — the desktop links are
+              individually glassy pills. The open menu therefore needs its own
+              surface, or it renders straight over the page behind it. */}
+          <div className="flex flex-col gap-1 mt-3 p-3 rounded-2xl border border-white/10 bg-[#000918]/92 backdrop-blur-xl shadow-[0_16px_40px_rgba(0,0,0,0.55)]">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.to}
