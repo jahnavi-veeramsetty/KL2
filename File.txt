@@ -1,0 +1,210 @@
+====================================================
+  KLM WEBSITE 2 — PROJECT STRUCTURE & TECH STACK
+====================================================
+
+
+─────────────────────────────────────────────────────
+  TECH STACK
+─────────────────────────────────────────────────────
+
+  Framework     : React 19 (with Vite 8 as bundler)
+  Language      : TypeScript ~6.0
+  Routing       : React Router DOM v7
+  Styling       : Tailwind CSS v4 (via @tailwindcss/vite plugin)
+  Font          : Sanchez (Google Fonts) — loaded in index.html
+  Linting       : oxlint
+  Build Tool    : Vite 8 (dev server + production build)
+  Package Mgr   : npm
+
+
+─────────────────────────────────────────────────────
+  FULL FILE & FOLDER STRUCTURE
+─────────────────────────────────────────────────────
+
+klm-website2/
+│
+├── index.html                  → App entry point HTML. Loads Sanchez font
+│                                 from Google Fonts, mounts div#root,
+│                                 and loads /src/main.tsx as an ES module.
+│
+├── package.json                → Project metadata, npm scripts (dev/build/
+│                                 lint/preview), and all dependencies.
+│
+├── vite.config.ts              → Vite configuration (uses @vitejs/plugin-react
+│                                 and @tailwindcss/vite for Tailwind v4).
+│
+├── tsconfig.json               → Root TypeScript config (references
+│                                 tsconfig.app.json and tsconfig.node.json).
+│
+├── tsconfig.app.json           → TS config for the browser/app code.
+├── tsconfig.node.json          → TS config for Node/Vite config files.
+│
+├── .oxlintrc.json              → oxlint (fast ESLint alternative) rules config.
+├── .gitignore                  → Git ignore rules (node_modules, dist, etc.)
+│
+├── README.md                   → Project readme / notes.
+├── File.txt                    → THIS FILE — project structure documentation.
+│
+├── public/                     → Static assets served at root URL (/):
+│   ├── favicon.png             → Browser tab icon (KLM logo).
+│   ├── icons.svg               → SVG icon sprite (shared across app).
+│   ├── event_webinar.png       → Image used for webinar event cards.
+│   ├── event_workshop.png      → Image used for workshop event cards.
+│   ├── react_course.png        → Image used for React course cards.
+│   └── ui_ux_course.png        → Image used for UI/UX course cards.
+│
+└── src/                        → All application source code lives here.
+    │
+    ├── main.tsx                → React app bootstrap. Renders App into
+    │                             #root using ReactDOM.createRoot().
+    │
+    ├── App.tsx                 → Root component. Sets up React Router with
+    │                             BrowserRouter and defines all routes:
+    │                               /           → Dashboard page
+    │                               /learn      → redirects to /learn/tutorials
+    │                               /learn/:sectionId → Learn page
+    │
+    ├── App.css                 → Global component-level CSS (animations,
+    │                             keyframes, etc. for App-level styles).
+    │
+    ├── index.css               → Global base styles + Tailwind v4 setup.
+    │                             Defines the @theme with custom design tokens:
+    │                               --color-primary   : #060B19  (deep navy bg)
+    │                               --color-secondary : #1E293B  (card bg)
+    │                               --color-tertiary  : #F8FAFC  (white text)
+    │                               --color-neutral   : #0F172A
+    │                               --font-sans       : Sanchez
+    │                             Also applies a subtle space-grid background
+    │                             via layered CSS linear-gradients on body.
+    │
+    ├── assets/                 → Static assets imported directly in components:
+    │   ├── wlogohorizontal.png → KLM horizontal logo (used in Navbar).
+    │   └── cardimage.png       → Fallback/placeholder image for course &
+    │                             event cards (used in mock data).
+    │
+    ├── pages/                  → Top-level route pages (one per route):
+    │   │
+    │   ├── Dashboard.tsx       → The main home page (route: /).
+    │   │                         Layout: fixed Navbar + scrollable main area
+    │   │                         (left) + fixed right panel (aside).
+    │   │                         Renders: ContinueLearning, UpcomingEvents
+    │   │                         in main, and DailyCalendar in aside.
+    │   │
+    │   └── Learn.tsx           → The learning section page (/learn/:sectionId).
+    │                             Reads the :sectionId URL param and shows one
+    │                             of three sections: tutorials / courses / masterclasses.
+    │                             Invalid sectionId redirects to /learn/tutorials.
+    │                             Currently shows a placeholder heading + message.
+    │                             Renders: Navbar
+    │
+    ├── components/             → Feature-specific, reusable React components:
+    │   │
+    │   ├── layout/             → App-wide layout components:
+    │   │   └── Navbar.tsx      → Fixed top navigation bar (z-index: 50).
+    │   │                         Left: KLM logo (links to /).
+    │   │                         Center: Nav links (Tutorials, Courses,
+    │   │                                 Practice, Compete, Arcade).
+    │   │                         Right: SearchBar, streak counter (fire 12),
+    │   │                                profile avatar button.
+    │   │                         Style: glassmorphism — bg-primary/80 +
+    │   │                                backdrop-blur-md + border-white/5.
+    │   │
+    │   ├── dashboard/          → Components used only on the Dashboard page:
+    │   │   │
+    │   │   ├── ContinueLearning.tsx → Horizontally scrollable row of course
+    │   │   │                          cards. Uses mock data (5 courses with
+    │   │   │                          title, module, progress %).
+    │   │   │                          Has left/right arrow buttons that appear
+    │   │   │                          on hover (opacity-0 to opacity-100).
+    │   │   │                          Uses snap scrolling (snap-x snap-mandatory).
+    │   │   │                          Uses: Card, Button (variant=link)
+    │   │   │
+    │   │   ├── UpcomingEvents.tsx   → Same scrollable layout as ContinueLearning.
+    │   │   │                          Shows 5 mock upcoming events (title, date,
+    │   │   │                          type: Live Webinar / Interactive Workshop).
+    │   │   │                          Horizontally scrollable with hover arrows.
+    │   │   │                          Uses: Card, Button (variant=link)
+    │   │   │
+    │   │   └── DailyCalendar.tsx    → Fixed right-panel calendar widget.
+    │   │                              Shows current month grid with:
+    │   │                                - Today: blue checkmark icon
+    │   │                                - Past days: number + red glowing dot
+    │   │                                - Future days: dimmed number
+    │   │                              Live countdown timer (HH:MM:SS) to midnight.
+    │   │                              Month navigation (cannot go forward past
+    │   │                              current month).
+    │   │                              Hexagon SVG shows current month name.
+    │   │
+    │   ├── learn/              → (empty) — Reserved for future Learn page
+    │   │                         components.
+    │   │
+    │   └── searchbar/          → Search UI component:
+    │       └── SearchBar.tsx   → Animated search input with magnifier icon.
+    │                             Width expands from w-36 to w-64 on focus
+    │                             (CSS transition-all duration-300).
+    │                             Styled: rounded-full, glassmorphism border,
+    │                             cyan focus ring.
+    │
+    └── ui/                     → Generic, reusable UI primitives (design system):
+        │
+        ├── Button.tsx          → Button component with 4 variants:
+        │                           primary   → cyan-500 fill, cyan glow shadow
+        │                           secondary → white/10 fill, white border
+        │                           ghost     → transparent, hover white/10
+        │                           link      → cyan text only, no background
+        │                         3 sizes: sm / md / lg.
+        │                         Accepts all standard HTML button attributes.
+        │
+        ├── Card.tsx            → Dual-mode card component:
+        │                           With image prop → full-bleed image card
+        │                             (260px tall, image covers full card,
+        │                              dark gradient overlay from bottom,
+        │                              title/subtitle/button overlaid at bottom,
+        │                              hover: image zooms + title turns cyan).
+        │                           Without image prop → plain glass card
+        │                             (white/5 bg, cyan/blue hover glow,
+        │                              accepts children content).
+        │                         Accepts all standard HTML div attributes.
+        │
+        └── Dropdown.tsx        → (empty / stub) — Placeholder for a future
+                                  Dropdown component.
+
+
+─────────────────────────────────────────────────────
+  ROUTING SUMMARY
+─────────────────────────────────────────────────────
+
+  /                        → Dashboard page
+  /learn                   → Redirects to /learn/tutorials
+  /learn/tutorials         → Learn page (tutorials section)
+  /learn/courses           → Learn page (courses section)
+  /learn/masterclasses     → Learn page (masterclasses section)
+  /learn/(anything else)   → Redirects to /learn/tutorials
+
+
+─────────────────────────────────────────────────────
+  DESIGN SYSTEM SUMMARY
+─────────────────────────────────────────────────────
+
+  Background  : Deep space navy (#060B19) with subtle white grid overlay
+  Cards       : Dark slate (#1E293B) with white/10 borders
+  Text        : Near-white (#F8FAFC)
+  Accent      : Cyan-400/500 (links, focus rings, hover states)
+  Font        : Sanchez (Google Fonts)
+  Theme Style : Dark mode, glassmorphism (backdrop-blur + transparent bg),
+                subtle glow/shadow effects on interactive elements
+  Animation   : Hover scale on images, opacity transitions on arrows,
+                smooth scroll on card rows, width expand on search input
+
+
+─────────────────────────────────────────────────────
+  NPM SCRIPTS
+─────────────────────────────────────────────────────
+
+  npm run dev      → Start Vite dev server (hot module replacement)
+  npm run build    → TypeScript compile + Vite production build
+  npm run preview  → Preview the production build locally
+  npm run lint     → Run oxlint on source files
+
+
+====================================================
