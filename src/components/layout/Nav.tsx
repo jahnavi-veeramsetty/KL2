@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/wlogohorizontal.webp";
+import { ROUTES } from "../../constants/routes";
+import { isAuthenticated as readAuth } from "../../lib/auth";
 
 /* ─────────────────────────────────────────────
    Types
@@ -83,7 +85,7 @@ export default function Nav() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
+    setIsAuthenticated(readAuth());
   }, []);
 
   // Scroll listener — intensify glass on scroll and hide/show on scroll direction
@@ -144,14 +146,14 @@ export default function Nav() {
           <div className="flex items-center gap-3">
             {isAuthenticated ? (
               <Link
-                to="/dashboard"
+                to={ROUTES.DASHBOARD}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white border border-white/20 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-250 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 shadow-sm"
               >
                 Dashboard
               </Link>
             ) : (
               <Link
-                to="/login"
+                to={ROUTES.LOGIN}
                 id="nav-signin-btn"
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-brand-tertiary border border-brand-tertiary/25 bg-brand-tertiary/5 backdrop-blur-sm hover:bg-brand-tertiary/12 hover:border-brand-tertiary/45 hover:scale-[1.03] hover:-translate-y-px active:scale-100 transition-all duration-250 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 shadow-sm hover:shadow-brand-tertiary/10"
               >
@@ -207,7 +209,7 @@ export default function Nav() {
             <div className="mt-2 pt-2 border-t border-white/10">
               {isAuthenticated ? (
                 <Link
-                  to="/dashboard"
+                  to={ROUTES.DASHBOARD}
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-brand-tertiary hover:bg-brand-tertiary/8 transition-all duration-200"
                 >
@@ -215,7 +217,7 @@ export default function Nav() {
                 </Link>
               ) : (
                 <Link
-                  to="/login"
+                  to={ROUTES.LOGIN}
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-brand-tertiary hover:bg-brand-tertiary/8 transition-all duration-200"
                 >

@@ -1,45 +1,58 @@
 
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import StarfieldBackground from "../../components/landing/StarfieldBackground";
+import { ROUTES } from "../../constants/routes";
+import { signIn } from "../../lib/auth";
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Same hand-off as Login: honour wherever RequireAuth turned them away from.
+  const from =
+    (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ??
+    ROUTES.DASHBOARD;
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && id && password) {
-      localStorage.setItem("isAuthenticated", "true");
-      navigate("/");
+      signIn();
+      navigate(from, { replace: true });
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#000511] flex p-4 md:p-8 relative overflow-hidden font-sans">
+    <div className="min-h-[100dvh] bg-[#000511] flex p-4 md:p-8 relative font-sans">
 
       {/* Interactive Network Background */}
       <StarfieldBackground />
 
-      {/* --- BACKGROUND EFFECTS --- */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-0" />
+      {/* --- BACKGROUND EFFECTS ---
+          Clipped as a group so the rotated panels can't add scroll height once
+          vertical overflow is scrollable rather than hidden. */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px]" />
 
-      {/* Liquid Background Orbs */}
-      <div className="absolute top-0 right-0 w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-brand-primary/20 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] filter blur-[100px] animate-[spin_20s_linear_infinite] z-0 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-[#466eff]/10 rounded-[60%_40%_30%_70%/50%_40%_60%_50%] filter blur-[120px] animate-[spin_25s_linear_infinite_reverse] z-0 pointer-events-none" />
+        {/* Liquid Background Orbs */}
+        <div className="absolute top-0 right-0 w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-brand-primary/20 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] filter blur-[100px] animate-[spin_20s_linear_infinite]" />
+        <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-[#466eff]/10 rounded-[60%_40%_30%_70%/50%_40%_60%_50%] filter blur-[120px] animate-[spin_25s_linear_infinite_reverse]" />
 
-      {/* Slanted Glass Accent Panels */}
-      <div className="absolute top-[20%] left-[10%] w-[120%] h-32 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent -rotate-45 pointer-events-none z-0" />
-      <div className="absolute top-[40%] left-[15%] w-[120%] h-64 bg-gradient-to-r from-transparent via-[#466eff]/[0.02] to-transparent -rotate-45 pointer-events-none z-0" />
+        {/* Slanted Glass Accent Panels */}
+        <div className="absolute top-[20%] left-[10%] w-[120%] h-32 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent -rotate-45" />
+        <div className="absolute top-[40%] left-[15%] w-[120%] h-64 bg-gradient-to-r from-transparent via-[#466eff]/[0.02] to-transparent -rotate-45" />
+      </div>
 
       {/* --- BACK BUTTON --- */}
       <Link
         to="/"
-        className="absolute top-6 left-6 md:top-8 md:left-8 flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 group z-30 backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_15px_rgba(255,253,240,0.2)]"
+        className="absolute top-4 left-4 md:top-8 md:left-8 flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 group z-30 backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_15px_rgba(255,253,240,0.2)]"
         aria-label="Back to Home"
       >
         <svg
@@ -52,11 +65,15 @@ export default function Signup() {
         </svg>
       </Link>
 
-      <div className="w-full flex max-w-7xl mx-auto h-full items-center justify-center md:justify-end z-10 gap-12">
+      {/* The upward bias is gated on viewport height: bottom padding adds to
+          the height the page must fit, so applying it unconditionally forced a
+          scrollbar on short screens even when the card itself fit. Above 800px
+          there is guaranteed headroom for it. */}
+      <div className="w-full flex max-w-7xl mx-auto items-center justify-center md:justify-end z-10 gap-12 py-4 [@media(min-height:800px)]:pb-24">
         {/* --- FORM CARD --- */}
         <div className="w-full max-w-[380px] animate-fade-slide-up opacity-0-init">
           {/* Liquid Glass Card */}
-          <div className="relative p-6 md:p-8 rounded-[2rem] bg-[#000918]/60 backdrop-blur-[40px] shadow-[0_16px_40px_rgba(0,0,0,0.8)] border border-white/[0.08] overflow-hidden group/card transition-all duration-700 hover:shadow-[0_20px_64px_rgba(255,253,240,0.1)] hover:border-white/[0.12] hover:bg-[#000918]/70">
+          <div className="relative p-5 md:p-8 rounded-3xl md:rounded-[2rem] bg-[#000918]/60 backdrop-blur-[40px] shadow-[0_16px_40px_rgba(0,0,0,0.8)] border border-white/[0.08] overflow-hidden group/card transition-all duration-700 hover:shadow-[0_20px_64px_rgba(255,253,240,0.1)] hover:border-white/[0.12] hover:bg-[#000918]/70">
 
             {/* Ambient Inner Glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/50 opacity-60 pointer-events-none mix-blend-overlay" />
@@ -67,8 +84,8 @@ export default function Signup() {
             {/* Decorative Corner Refraction */}
             <div className="absolute -top-12 -left-12 w-32 h-32 bg-[#466eff]/20 rounded-full blur-2xl pointer-events-none group-hover/card:bg-[#466eff]/30 transition-colors duration-700" />
 
-            <div className="relative z-10 text-center mb-6">
-              <h1 className="text-2xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/40 mb-1.5" style={{ fontFamily: "var(--font-plus-jakarta)" }}>
+            <div className="relative z-10 text-center mb-5">
+              <h1 className="text-xl md:text-2xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/40 mb-1.5" style={{ fontFamily: "var(--font-plus-jakarta)" }}>
                 Create Account
               </h1>
               <p className="text-brand-neutral/50 text-xs">
@@ -143,7 +160,7 @@ export default function Signup() {
 
             <div className="relative z-10 mt-6 text-center text-xs text-brand-neutral/50">
               Already have an account?{" "}
-              <Link to="/?auth=login" className="text-white hover:text-white transition-colors hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] font-medium">
+              <Link to={ROUTES.LOGIN} state={location.state} className="text-white hover:text-white transition-colors hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] font-medium">
                 Login
               </Link>
             </div>

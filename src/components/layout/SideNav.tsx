@@ -8,6 +8,7 @@ import { useSidebar } from '../../hooks/useSidebar'
 import { useMediaQuery, DESKTOP_QUERY } from '../../hooks/useMediaQuery'
 import { Avatar } from '../../ui/Avatar'
 import { cn } from '../../lib/cn'
+import { signOut } from '../../lib/auth'
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 const Icon = {
@@ -161,8 +162,9 @@ export default function SideNav() {
   }, [])
 
   const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated')
-    navigate(ROUTES.HOME)
+    signOut()
+    // replace: without it, Back returns to the signed-in page they just left
+    navigate(ROUTES.HOME, { replace: true })
   }
 
   // Desktop: docked, width follows the collapse toggle. Must match AppLayout's
@@ -212,7 +214,7 @@ export default function SideNav() {
       {/* ── Header: mobile only — profile + close. On desktop the rail has no
              header; its toggle lives in the TopBar. ── */}
       {!isDesktop && (
-        <div className="flex items-center justify-between gap-3 h-20 px-4 border-b border-white/[0.06] flex-shrink-0">
+        <div className="flex items-center justify-between gap-3 h-16 px-4 border-b border-white/[0.06] flex-shrink-0">
           {/* Profile, at the very top beside the close button */}
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <Avatar name={profile.fullName} size="md" src={profile.avatarUrl} />

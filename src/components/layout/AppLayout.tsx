@@ -66,7 +66,7 @@ export default function AppLayout({ variant = 'default' }: { variant?: LayoutVar
         <BottomNav />
         <div className="flex flex-col w-full">
           <TopBar />
-          <div className="flex-1 pt-20 lg:pt-14 pb-24 lg:pb-0">
+          <div className="flex-1 pt-16 lg:pt-14 pb-24 lg:pb-0">
             <Suspense fallback={<ContentFallback />}>
               <Outlet />
             </Suspense>
@@ -86,7 +86,7 @@ export default function AppLayout({ variant = 'default' }: { variant?: LayoutVar
       <div className="flex flex-col min-h-screen w-full relative">
         <div className="flex flex-col flex-1 z-10 relative bg-primary space-grid w-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-b border-white/5">
           <TopBar />
-          <main className="flex-1 pt-20 lg:pt-14 pb-28 lg:pb-16 px-6 md:px-10 mx-auto w-full max-w-7xl">
+          <main className="flex-1 pt-16 lg:pt-14 pb-28 lg:pb-16 px-6 md:px-10 mx-auto w-full max-w-7xl">
             <div className="pt-6">
               <PageHeading />
               <Suspense fallback={<ContentFallback />}>

@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ROUTES } from './constants/routes'
 import ScrollToTop from './components/layout/ScrollToTop'
 import AppLayout from './components/layout/AppLayout'
+import { RequireAuth, RedirectIfAuthed } from './components/auth/RouteGuards'
 import { ProfileProvider } from './contexts/ProfileContext'
 import { SidebarProvider } from './contexts/SidebarContext'
+import { isAuthenticated } from './lib/auth'
 
 // Landing page stays eager: it is the public entry point and must paint immediately.
 import LandingPage from './pages/LandingPage'
@@ -38,8 +40,7 @@ function RouteFallback() {
 }
 
 function RootPage() {
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
-  return isAuthenticated ? <Navigate to={ROUTES.DASHBOARD} replace /> : <LandingPage />
+  return isAuthenticated() ? <Navigate to={ROUTES.DASHBOARD} replace /> : <LandingPage />
 }
 
 function App() {
@@ -49,50 +50,59 @@ function App() {
       <ProfileProvider>
         <SidebarProvider>
           <Routes>
-            {/* Standalone pages — no app chrome */}
+            {/* Public — the landing page decides for itself based on session */}
             <Route path={ROUTES.HOME} element={<RootPage />} />
-            <Route
-              path={ROUTES.LOGIN}
-              element={<Suspense fallback={<RouteFallback />}><LoginPage /></Suspense>}
-            />
-            <Route
-              path={ROUTES.SIGNUP}
-              element={<Suspense fallback={<RouteFallback />}><SignupPage /></Suspense>}
-            />
-            <Route
-              path="/practice/:problemId"
-              element={<Suspense fallback={<RouteFallback />}><ProblemPage /></Suspense>}
-            />
 
-            {/* App chrome mounts once; only the outlet swaps */}
-            <Route element={<AppLayout />}>
-              <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
-
-              <Route path={ROUTES.COURSES} element={<CoursesPage />} />
-              <Route path="/courses/:courseId" element={<CourseDetailPage />} />
-              <Route path={ROUTES.MASTERCLASSES} element={<MasterclassesPage />} />
-              <Route path="/masterclasses/:masterclassId" element={<MasterclassDetailPage />} />
-
-              <Route path={ROUTES.DAILY_CHALLENGE} element={<DailyChallengePage />} />
-
-              <Route path={ROUTES.COMPETE} element={<CompetePage />} />
-              <Route path={ROUTES.HACKATHONS} element={<HackathonsPage />} />
-              <Route path="/compete/contests/:contestId" element={<ContestDetailPage />} />
-              <Route path="/compete/hackathons/:hackathonId" element={<HackathonDetailPage />} />
-
-              <Route path={ROUTES.ARCADE} element={<ArcadePage />} />
+            {/* Auth pages — pointless once a session exists, so bounce to the app */}
+            <Route element={<RedirectIfAuthed />}>
+              <Route
+                path={ROUTES.LOGIN}
+                element={<Suspense fallback={<RouteFallback />}><LoginPage /></Suspense>}
+              />
+              <Route
+                path={ROUTES.SIGNUP}
+                element={<Suspense fallback={<RouteFallback />}><SignupPage /></Suspense>}
+              />
             </Route>
 
-            {/* Chrome only — these pages manage their own width and background */}
-            <Route element={<AppLayout variant="bare" />}>
-              <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-              <Route path={ROUTES.SETTINGS} element={<ProfileSettingsPage />} />
-            </Route>
+            {/* Everything below needs a session; RequireAuth bounces to /login */}
+            <Route element={<RequireAuth />}>
+              {/* Standalone — no app chrome */}
+              <Route
+                path="/practice/:problemId"
+                element={<Suspense fallback={<RouteFallback />}><ProblemPage /></Suspense>}
+              />
 
-            {/* Full-height, non-scrolling shell */}
-            <Route element={<AppLayout variant="fixed" />}>
-              <Route path={ROUTES.PRACTICE} element={<PracticePage />} />
-              <Route path={ROUTES.PLAYGROUND} element={<PlaygroundPage />} />
+              {/* App chrome mounts once; only the outlet swaps */}
+              <Route element={<AppLayout />}>
+                <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
+
+                <Route path={ROUTES.COURSES} element={<CoursesPage />} />
+                <Route path="/courses/:courseId" element={<CourseDetailPage />} />
+                <Route path={ROUTES.MASTERCLASSES} element={<MasterclassesPage />} />
+                <Route path="/masterclasses/:masterclassId" element={<MasterclassDetailPage />} />
+
+                <Route path={ROUTES.DAILY_CHALLENGE} element={<DailyChallengePage />} />
+
+                <Route path={ROUTES.COMPETE} element={<CompetePage />} />
+                <Route path={ROUTES.HACKATHONS} element={<HackathonsPage />} />
+                <Route path="/compete/contests/:contestId" element={<ContestDetailPage />} />
+                <Route path="/compete/hackathons/:hackathonId" element={<HackathonDetailPage />} />
+
+                <Route path={ROUTES.ARCADE} element={<ArcadePage />} />
+              </Route>
+
+              {/* Chrome only — these pages manage their own width and background */}
+              <Route element={<AppLayout variant="bare" />}>
+                <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+                <Route path={ROUTES.SETTINGS} element={<ProfileSettingsPage />} />
+              </Route>
+
+              {/* Full-height, non-scrolling shell */}
+              <Route element={<AppLayout variant="fixed" />}>
+                <Route path={ROUTES.PRACTICE} element={<PracticePage />} />
+                <Route path={ROUTES.PLAYGROUND} element={<PlaygroundPage />} />
+              </Route>
             </Route>
 
             {/* Redirect old routes */}
