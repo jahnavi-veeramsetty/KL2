@@ -31,18 +31,18 @@ export interface DailyStats {
 /**
  * Derived from the challenge list itself rather than stored anywhere.
  *
- * NOTE: `isCompleted` is a static field in src/data/daily.ts, not per-user
- * state — every visitor sees the same record. Real history needs a backend or
- * at minimum localStorage keyed by challenge id.
+ * `completed` carries this browser's own answers on top of the seeded
+ * `isCompleted` flags, so solving something actually moves these numbers.
  */
-export function getDailyStats(challenges: DailyChallenge[]): DailyStats {
+export function getDailyStats(challenges: DailyChallenge[], completed?: Set<string>): DailyStats {
   const today = toISODate(new Date())
+  const isSolved = (c: DailyChallenge) => c.isCompleted || completed?.has(c.id) === true
 
   // Today is not missed yet — it is still in play, so it does not count against
   // the completion rate until the day is over.
   const past = challenges.filter(c => c.date <= today)
-  const solved = past.filter(c => c.isCompleted)
-  const missed = past.filter(c => !c.isCompleted && c.date < today)
+  const solved = past.filter(isSolved)
+  const missed = past.filter(c => !isSolved(c) && c.date < today)
 
   return {
     total: past.length,
@@ -54,6 +54,23 @@ export function getDailyStats(challenges: DailyChallenge[]): DailyStats {
 }
 
 /** Map of YYYY-MM-DD to completion, for colouring calendar cells. */
-export function buildDailyIndex(challenges: DailyChallenge[]): Map<string, boolean> {
-  return new Map(challenges.map(c => [c.date, c.isCompleted]))
+export function buildDailyIndex(
+  challenges: DailyChallenge[],
+  completed?: Set<string>
+): Map<string, boolean> {
+  return new Map(challenges.map(c => [c.date, c.isCompleted || completed?.has(c.id) === true]))
+}
+
+/**
+ * Data quirk: descriptions in src/data/daily.ts escape their line breaks, so
+ * the runtime string holds a literal backslash followed by 'n' rather than a
+ * newline. Pattern challenges are ASCII art and unreadable without this.
+ *
+ * String.raw avoids a double-escaped regex, which is easy to get wrong and
+ * silently becomes a real-newline match instead of the intended literal.
+ */
+const ESCAPED_NEWLINE = String.raw`\n`
+
+export function unescapeNewlines(text: string): string {
+  return text.split(ESCAPED_NEWLINE).join('\n')
 }

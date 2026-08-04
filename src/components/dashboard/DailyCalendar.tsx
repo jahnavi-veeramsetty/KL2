@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useCountdown } from '../../hooks/useCountdown';
 import { dailyChallenges } from '../../data';
 import { buildDailyIndex, toISODate } from '../../lib/daily';
+import { useDailyProgress } from '../../hooks/useDailyProgress';
 
 /**
  * A day cell has four states, not two. A bare red dot on every past day
@@ -9,7 +10,8 @@ import { buildDailyIndex, toISODate } from '../../lib/daily';
  * challenge scheduled — that is not the same as one being missed.
  */
 export default function DailyCalendar() {
-  const dailyIndex = buildDailyIndex(dailyChallenges);
+  const { completed } = useDailyProgress();
+  const dailyIndex = buildDailyIndex(dailyChallenges, completed);
   const [currentDate, setCurrentDate] = useState(new Date());
   const today = new Date();
   today.setHours(0, 0, 0, 0);

@@ -1,93 +1,148 @@
 import type { Contest } from '../../types'
 import { Link } from 'react-router-dom'
-import { Calendar, Clock, Users, Trophy, Ticket, CircleAlert, AlarmClock } from 'lucide-react'
-import { Button, Card } from '../../ui'
+import { Calendar, Clock, Users, Trophy } from 'lucide-react'
+import { Card } from '../../ui'
 import { ROUTES } from '../../constants/routes'
 import { useCountdown } from '../../hooks/useCountdown'
 import { formatDateTime } from '../../lib/format'
+import { cn } from '../../lib/cn'
 
 interface ContestCardProps {
   contest: Contest
 }
 
+/**
+ * The countdown is the reason this card exists, so it gets a panel of its own
+ * rather than being one line among the meta. Everything else compresses into a
+ * single row beneath it.
+ *
+ * CTAs are spans, not Buttons — the whole card is already a Link, and a button
+ * inside an anchor is invalid HTML that traps keyboard users.
+ */
 export function ContestCard({ contest }: ContestCardProps) {
-  const { formatted, isExpired } = useCountdown(contest.startTime)
   const isLive = contest.status === 'live'
   const isPast = contest.status === 'past'
 
-  return (
-    <Link to={ROUTES.CONTEST_DETAIL(contest.id)} className="block group focus-visible:outline-none h-full">
-      <Card className="p-5 flex flex-col gap-4 h-full group border-white/5 hover:border-accent/40 transition-all duration-300">
-      {isLive && (
-        <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2 py-0.5 bg-green-500/20 border border-green-500/40 rounded-full">
-          <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-          <span className="text-[10px] font-bold text-green-400 uppercase tracking-wider">Live</span>
-        </div>
-      )}
+  // Live contests count down to the end, upcoming ones to the start.
+  const endTime = new Date(new Date(contest.startTime).getTime() + contest.durationMins * 60_000)
+  const { formatted, isExpired } = useCountdown(isLive ? endTime : contest.startTime)
 
-      <div className="space-y-3">
-        <h3 className="font-bold text-white text-xl leading-snug pr-12">{contest.title}</h3>
-        <div className="flex items-center gap-3 flex-wrap">
-          <span className="px-3 py-1 bg-white/[0.08] text-slate-300 text-xs font-semibold rounded-full border border-white/10">
+  const hours = Math.floor(contest.durationMins / 60)
+  const mins = contest.durationMins % 60
+  const isFree = !contest.entryFee || contest.entryFee === 'Free'
+
+  return (
+    <Link
+      to={ROUTES.CONTEST_DETAIL(contest.id)}
+      className="block group h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-[20px]"
+    >
+      <Card
+        className={cn(
+          'flex flex-col h-full p-4 sm:p-5 bg-[#0A0F1C]/80 border-white/5 shadow-none transition-all duration-300',
+          isLive
+            ? 'border-green-500/25 hover:border-green-500/50'
+            : 'hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5'
+        )}
+      >
+        {/* Status + division + fee */}
+        <div className="flex items-center gap-2 mb-2.5 sm:mb-3">
+          {isLive && (
+            <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-500/15 border border-green-500/35 text-[9px] font-bold text-green-400 uppercase tracking-[0.12em]">
+              <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" /> Live
+            </span>
+          )}
+          <span className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400 px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10">
             {contest.difficulty}
           </span>
-          {contest.prize && (
-            <span className="text-sm text-amber-400 font-bold tracking-wide flex items-center gap-1.5">
-              <Trophy className="w-4 h-4" /> {contest.prize}
+          <span
+            className={cn(
+              'ml-auto text-[10px] font-bold tracking-wide',
+              isFree ? 'text-green-400' : 'text-blue-400'
+            )}
+          >
+            {isFree ? 'FREE' : contest.entryFee}
+          </span>
+        </div>
+
+        {/* Title */}
+        <h3 className="font-bold text-white text-base sm:text-lg leading-snug line-clamp-2 group-hover:text-accent transition-colors">
+          {contest.title}
+        </h3>
+
+        {/* Countdown, or your result once it is over */}
+        {!isPast && !isExpired ? (
+          <div
+            className={cn(
+              'mt-3 sm:mt-4 rounded-xl border px-3.5 py-2.5 sm:px-4 sm:py-3',
+              isLive ? 'border-green-500/20 bg-green-500/[0.07]' : 'border-accent/20 bg-accent/[0.06]'
+            )}
+          >
+            <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-500">
+              {isLive ? 'Ends in' : 'Starts in'}
+            </p>
+            <p
+              className={cn(
+                'text-lg sm:text-xl font-bold tracking-tight tabular-nums leading-none mt-1',
+                isLive ? 'text-green-400' : 'text-accent'
+              )}
+            >
+              {formatted}
+            </p>
+          </div>
+        ) : isPast && contest.yourRank ? (
+          <div className="mt-3 sm:mt-4 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3.5 py-2.5 sm:px-4 sm:py-3">
+            <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-500">Your result</p>
+            <p className="text-lg sm:text-xl font-bold text-accent tracking-tight tabular-nums leading-none mt-1">
+              #{contest.yourRank}
+              {contest.yourScore !== undefined && (
+                <span className="text-xs font-semibold text-slate-400 ml-2">{contest.yourScore} pts</span>
+              )}
+            </p>
+          </div>
+        ) : null}
+
+        {/* Meta — one wrapping row instead of three stacked lines */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-3 sm:mt-4 text-[11px] text-slate-400 font-medium">
+          <span className="flex items-center gap-1.5">
+            <Calendar className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+            {formatDateTime(contest.startTime)}
+          </span>
+          <span className="w-1 h-1 rounded-full bg-slate-700" />
+          <span className="flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+            {hours}h{mins > 0 ? ` ${mins}m` : ''}
+          </span>
+          <span className="w-1 h-1 rounded-full bg-slate-700" />
+          <span className="flex items-center gap-1.5 tabular-nums">
+            <Users className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+            {contest.participants.toLocaleString()}
+          </span>
+        </div>
+
+        <div className="mt-auto" />
+
+        {/* Prize + action */}
+        <div className="flex items-center justify-between gap-3 pt-3 mt-3 sm:pt-4 sm:mt-4 border-t border-white/5">
+          {contest.prize ? (
+            <span className="flex items-center gap-1.5 text-amber-400 font-bold text-sm tracking-tight truncate">
+              <Trophy className="w-4 h-4 shrink-0" /> {contest.prize}
             </span>
+          ) : (
+            <span className="text-xs text-slate-500">No prize pool</span>
           )}
-          {contest.entryFee && contest.entryFee !== 'Free' && (
-            <span className="text-sm text-blue-400 font-bold tracking-wide flex items-center gap-1.5 ml-auto">
-              <Ticket className="w-4 h-4" /> {contest.entryFee}
-            </span>
-          )}
-          {(!contest.entryFee || contest.entryFee === 'Free') && (
-            <span className="text-sm text-green-400 font-bold tracking-wide flex items-center gap-1.5 ml-auto">
-              <Ticket className="w-4 h-4" /> Free
-            </span>
-          )}
-        </div>
-      </div>
 
-      <div className="text-sm text-slate-400 space-y-2 mt-2">
-        <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-slate-500" /> 
-          <span>{formatDateTime(contest.startTime)}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-slate-500" /> 
-          <span>{Math.floor(contest.durationMins / 60)}h {contest.durationMins % 60 > 0 ? `${contest.durationMins % 60}m` : ''}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Users className="w-4 h-4 text-slate-500" /> 
-          <span>{contest.participants.toLocaleString()} participants</span>
-        </div>
-      </div>
-
-      {!isPast && !isExpired && (
-        <div className="text-[15px] font-medium text-slate-300 mt-2 flex items-center gap-2">
-          {isLive ? <CircleAlert className="w-4 h-4 text-red-500" /> : <AlarmClock className="w-4 h-4 text-slate-400" />}
-          {isLive ? 'Ends in' : 'Starts in'} 
-          <span className="text-cyan-400 font-bold tracking-wide ml-1">{formatted}</span>
-        </div>
-      )}
-
-      {isPast && contest.yourRank && (
-        <div className="text-sm bg-white/5 rounded-xl px-4 py-3 mt-2 border border-white/5">
-          Your rank: <span className="text-cyan-400 font-bold">#{contest.yourRank}</span>
-          {contest.yourScore && <span className="text-slate-400 ml-2">({contest.yourScore} pts)</span>}
-        </div>
-      )}
-
-      <div className="flex gap-3 mt-4">
-        {!isPast && (
-          <Button size="md" className="flex-1 font-bold text-[15px] rounded-xl py-2.5">
-            {isLive ? 'Join Now' : (contest.entryFee && contest.entryFee !== 'Free' ? `Pay ${contest.entryFee}` : 'Register')}
-          </Button>
-        )}
-        <Button variant="secondary" size="md" className={`font-semibold rounded-xl text-[15px] ${isPast ? 'flex-1' : 'px-6'}`}>
-          Details
-        </Button>
+          <span
+            className={cn(
+              'text-[11px] font-bold uppercase tracking-wide px-4 py-2 rounded-lg shrink-0 transition-colors',
+              isPast
+                ? 'bg-white/5 text-slate-400 border border-white/10'
+                : isLive
+                  ? 'bg-green-500 text-[#04140d] group-hover:bg-green-400'
+                  : 'bg-accent text-[#060b1a] group-hover:bg-accent/90'
+            )}
+          >
+            {isPast ? 'Standings' : isLive ? 'Join now' : isFree ? 'Register' : `Pay ${contest.entryFee}`}
+          </span>
         </div>
       </Card>
     </Link>

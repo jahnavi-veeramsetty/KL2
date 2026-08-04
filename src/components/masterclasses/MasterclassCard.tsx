@@ -19,7 +19,7 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
   return (
     <Link
       to={ROUTES.MASTERCLASS_DETAIL(course.id)}
-      className={cn('block group focus-visible:outline-none h-full', className)}
+      className={cn('@container block group focus-visible:outline-none h-full', className)}
     >
       <Card className="flex flex-row sm:flex-col h-full overflow-hidden gap-3 sm:gap-0 p-3 sm:p-0 rounded-2xl sm:rounded-[20px] bg-[#0A0F1C]/80 border-white/5 hover:border-accent/40 hover:bg-[#0A0F1C] transition-all duration-300 shadow-none hover:shadow-xl hover:shadow-accent/5">
 
@@ -31,6 +31,23 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+
+          {/* Solid brand fills rather than a dark scrim — they read as labels
+              on the artwork instead of another translucent panel. Shown at every
+              size now, so the content column carries no duplicate. */}
+          <div className="flex absolute top-1.5 left-1.5 sm:top-2 sm:left-2 flex-wrap gap-1 sm:gap-1.5 z-10">
+            {course.isBestseller && (
+              <span className="bg-amber-500 text-white text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+                <span className="hidden sm:inline">Selling Fast</span>
+                <span className="sm:hidden">Hot</span>
+              </span>
+            )}
+            {course.isNew && (
+              <span className="bg-accent-strong text-white text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+                New
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Content area */}
@@ -46,35 +63,10 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
                 {course.level}
               </span>
             </div>
-
-            {/* One short tag on a phone; "Selling Fast" degrades to "Hot". */}
-            {(course.isNew || course.isBestseller) && (
-              <span className={cn(
-                'sm:hidden text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded shrink-0 border',
-                course.isNew
-                  ? 'bg-accent/10 text-accent border-accent/20'
-                  : 'bg-amber-500/10 text-amber-500 border-amber-500/20'
-              )}>
-                {course.isNew ? 'New' : 'Hot'}
-              </span>
-            )}
-
-            <div className="hidden sm:flex flex-wrap items-center justify-end gap-1.5 flex-shrink-0">
-              {course.isBestseller && (
-                <span className="bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded">
-                  Selling Fast
-                </span>
-              )}
-              {course.isNew && (
-                <span className="bg-accent/10 text-accent border border-accent/20 text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded">
-                  New
-                </span>
-              )}
-            </div>
           </div>
 
           {/* Title */}
-          <h3 className="text-white font-bold text-sm sm:text-base leading-snug line-clamp-2 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">
+          <h3 className="text-white font-bold text-sm @min-[17rem]:text-[15px] @min-[20rem]:text-base leading-snug line-clamp-2 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">
             {course.title}
           </h3>
 
@@ -112,14 +104,15 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
 
           <div className="hidden sm:flex pt-3 border-t border-white/5 items-end justify-between gap-2">
             <div className="flex flex-col min-w-0">
-              <DiscountLine price={course.price} className="mb-1" />
-              <span className="text-white font-bold text-xl tracking-tight leading-none tabular-nums">
+              <DiscountLine price={course.price} size="sm" className="mb-1 @min-[20rem]:hidden" />
+              <DiscountLine price={course.price} className="mb-1 hidden @min-[20rem]:flex" />
+              <span className="text-white font-bold text-base @min-[17rem]:text-lg @min-[20rem]:text-xl tracking-tight leading-none tabular-nums">
                 {formatRupees(course.price)}
               </span>
             </div>
 
             {/* A span, not a button — the whole card is already a link. */}
-            <span className="text-xs font-bold uppercase tracking-wide px-5 py-2.5 rounded-lg transition-all duration-300 bg-accent text-[#060b1a] group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] shrink-0">
+            <span className="text-[10px] @min-[17rem]:text-[11px] @min-[20rem]:text-xs font-bold uppercase tracking-wide px-3 py-2 @min-[17rem]:px-4 @min-[20rem]:px-5 @min-[20rem]:py-2.5 rounded-lg transition-all duration-300 bg-accent text-[#060b1a] group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] shrink-0">
               Enroll
             </span>
           </div>

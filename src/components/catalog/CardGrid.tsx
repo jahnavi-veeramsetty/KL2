@@ -3,13 +3,17 @@ import { EmptyState } from '../../ui'
 
 /**
  * comfortable — wide cards, max 2 per row (side-by-side card layouts)
- * compact     — narrow cards, up to 3 per row (stacked card layouts)
+ * compact     — stacked cards, 2 up to 5 per row as the viewport allows
+ *
+ * Three per row inside a 1280px column gives ~400px cards, which read as
+ * oversized on a large monitor. Four at xl and five at 2xl bring them back to
+ * ~305px and ~240px — the width the card was actually designed around.
  */
 type Density = 'comfortable' | 'compact'
 
 const DENSITY_COLUMNS: Record<Density, string> = {
   comfortable: 'grid-cols-1 md:grid-cols-2',
-  compact: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  compact: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5',
 }
 
 interface CardGridProps<T extends { id: string }> {

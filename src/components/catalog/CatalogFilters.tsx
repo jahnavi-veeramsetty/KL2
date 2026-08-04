@@ -46,18 +46,24 @@ export function CatalogFilters({ filters, onChange, searchPlaceholder, sortOptio
           onChange={e => onChange({ ...filters, search: e.target.value })}
           onClear={() => onChange({ ...filters, search: '' })}
         />
-        <Select
-          options={LEVELS}
-          value={filters.level}
-          onChange={e => onChange({ ...filters, level: e.target.value as CourseLevel | 'All' })}
-          className="sm:w-44"
-        />
-        <Select
-          options={sortOptions}
-          value={filters.sort}
-          onChange={e => onChange({ ...filters, sort: e.target.value })}
-          className="sm:w-44"
-        />
+        {/* Two half-width selects on one line below sm. `sm:contents` dissolves
+            this wrapper from sm up, so they become direct flex children again
+            and the desktop row is unchanged. Search keeps its own line — split
+            three ways at 342px it would be too narrow to read a query in. */}
+        <div className="grid grid-cols-2 gap-3 sm:contents">
+          <Select
+            options={LEVELS}
+            value={filters.level}
+            onChange={e => onChange({ ...filters, level: e.target.value as CourseLevel | 'All' })}
+            className="min-w-0 sm:w-44"
+          />
+          <Select
+            options={sortOptions}
+            value={filters.sort}
+            onChange={e => onChange({ ...filters, sort: e.target.value })}
+            className="min-w-0 sm:w-44"
+          />
+        </div>
       </div>
       {/* Category chips */}
       <div className="flex flex-wrap gap-2">

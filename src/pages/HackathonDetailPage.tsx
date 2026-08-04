@@ -3,7 +3,7 @@ import {
   Bot, Link2, HeartPulse, Globe, Lightbulb,
   BookOpen, Wrench, IndianRupee, Smartphone, Accessibility, Sparkles,
 } from 'lucide-react'
-import { Badge, Button, Accordion, BackButton, Breadcrumbs } from '../ui'
+import { Badge, Button, Accordion, Breadcrumbs } from '../ui'
 import { hackathons } from '../data'
 import { ROUTES } from '../constants/routes'
 import { formatDate } from '../lib/format'
@@ -30,9 +30,8 @@ export default function HackathonDetailPage() {
 
   return (
     <>
-      <BackButton fallbackTo={ROUTES.HACKATHONS} className="mb-2" />
-
       <Breadcrumbs
+          backTo={ROUTES.HACKATHONS}
         className="mb-6"
         items={[
           { label: 'Hackathons', to: ROUTES.HACKATHONS },

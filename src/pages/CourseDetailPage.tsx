@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams, Navigate, useNavigate } from 'react-router-dom'
-import { Badge, Rating, Button, Accordion, BackButton, Breadcrumbs } from '../ui'
+import { Badge, Rating, Button, Accordion, Breadcrumbs } from '../ui'
 import { CurriculumAccordion } from '../components/courses/CurriculumAccordion'
 import { InstructorCard } from '../components/courses/InstructorCard'
 import { ReviewSummary } from '../components/courses/ReviewSummary'
@@ -38,9 +38,8 @@ export default function CourseDetailPage() {
 
   return (
     <>
-      <BackButton fallbackTo={ROUTES.COURSES} className="mb-2" />
-
       <Breadcrumbs
+          backTo={ROUTES.COURSES}
         className="mb-6"
         items={[
           { label: 'Courses', to: ROUTES.COURSES },

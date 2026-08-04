@@ -15,6 +15,7 @@ export const ROUTES = {
   DAILY_CHALLENGE: '/daily-challenge',
 
   COMPETE: '/compete',
+  LEADERBOARD: '/compete/leaderboard',
   HACKATHONS: '/hackathons',
   CONTEST_DETAIL: (contestId: string) => `/compete/contests/${contestId}`,
   HACKATHON_DETAIL: (hackathonId: string) => `/compete/hackathons/${hackathonId}`,

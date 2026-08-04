@@ -20,6 +20,7 @@ const ProblemPage = lazy(() => import('./pages/ProblemPage'))
 const CompetePage = lazy(() => import('./pages/CompetePage'))
 const HackathonsPage = lazy(() => import('./pages/HackathonsPage'))
 const ContestDetailPage = lazy(() => import('./pages/ContestDetailPage'))
+const LeaderboardPage = lazy(() => import('./pages/LeaderboardPage'))
 const HackathonDetailPage = lazy(() => import('./pages/HackathonDetailPage'))
 const ArcadePage = lazy(() => import('./pages/ArcadePage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage'))
@@ -90,6 +91,7 @@ function App() {
 
                 <Route path={ROUTES.COMPETE} element={<CompetePage />} />
                 <Route path={ROUTES.HACKATHONS} element={<HackathonsPage />} />
+                <Route path={ROUTES.LEADERBOARD} element={<LeaderboardPage />} />
                 <Route path="/compete/contests/:contestId" element={<ContestDetailPage />} />
                 <Route path="/compete/hackathons/:hackathonId" element={<HackathonDetailPage />} />
 

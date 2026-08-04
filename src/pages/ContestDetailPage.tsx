@@ -1,6 +1,6 @@
 import { useParams, Navigate } from 'react-router-dom'
 import { Info, CheckCircle, CalendarDays } from 'lucide-react'
-import { BackButton, Breadcrumbs } from '../ui'
+import { Breadcrumbs } from '../ui'
 import { ContestDetailHero } from '../components/compete/ContestDetailHero'
 import { ContestRegistrationCard } from '../components/compete/ContestRegistrationCard'
 
@@ -17,9 +17,8 @@ export default function ContestDetailPage() {
 
   return (
     <>
-      <BackButton fallbackTo={ROUTES.COMPETE} className="mb-2" />
-
       <Breadcrumbs
+          backTo={ROUTES.COMPETE}
         className="mb-6"
         items={[
           { label: 'Coding Contest', to: ROUTES.COMPETE },

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams, Navigate, useNavigate } from 'react-router-dom'
-import { Badge, Button, Accordion, BackButton, Breadcrumbs } from '../ui'
+import { Badge, Button, Accordion, Breadcrumbs } from '../ui'
 import { InstructorCard } from '../components/courses/InstructorCard'
 import { masterclasses } from '../data'
 import { ROUTES } from '../constants/routes'
@@ -33,9 +33,8 @@ export default function MasterclassDetailPage() {
 
   return (
     <>
-      <BackButton fallbackTo={ROUTES.MASTERCLASSES} className="mb-2" />
-
       <Breadcrumbs
+          backTo={ROUTES.MASTERCLASSES}
         className="mb-6"
         items={[
           { label: 'Masterclasses', to: ROUTES.MASTERCLASSES },
