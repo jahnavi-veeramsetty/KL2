@@ -39,8 +39,8 @@ export function ProgressRing({
       </svg>
       {(label !== undefined || sublabel !== undefined) && (
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-          {label && <span className="text-tertiary font-bold leading-tight" style={{ fontSize: size * 0.18 }}>{label}</span>}
-          {sublabel && <span className="text-muted leading-tight" style={{ fontSize: size * 0.12 }}>{sublabel}</span>}
+          {label && <span className="text-strong font-bold leading-tight" style={{ fontSize: size * 0.18 }}>{label}</span>}
+          {sublabel && <span className="text-subtle leading-tight" style={{ fontSize: size * 0.12 }}>{sublabel}</span>}
         </div>
       )}
     </div>

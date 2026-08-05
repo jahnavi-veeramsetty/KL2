@@ -31,8 +31,8 @@ function SectionHead({ title, count, tone, pulse }: { title: string; count: numb
     <div className="flex items-center gap-3 mb-4">
       {pulse && <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />}
       <h3 className={`text-xs font-bold uppercase tracking-[0.12em] ${tone}`}>{title}</h3>
-      <span className="text-[11px] font-semibold text-slate-600 tabular-nums">{count}</span>
-      <span className="flex-1 h-px bg-white/[0.06]" />
+      <span className="text-[11px] font-semibold text-faint tabular-nums">{count}</span>
+      <span className="flex-1 h-px bg-raised" />
     </div>
   )
 }
@@ -78,7 +78,7 @@ export default function MasterclassesPage() {
         searchPlaceholder="Search master classes..."
         sortOptions={SORT_OPTIONS}
       />
-      <div className="text-xs text-muted mb-4">
+      <div className="text-xs text-subtle mb-4">
         {filtered.length} {filtered.length === 1 ? 'master class' : 'master classes'} found
       </div>
 
@@ -129,7 +129,7 @@ export default function MasterclassesPage() {
 
           <section>
             {(liveNow.length > 0 || startingSoon.length > 0) && (
-              <SectionHead title="All sessions" count={rest.length} tone="text-slate-500" />
+              <SectionHead title="All sessions" count={rest.length} tone="text-faint" />
             )}
             <CardGrid
               items={rest}

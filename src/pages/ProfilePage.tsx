@@ -4,22 +4,30 @@ import { ROUTES } from '../constants/routes'
 import { useProfile } from '../hooks/useProfile'
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
+/**
+ * This page is built from inline style objects, which cannot carry a utility
+ * class — so every colour below is a custom property rather than a literal.
+ * A var() in an inline style still resolves against :root, which is what lets
+ * the page follow the theme at all. The ramps themselves live in index.css.
+ */
 function heatColor(count: number) {
-  if (count === 0) return '#0f172a'
-  if (count <= 2) return '#164e63'
-  if (count <= 5) return '#0e7490'
-  if (count <= 9) return '#06b6d4'
-  return '#22d3ee'
+  if (count === 0) return 'var(--heat-0)'
+  if (count <= 2) return 'var(--heat-1)'
+  if (count <= 5) return 'var(--heat-2)'
+  if (count <= 9) return 'var(--heat-3)'
+  return 'var(--heat-4)'
 }
 
+/** color-mix rather than a baked rgba: the tint has to follow its own hue
+    when the rarity colour changes between themes. */
 const rarityMeta: Record<string, { color: string; bg: string; label: string }> = {
-  common:    { color: '#94a3b8', bg: 'rgba(148,163,184,0.1)', label: 'Common'    },
-  rare:      { color: '#60a5fa', bg: 'rgba(96,165,250,0.1)',  label: 'Rare'      },
-  epic:      { color: '#22d3ee', bg: 'rgba(34,211,238,0.1)',  label: 'Epic'      },
-  legendary: { color: '#fbbf24', bg: 'rgba(251,191,36,0.1)',  label: 'Legendary' },
+  common:    { color: 'var(--rarity-common)',    bg: 'color-mix(in oklab, var(--rarity-common) 12%, transparent)',    label: 'Common'    },
+  rare:      { color: 'var(--rarity-rare)',      bg: 'color-mix(in oklab, var(--rarity-rare) 12%, transparent)',      label: 'Rare'      },
+  epic:      { color: 'var(--rarity-epic)',      bg: 'color-mix(in oklab, var(--rarity-epic) 12%, transparent)',      label: 'Epic'      },
+  legendary: { color: 'var(--rarity-legendary)', bg: 'color-mix(in oklab, var(--rarity-legendary) 12%, transparent)', label: 'Legendary' },
 }
 
-const diffColors = { easy: '#22c55e', medium: '#f59e0b', hard: '#ef4444' }
+const diffColors = { easy: 'var(--color-easy)', medium: 'var(--color-medium)', hard: 'var(--color-hard)' }
 
 // ─── SVG Icons ───────────────────────────────────────────────────────────────
 const Icons = {
@@ -162,7 +170,7 @@ function Heatmap() {
                     width: 11, height: 11, borderRadius: 2,
                     background: heatColor(cell.count),
                     cursor: 'default',
-                    border: `1px solid ${cell.count > 0 ? 'rgba(255,255,255,0.06)' : 'transparent'}`,
+                    border: `1px solid ${cell.count > 0 ? 'var(--color-line)' : 'transparent'}`,
                     transition: 'transform 0.1s',
                   }}
                   onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.3)')}
@@ -174,15 +182,15 @@ function Heatmap() {
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
-        <span style={{ fontSize: 12, color: '#475569', height: 18 }}>
-          {tip && <span><span style={{ color: '#22d3ee', fontWeight: 600 }}>{tip.count}</span> {tip.count === 1 ? 'solve' : 'solves'} · {tip.date}</span>}
+        <span style={{ fontSize: 12, color: 'var(--color-subtle)', height: 18 }}>
+          {tip && <span><span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>{tip.count}</span> {tip.count === 1 ? 'solve' : 'solves'} · {tip.date}</span>}
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <span style={{ fontSize: 10, color: '#334155', marginRight: 2 }}>Less</span>
+          <span style={{ fontSize: 10, color: 'var(--color-faint)', marginRight: 2 }}>Less</span>
           {[0, 2, 5, 9, 12].map(v => (
             <div key={v} style={{ width: 11, height: 11, borderRadius: 2, background: heatColor(v) }} />
           ))}
-          <span style={{ fontSize: 10, color: '#334155', marginLeft: 2 }}>More</span>
+          <span style={{ fontSize: 10, color: 'var(--color-faint)', marginLeft: 2 }}>More</span>
         </div>
       </div>
     </div>
@@ -195,7 +203,7 @@ function DonutChart({ segments, total }: { segments: { value: number; color: str
   let offset = 0
   return (
     <svg width="100" height="100" viewBox="0 0 100 100">
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="#1e293b" strokeWidth="11"/>
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--color-raised)" strokeWidth="11"/>
       {segments.map((s, i) => {
         const frac = s.value / total
         const dash = Math.max(0, frac * circ - 2)
@@ -210,8 +218,8 @@ function DonutChart({ segments, total }: { segments: { value: number; color: str
         offset += frac * circ
         return el
       })}
-      <text x={cx} y={cy - 4} textAnchor="middle" fill="#f1f5f9" fontSize="17" fontWeight="700" fontFamily="Inter,sans-serif">{total}</text>
-      <text x={cx} y={cy + 12} textAnchor="middle" fill="#475569" fontSize="9" fontFamily="Inter,sans-serif">solved</text>
+      <text x={cx} y={cy - 4} textAnchor="middle" fill="var(--color-strong)" fontSize="17" fontWeight="700" fontFamily="Inter,sans-serif">{total}</text>
+      <text x={cx} y={cy + 12} textAnchor="middle" fill="var(--color-subtle)" fontSize="9" fontFamily="Inter,sans-serif">solved</text>
     </svg>
   )
 }
@@ -234,8 +242,12 @@ export default function ProfilePage() {
   return (
     <div>
 
-      {/* ── COVER BANNER ── */}
-      <div style={{
+      {/* ── COVER BANNER ──
+          on-dark: a cover photo is artwork, and it stays dark in both themes
+          like every other banner in the app. The overlay controls sitting on
+          top keep their fixed dark values for the same reason — they have to
+          read over whatever image someone uploads. */}
+      <div className="on-dark" style={{
         height: 220,
         position: 'relative',
         overflow: 'hidden',
@@ -259,7 +271,9 @@ export default function ProfilePage() {
               </defs>
               <rect width="100%" height="100%" fill="url(#g)"/>
             </svg>
-            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 60% 50%, rgba(34,211,238,0.07) 0%, transparent 70%)' }}/>
+            {/* Kept in light too — the banner behind it is dark either way, so
+                this wash still has something to glow against. */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_50%,rgba(34,211,238,0.07)_0%,transparent_70%)]"/>
           </>
         )}
 
@@ -388,8 +402,10 @@ export default function ProfilePage() {
         {/* Avatar (Overlaps Banner) */}
         <div style={{
           width: 120, height: 120, borderRadius: '50%',
-          background: 'linear-gradient(135deg, #0f2744, #0c1e35)',
-          border: '4px solid #060b19',
+          // The ring is the page colour, so the avatar reads as punched through
+          // the banner rather than pasted on it — that only works if it flips.
+          background: 'var(--color-raised)',
+          border: '4px solid var(--color-page)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           boxShadow: '0 4px 24px rgba(0,0,0,0.6)',
           marginTop: -60,
@@ -398,7 +414,7 @@ export default function ProfilePage() {
           {p.avatarUrl ? (
             <img src={p.avatarUrl} alt="avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
           ) : (
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#334155" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--color-faint)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
             </svg>
           )}
@@ -410,8 +426,8 @@ export default function ProfilePage() {
           {/* Name block */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 6 }}>
-              <h1 style={{ fontSize: 'clamp(24px,4vw,28px)', fontWeight: 800, color: '#f1f5f9', margin: 0 }}>{p.fullName}</h1>
-              <span style={{ fontSize: 11, fontWeight: 600, color: '#22d3ee', background: 'rgba(34,211,238,0.08)', border: '1px solid rgba(34,211,238,0.2)', borderRadius: 5, padding: '2px 9px' }}>
+              <h1 style={{ fontSize: 'clamp(24px,4vw,28px)', fontWeight: 800, color: 'var(--color-strong)', margin: 0 }}>{p.fullName}</h1>
+              <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-accent)', background: 'var(--accent-wash)', border: '1px solid var(--accent-edge)', borderRadius: 5, padding: '2px 9px' }}>
                 {p.title.split('·')[0].trim()}
               </span>
               <Link 
@@ -420,19 +436,19 @@ export default function ProfilePage() {
                 style={{ 
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   width: 28, height: 28, borderRadius: '50%',
-                  background: 'rgba(255,255,255,0.05)', color: '#94a3b8',
-                  border: '1px solid rgba(255,255,255,0.05)',
+                  background: 'var(--color-raised)', color: 'var(--color-subtle)',
+                  border: '1px solid var(--color-raised)',
                   marginLeft: 4, transition: 'all 0.2s'
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#f1f5f9'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#94a3b8'; }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'var(--color-line-strong)'; e.currentTarget.style.color = 'var(--color-strong)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'var(--color-raised)'; e.currentTarget.style.color = 'var(--color-subtle)'; }}
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                 </svg>
               </Link>
             </div>
-            <p style={{ margin: 0, fontSize: 14, color: '#64748b' }}>@{p.username}</p>
+            <p style={{ margin: 0, fontSize: 14, color: 'var(--color-faint)' }}>@{p.username}</p>
           </div>
 
           {/* Quick stat chips */}
@@ -442,9 +458,9 @@ export default function ProfilePage() {
               { label: 'XP',      value: p.stats.totalXP.toLocaleString()          },
               { label: 'Streak',  value: `${p.stats.currentStreak}d`               },
             ].map(s => (
-              <div key={s.label} style={{ textAlign: 'center', padding: '8px 16px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ fontSize: 16, fontWeight: 700, color: '#e2e8f0' }}>{s.value}</div>
-                <div style={{ fontSize: 10, color: '#475569', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{s.label}</div>
+              <div key={s.label} style={{ textAlign: 'center', padding: '8px 16px', borderRadius: 8, background: 'var(--color-panel)', border: '1px solid var(--color-line)' }}>
+                <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--color-strong)' }}>{s.value}</div>
+                <div style={{ fontSize: 10, color: 'var(--color-subtle)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -459,7 +475,7 @@ export default function ProfilePage() {
             {/* Bio + Meta */}
             <div>
               {p.bio && (
-                <p style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.65, margin: '0 0 16px' }}>
+                <p style={{ fontSize: 13, color: 'var(--color-subtle)', lineHeight: 1.65, margin: '0 0 16px' }}>
                   {p.bio.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('Hi') && !l.startsWith('-') && !l.startsWith('🔭') && !l.startsWith('🌱') && !l.startsWith('⚡'))[0] || 'Software engineer passionate about algorithms and scalable systems.'}
                 </p>
               )}
@@ -508,9 +524,9 @@ export default function ProfilePage() {
                     style={{
                       fontSize: 11,
                       fontWeight: 500,
-                      color: '#94a3b8',
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.08)',
+                      color: 'var(--color-subtle)',
+                      background: 'var(--color-raised)',
+                      border: '1px solid var(--color-line)',
                       borderRadius: 6,
                       padding: '4px 10px',
                       lineHeight: 1,
@@ -519,15 +535,15 @@ export default function ProfilePage() {
                     }}
                     onMouseEnter={e => {
                       const el = e.currentTarget as HTMLElement
-                      el.style.color = '#22d3ee'
-                      el.style.borderColor = 'rgba(34,211,238,0.3)'
-                      el.style.background = 'rgba(34,211,238,0.06)'
+                      el.style.color = 'var(--color-accent)'
+                      el.style.borderColor = 'var(--accent-edge)'
+                      el.style.background = 'var(--accent-wash)'
                     }}
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLElement
-                      el.style.color = '#94a3b8'
-                      el.style.borderColor = 'rgba(255,255,255,0.08)'
-                      el.style.background = 'rgba(255,255,255,0.05)'
+                      el.style.color = 'var(--color-subtle)'
+                      el.style.borderColor = 'var(--color-line)'
+                      el.style.background = 'var(--color-raised)'
                     }}
                   >
                     {skill}
@@ -545,11 +561,11 @@ export default function ProfilePage() {
                 <SectionLabel>Certificates</SectionLabel>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {p.certificates.map(cert => (
-                    <div key={cert.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                      <span style={{ color: '#f59e0b', marginTop: 1, flexShrink: 0 }}><Icons.GraduationCap /></span>
+                    <div key={cert.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 12px', borderRadius: 8, background: 'var(--color-raised)', border: '1px solid var(--color-line)' }}>
+                      <span style={{ color: 'var(--color-medium)', marginTop: 1, flexShrink: 0 }}><Icons.GraduationCap /></span>
                       <div>
-                        <p style={{ fontSize: 12, fontWeight: 600, color: '#cbd5e1', margin: '0 0 2px', lineHeight: 1.3 }}>{cert.courseName}</p>
-                        <p style={{ fontSize: 10, color: '#475569', margin: 0 }}>{new Date(cert.dateCompleted).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</p>
+                        <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-body)', margin: '0 0 2px', lineHeight: 1.3 }}>{cert.courseName}</p>
+                        <p style={{ fontSize: 10, color: 'var(--color-subtle)', margin: 0 }}>{new Date(cert.dateCompleted).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</p>
                       </div>
                     </div>
                   ))}
@@ -583,9 +599,9 @@ export default function ProfilePage() {
                         <div key={d}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                             <span style={{ fontSize: 11, fontWeight: 600, color: diffColors[d], textTransform: 'capitalize' }}>{d}</span>
-                            <span style={{ fontSize: 11, color: '#475569' }}>{s.solved}<span style={{ color: '#334155' }}>/{s.total}</span></span>
+                            <span style={{ fontSize: 11, color: 'var(--color-subtle)' }}>{s.solved}<span style={{ color: 'var(--color-faint)' }}>/{s.total}</span></span>
                           </div>
-                          <div style={{ height: 5, borderRadius: 2, background: '#1e293b' }}>
+                          <div style={{ height: 5, borderRadius: 2, background: 'var(--color-raised)' }}>
                             <div style={{ height: '100%', borderRadius: 2, width: `${(s.solved / s.total) * 100}%`, background: diffColors[d] }} />
                           </div>
                         </div>
@@ -595,7 +611,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* Bottom stat chips */}
-                <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '16px 0 14px' }} />
+                <div style={{ height: 1, background: 'var(--color-raised)', margin: '16px 0 14px' }} />
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   {[
                     { label: 'Total',       value: `${totalSolved}`, sub: `/ ${p.solveStats.easy.total + p.solveStats.medium.total + p.solveStats.hard.total}` },
@@ -603,10 +619,10 @@ export default function ProfilePage() {
                     { label: 'Acceptance',  value: `${(p.stats as any).acceptanceRate ?? 72}%`, sub: '' },
                   ].map(chip => (
                     <div key={chip.label} style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: 15, fontWeight: 700, color: '#e2e8f0' }}>
-                        {chip.value}<span style={{ fontSize: 11, color: '#334155', fontWeight: 400 }}>{chip.sub}</span>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-strong)' }}>
+                        {chip.value}<span style={{ fontSize: 11, color: 'var(--color-faint)', fontWeight: 400 }}>{chip.sub}</span>
                       </div>
-                      <div style={{ fontSize: 10, color: '#475569', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{chip.label}</div>
+                      <div style={{ fontSize: 10, color: 'var(--color-subtle)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{chip.label}</div>
                     </div>
                   ))}
                 </div>
@@ -617,24 +633,24 @@ export default function ProfilePage() {
               <Panel>
                 <PanelHeader icon={<Icons.Zap />} title="Experience" />
                 <div style={{ marginBottom: 16 }}>
-                  <div style={{ fontSize: 32, fontWeight: 800, color: '#e2e8f0', lineHeight: 1, marginBottom: 2 }}>
+                  <div style={{ fontSize: 32, fontWeight: 800, color: 'var(--color-strong)', lineHeight: 1, marginBottom: 2 }}>
                     {p.stats.totalXP.toLocaleString()}
                   </div>
-                  <div style={{ fontSize: 11, color: '#475569' }}>total XP earned</div>
+                  <div style={{ fontSize: 11, color: 'var(--color-subtle)' }}>total XP earned</div>
                 </div>
 
                 {/* XP bar (progress to next level) */}
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#475569', marginBottom: 6 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--color-subtle)', marginBottom: 6 }}>
                     <span>{p.title}</span>
-                    <span style={{ color: '#94a3b8' }}>92%</span>
+                    <span style={{ color: 'var(--color-subtle)' }}>92%</span>
                   </div>
-                  <div style={{ height: 6, borderRadius: 3, background: '#1e293b' }}>
-                    <div style={{ height: '100%', borderRadius: 3, width: '92%', background: 'linear-gradient(90deg, #0ea5e9, #22d3ee)' }} />
+                  <div style={{ height: 6, borderRadius: 3, background: 'var(--color-raised)' }}>
+                    <div style={{ height: '100%', borderRadius: 3, width: '92%', background: 'linear-gradient(90deg, var(--color-accent-strong), var(--color-accent))' }} />
                   </div>
                 </div>
 
-                <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '16px 0 14px' }} />
+                <div style={{ height: 1, background: 'var(--color-raised)', margin: '16px 0 14px' }} />
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   {[
                     { label: 'Percentile', value: `Top ${(100 - p.stats.percentile).toFixed(0)}%` },
@@ -642,8 +658,8 @@ export default function ProfilePage() {
                     { label: 'Streak',     value: `${p.stats.currentStreak}d`                     },
                   ].map(x => (
                     <div key={x.label} style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: 15, fontWeight: 700, color: '#e2e8f0' }}>{x.value}</div>
-                      <div style={{ fontSize: 10, color: '#475569', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{x.label}</div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-strong)' }}>{x.value}</div>
+                      <div style={{ fontSize: 10, color: 'var(--color-subtle)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{x.label}</div>
                     </div>
                   ))}
                 </div>
@@ -691,16 +707,16 @@ export default function ProfilePage() {
 // ─── Helper Components ────────────────────────────────────────────────────────
 
 function HR() {
-  return <div style={{ height: 1, background: 'rgba(255,255,255,0.06)' }} />
+  return <div style={{ height: 1, background: 'var(--color-line)' }} />
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#334155', margin: '0 0 12px' }}>{children}</p>
+  return <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-faint)', margin: '0 0 12px' }}>{children}</p>
 }
 
 function MetaRow({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#64748b', fontSize: 13 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-faint)', fontSize: 13 }}>
       <span style={{ flexShrink: 0 }}>{icon}</span>
       <span>{text}</span>
     </div>
@@ -713,7 +729,7 @@ function SocialLink({ icon, label, href }: { icon: React.ReactNode; label: strin
     <a
       href={href} target="_blank" rel="noopener noreferrer"
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: hov ? '#94a3b8' : '#64748b', textDecoration: 'none', transition: 'color 0.15s' }}
+      style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: hov ? 'var(--color-subtle)' : 'var(--color-faint)', textDecoration: 'none', transition: 'color 0.15s' }}
     >
       <span>{icon}</span>
       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
@@ -724,17 +740,21 @@ function SocialLink({ icon, label, href }: { icon: React.ReactNode; label: strin
 function StatRow({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <span style={{ fontSize: 12, color: '#475569' }}>{label}</span>
-      <span style={{ fontSize: 13, fontWeight: 600, color: accent ? '#22d3ee' : '#94a3b8' }}>{value}</span>
+      <span style={{ fontSize: 12, color: 'var(--color-subtle)' }}>{label}</span>
+      <span style={{ fontSize: 13, fontWeight: 600, color: accent ? 'var(--color-accent)' : 'var(--color-subtle)' }}>{value}</span>
     </div>
   )
 }
 
 function Panel({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
+    // A real surface with an edge, not a 3%-white wash. The wash worked on
+    // near-black because anything lighter than the page reads as a card; over
+    // #F6F7FB it was invisible, which is why these looked like bare text.
     <div style={{
       padding: 20, borderRadius: 12,
-      background: 'rgba(255,255,255,0.03)',
+      background: 'var(--color-panel)',
+      border: '1px solid var(--color-line)',
       ...style,
     }}>
       {children}
@@ -745,8 +765,8 @@ function Panel({ children, style }: { children: React.ReactNode; style?: React.C
 function PanelHeader({ icon, title, iconColor }: { icon: React.ReactNode; title: string; iconColor?: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-      <span style={{ color: iconColor || '#64748b' }}>{icon}</span>
-      <h3 style={{ fontSize: 13, fontWeight: 600, color: '#94a3b8', margin: 0 }}>{title}</h3>
+      <span style={{ color: iconColor || 'var(--color-faint)' }}>{icon}</span>
+      <h3 style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-subtle)', margin: 0 }}>{title}</h3>
     </div>
   )
 }
@@ -759,8 +779,12 @@ function BadgeCard({ badge, rm }: { badge: any; rm: { color: string; bg: string;
       title={badge.description}
       style={{
         padding: '14px 10px', borderRadius: 10, textAlign: 'center',
-        border: `1px solid ${hov && !badge.isLocked ? `${rm.color}50` : 'rgba(255,255,255,0.07)'}`,
-        background: hov && !badge.isLocked ? rm.bg : 'rgba(255,255,255,0.03)',
+        // color-mix, not a `${hex}50` alpha suffix — rm.color is a var() now,
+        // and string-concatenating an alpha onto one produces nothing.
+        border: `1px solid ${hov && !badge.isLocked
+          ? `color-mix(in oklab, ${rm.color} 45%, transparent)`
+          : 'var(--color-line)'}`,
+        background: hov && !badge.isLocked ? rm.bg : 'var(--color-raised)',
         opacity: badge.isLocked ? 0.4 : 1,
         cursor: 'default',
         transition: 'all 0.2s',
@@ -769,14 +793,18 @@ function BadgeCard({ badge, rm }: { badge: any; rm: { color: string; bg: string;
     >
       <div style={{
         width: 40, height: 40, borderRadius: '50%', margin: '0 auto 10px',
-        background: badge.isLocked ? 'rgba(255,255,255,0.05)' : `${rm.color}18`,
-        border: `1px solid ${badge.isLocked ? 'rgba(255,255,255,0.08)' : `${rm.color}35`}`,
+        background: badge.isLocked
+          ? 'var(--color-raised)'
+          : `color-mix(in oklab, ${rm.color} 14%, transparent)`,
+        border: `1px solid ${badge.isLocked
+          ? 'var(--color-line)'
+          : `color-mix(in oklab, ${rm.color} 30%, transparent)`}`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        color: badge.isLocked ? '#334155' : rm.color,
+        color: badge.isLocked ? 'var(--color-faint)' : rm.color,
       }}>
         {badge.isLocked ? <Icons.Lock /> : (badgeIconMap[badge.icon] || <Icons.Award />)}
       </div>
-      <p style={{ fontSize: 11, fontWeight: 600, color: badge.isLocked ? '#334155' : '#cbd5e1', margin: '0 0 3px', lineHeight: 1.3 }}>{badge.name}</p>
+      <p style={{ fontSize: 11, fontWeight: 600, color: badge.isLocked ? 'var(--color-faint)' : 'var(--color-body)', margin: '0 0 3px', lineHeight: 1.3 }}>{badge.name}</p>
       <p style={{ fontSize: 10, color: rm.color, margin: 0, opacity: badge.isLocked ? 0.5 : 1 }}>{rm.label}</p>
     </div>
   )

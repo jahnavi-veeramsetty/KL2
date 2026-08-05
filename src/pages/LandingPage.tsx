@@ -12,7 +12,9 @@ import Footer from "../components/layout/Footer";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#000511] relative overflow-hidden font-sans text-slate-200">
+    // on-dark: the marketing site keeps its own dark identity in both themes,
+    // so anything shared with the app renders against dark tokens here.
+    <div className="on-dark min-h-screen bg-[#000511] relative overflow-hidden font-sans text-slate-200">
       <StarfieldBackground />
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-0" />
@@ -49,7 +51,7 @@ export default function LandingPage() {
         {/* 7. Milestones & Achievements */}
         <MilestonesSection />
       </div>
-      <div className="relative z-20 w-full bg-secondary">
+      <div className="relative z-20 w-full bg-panel">
         <Footer />
       </div>
     </div>

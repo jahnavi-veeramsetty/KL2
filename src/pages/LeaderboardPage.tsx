@@ -44,14 +44,14 @@ const COLUMNS = [
 ]
 
 const MEDALS = ['🥇', '🥈', '🥉']
-const PODIUM_TONE = ['text-amber-400', 'text-slate-300', 'text-orange-400']
+const PODIUM_TONE = ['text-amber-400', 'text-body', 'text-orange-400']
 
 function Delta({ value }: { value: number }) {
   const Icon = value > 0 ? TrendingUp : value < 0 ? TrendingDown : Minus
   return (
     <span className={cn(
       'inline-flex items-center gap-1 text-[11px] font-bold tabular-nums',
-      value > 0 ? 'text-green-400' : value < 0 ? 'text-red-400' : 'text-slate-600'
+      value > 0 ? 'text-green-400' : value < 0 ? 'text-red-400' : 'text-faint'
     )}>
       <Icon className="w-3 h-3" />
       {value === 0 ? '—' : Math.abs(value)}
@@ -78,7 +78,7 @@ function Chip({
           ? tone === 'violet'
             ? 'bg-violet-400/15 text-violet-300 border-violet-400/40'
             : 'bg-accent/15 text-accent border-accent/40'
-          : 'bg-white/[0.04] text-slate-400 border-white/10 hover:text-white hover:border-white/25'
+          : 'bg-raised text-subtle border-line-strong hover:text-strong hover:border-line-strong'
       )}
     >
       {children}
@@ -100,13 +100,13 @@ function Select({
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full appearance-none rounded-xl border border-white/10 bg-secondary/40 pl-3 pr-8 py-2.5 text-xs font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 [&>option]:bg-neutral [&>option]:text-white"
+        className="w-full appearance-none rounded-xl border border-line-strong bg-raised/40 pl-3 pr-8 py-2.5 text-xs font-semibold text-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 [&>option]:bg-panel [&>option]:text-strong"
       >
         {options.map(o => (
           <option key={o.id} value={o.id}>{o.label}</option>
         ))}
       </select>
-      <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+      <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-faint" />
     </label>
   )
 }
@@ -121,35 +121,35 @@ function GroupRow({ group, onOpen }: { group: GroupStanding; onOpen: () => void 
         'group w-full flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-3.5 rounded-xl border text-left transition-colors',
         group.isYours
           ? 'border-accent/30 bg-accent/[0.06] hover:border-accent/50'
-          : 'border-white/[0.06] bg-secondary/25 hover:border-white/20'
+          : 'border-line bg-raised/25 hover:border-line-strong'
       )}
     >
       <span className={cn(
         'w-7 text-center text-base font-bold tabular-nums shrink-0',
-        PODIUM_TONE[group.rank - 1] ?? 'text-slate-600'
+        PODIUM_TONE[group.rank - 1] ?? 'text-faint'
       )}>
         {group.rank}
       </span>
 
-      <span className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-[10.5px] font-bold text-accent shrink-0">
+      <span className="w-10 h-10 rounded-xl bg-raised border border-line-strong flex items-center justify-center text-[10.5px] font-bold text-accent shrink-0">
         {group.short}
       </span>
 
       <span className="flex-1 min-w-0">
-        <span className="block text-[13px] font-semibold text-white truncate">
+        <span className="block text-[13px] font-semibold text-strong truncate">
           {group.name}
           {group.isYours && <span className="text-[9.5px] text-accent font-bold ml-2 tracking-wide">YOURS</span>}
         </span>
-        <span className="block text-[11px] text-slate-500 truncate">
+        <span className="block text-[11px] text-faint truncate">
           {group.sub} · {group.competing} competing
         </span>
       </span>
 
       <span className="text-right shrink-0">
-        <span className="block text-sm font-bold text-white tabular-nums leading-none">
+        <span className="block text-sm font-bold text-strong tabular-nums leading-none">
           {group.averageScore.toLocaleString()}
         </span>
-        <span className="block text-[9px] font-bold uppercase tracking-[0.1em] text-slate-600 mt-1">avg</span>
+        <span className="block text-[9px] font-bold uppercase tracking-[0.1em] text-faint mt-1">avg</span>
       </span>
 
       <span className="text-right shrink-0 hidden sm:block w-20">
@@ -157,10 +157,10 @@ function GroupRow({ group, onOpen }: { group: GroupStanding; onOpen: () => void 
           <Trophy className="w-3 h-3" />
           {group.totalScore.toLocaleString()}
         </span>
-        <span className="block text-[9px] font-bold uppercase tracking-[0.1em] text-slate-600 mt-1">total</span>
+        <span className="block text-[9px] font-bold uppercase tracking-[0.1em] text-faint mt-1">total</span>
       </span>
 
-      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-accent transition-colors shrink-0" />
+      <ChevronRight className="w-4 h-4 text-faint group-hover:text-accent transition-colors shrink-0" />
     </button>
   )
 }
@@ -203,8 +203,8 @@ export default function LeaderboardPage() {
       </div>
 
       <div>
-        <h1 className="text-2xl font-bold text-white tracking-tight">Leaderboard</h1>
-        <p className="text-sm text-slate-400 mt-1">
+        <h1 className="text-2xl font-bold text-strong tracking-tight">Leaderboard</h1>
+        <p className="text-sm text-subtle mt-1">
           Where you stand across Telangana, your district and your college.
         </p>
       </div>
@@ -240,7 +240,7 @@ export default function LeaderboardPage() {
                   ? 'border-accent/45 bg-accent/[0.08]'
                   : isBest
                     ? 'border-green-500/30 bg-green-500/[0.05] hover:border-green-500/50'
-                    : 'border-white/[0.07] bg-secondary/25 hover:border-white/20'
+                    : 'border-line bg-raised/25 hover:border-line-strong'
               )}
             >
               {isBest && (
@@ -251,15 +251,15 @@ export default function LeaderboardPage() {
                   </span>
                 </>
               )}
-              <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.1em] sm:tracking-[0.13em] text-slate-500 mb-1.5 sm:mb-2 truncate pr-3 sm:pr-10">
+              <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.1em] sm:tracking-[0.13em] text-faint mb-1.5 sm:mb-2 truncate pr-3 sm:pr-10">
                 {s.label}
               </p>
-              <p className="text-lg sm:text-2xl font-bold text-white tracking-tight leading-none tabular-nums">
+              <p className="text-lg sm:text-2xl font-bold text-strong tracking-tight leading-none tabular-nums">
                 #{s.rank.toLocaleString()}
               </p>
               {/* The field size does not fit at 107px and is the less useful
                   half — the percentile already says how good the rank is. */}
-              <p className="text-[9.5px] sm:text-[10.5px] text-slate-400 mt-1 sm:mt-1.5 tabular-nums truncate">
+              <p className="text-[9.5px] sm:text-[10.5px] text-subtle mt-1 sm:mt-1.5 tabular-nums truncate">
                 top {s.topPercent}%<span className="hidden sm:inline"> · {s.total.toLocaleString()} students</span>
               </p>
             </button>
@@ -281,7 +281,7 @@ export default function LeaderboardPage() {
           </Chip>
         ))}
 
-        <span className="w-px h-5 bg-white/10 mx-1" />
+        <span className="w-px h-5 bg-line-strong mx-1" />
 
         {PERIODS.map(p => (
           <Chip key={p.id} active={period === p.id} onClick={() => setPeriod(p.id)}>
@@ -293,14 +293,14 @@ export default function LeaderboardPage() {
       {/* Active drill-down */}
       {pinned && (
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[11px] text-slate-500">Showing</span>
+          <span className="text-[11px] text-faint">Showing</span>
           <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/12 border border-accent/30 text-xs font-semibold text-accent">
             {filterLabel(filter)}
             <button
               type="button"
               onClick={() => setFilter({ kind: 'college' })}
               aria-label="Clear filter"
-              className="hover:text-white transition-colors"
+              className="hover:text-strong transition-colors"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -310,8 +310,8 @@ export default function LeaderboardPage() {
 
       {view === 'districts' && (
         <div className="space-y-2.5">
-          <p className="text-[11px] text-slate-500">
-            Districts ranked by <span className="text-slate-300 font-semibold">average</span> student score —
+          <p className="text-[11px] text-faint">
+            Districts ranked by <span className="text-body font-semibold">average</span> student score —
             ranking by total would just reward whichever district has the most students here. Open one to see
             its students.
           </p>
@@ -323,9 +323,9 @@ export default function LeaderboardPage() {
 
       {view === 'colleges' && (
         <div className="space-y-2.5">
-          <p className="text-[11px] text-slate-500">
-            Colleges ranked by <span className="text-slate-300 font-semibold">average</span> student score
-            {collegeDistrictId && <> in <span className="text-slate-300 font-semibold">{filterLabel(filter)}</span></>}.
+          <p className="text-[11px] text-faint">
+            Colleges ranked by <span className="text-body font-semibold">average</span> student score
+            {collegeDistrictId && <> in <span className="text-body font-semibold">{filterLabel(filter)}</span></>}.
             Open one to see its students.
           </p>
           {colleges.map(c => (
@@ -347,16 +347,16 @@ export default function LeaderboardPage() {
                     className={cn(
                       'rounded-2xl border p-4 text-center',
                       place === 0
-                        ? 'border-amber-400/40 bg-gradient-to-b from-amber-400/[0.12] to-transparent py-6'
-                        : 'border-white/[0.07] bg-secondary/25'
+                        ? 'border-amber-400/40 bg-gradient-to-b from-amber-400/[0.12] to-transparent light:bg-none light:bg-amber-400/20 py-6'
+                        : 'border-line bg-raised/25'
                     )}
                   >
                     <p className="text-base mb-1.5">{MEDALS[place]}</p>
                     <div className="flex justify-center mb-2">
                       <Avatar name={p.username} size={place === 0 ? 'lg' : 'md'} src={p.avatar} />
                     </div>
-                    <p className="text-[13px] font-bold text-white truncate">{p.username}</p>
-                    <p className="text-[10px] text-slate-500 truncate mt-0.5">{p.branch} · year {p.year}</p>
+                    <p className="text-[13px] font-bold text-strong truncate">{p.username}</p>
+                    <p className="text-[10px] text-faint truncate mt-0.5">{p.branch} · year {p.year}</p>
                     <p className={cn('text-sm font-bold tabular-nums mt-2', PODIUM_TONE[place])}>
                       {scoreOf(p).toLocaleString()}
                     </p>
@@ -366,16 +366,16 @@ export default function LeaderboardPage() {
             </div>
           )}
 
-          <div className="rounded-2xl border border-white/[0.07] bg-secondary/20 overflow-hidden">
+          <div className="rounded-2xl border border-line bg-raised/20 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full table-fixed md:min-w-[900px]">
                 <thead>
-                  <tr className="border-b border-white/[0.07]">
+                  <tr className="border-b border-line">
                     {COLUMNS.map(c => (
                       <th
                         key={c.label}
                         className={cn(
-                          'text-[9px] font-medium uppercase tracking-[0.14em] text-slate-500 px-3 sm:px-4 py-3',
+                          'text-[9px] font-medium uppercase tracking-[0.14em] text-faint px-3 sm:px-4 py-3',
                           c.w,
                           c.align === 'right' ? 'text-right' : c.align === 'center' ? 'text-center' : 'text-left',
                           // letter-spacing is added after the last glyph too, so a
@@ -395,10 +395,10 @@ export default function LeaderboardPage() {
                     const you = p.id === YOUR_PLAYER_ID
                     const college = institutionById(p.collegeId)
                     return (
-                      <tr key={p.id} className={cn('border-b border-white/[0.05] last:border-b-0', you && 'bg-accent/[0.08]')}>
+                      <tr key={p.id} className={cn('border-b border-line last:border-b-0', you && 'bg-accent/[0.08]')}>
                         <td className={cn(
                           'px-3 sm:px-4 py-3 text-sm tabular-nums',
-                          you ? 'text-accent font-bold shadow-[inset_3px_0_0_var(--color-accent)]' : 'text-slate-500'
+                          you ? 'text-accent font-bold shadow-[inset_3px_0_0_var(--color-accent)]' : 'text-faint'
                         )}>
                           {i + 1}
                         </td>
@@ -410,7 +410,7 @@ export default function LeaderboardPage() {
                             <Avatar name={p.username} size="sm" src={p.avatar} />
                             <div className="min-w-0">
                               <div className="flex items-center gap-2 min-w-0">
-                                <span className={cn('text-[13px] font-semibold truncate', you ? 'text-accent' : 'text-white')}>
+                                <span className={cn('text-[13px] font-semibold truncate', you ? 'text-accent' : 'text-strong')}>
                                   {p.username}
                                 </span>
                                 {you && (
@@ -419,21 +419,21 @@ export default function LeaderboardPage() {
                                   </span>
                                 )}
                               </div>
-                              <p className="md:hidden text-[10px] text-slate-500 truncate mt-0.5">
+                              <p className="md:hidden text-[10px] text-faint truncate mt-0.5">
                                 {college?.short ?? '—'} · {college?.district ?? '—'}
                               </p>
                             </div>
                           </div>
                         </td>
                         <td className="hidden md:table-cell px-4 py-3 max-w-[190px]">
-                          <p className="text-[12px] text-slate-300 truncate">{college?.name ?? '—'}</p>
-                          <p className="text-[10px] text-slate-600 truncate">{p.branch} · year {p.year}</p>
+                          <p className="text-[12px] text-body truncate">{college?.name ?? '—'}</p>
+                          <p className="text-[10px] text-faint truncate">{p.branch} · year {p.year}</p>
                         </td>
-                        <td className="hidden md:table-cell px-4 py-3 text-[12px] text-slate-500 whitespace-nowrap">
+                        <td className="hidden md:table-cell px-4 py-3 text-[12px] text-faint whitespace-nowrap">
                           {college?.district ?? '—'}
                         </td>
-                        <td className="hidden md:table-cell px-4 py-3 text-[12px] text-slate-500 text-center tabular-nums">{p.contests}</td>
-                        <td className="px-3 sm:px-4 py-3 text-[13px] font-bold text-white text-right tabular-nums">
+                        <td className="hidden md:table-cell px-4 py-3 text-[12px] text-faint text-center tabular-nums">{p.contests}</td>
+                        <td className="px-3 sm:px-4 py-3 text-[13px] font-bold text-strong text-right tabular-nums">
                           {scoreOf(p).toLocaleString()}
                         </td>
                         <td className="hidden md:table-cell px-4 py-3 text-right"><Delta value={p.rankDelta} /></td>
@@ -444,7 +444,7 @@ export default function LeaderboardPage() {
               </table>
             </div>
 
-            <p className="text-[11px] text-slate-500 text-center py-3 border-t border-white/[0.06]">
+            <p className="text-[11px] text-faint text-center py-3 border-t border-line">
               {ranked.length > 25
                 ? `Showing top 25 of ${ranked.length.toLocaleString()} in ${filterLabel(filter)}`
                 : `${ranked.length.toLocaleString()} students in ${filterLabel(filter)}`}

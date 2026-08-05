@@ -17,6 +17,7 @@ export const PAGE_TITLES: Record<string, string> = {
   [ROUTES.DAILY_CHALLENGE]: 'Daily Challenge',
   [ROUTES.COMPETE]:         'Coding Contest',
   [ROUTES.HACKATHONS]:      'Hackathons',
+  [ROUTES.EVENTS]:          'Events',
   [ROUTES.ARCADE]:          'Arcade',
   [ROUTES.PROFILE]:         'My Profile',
   [ROUTES.SETTINGS]:        'Settings',

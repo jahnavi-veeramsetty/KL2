@@ -50,7 +50,7 @@ function HistoryRow({
   return (
     <div className={cn(
       'rounded-xl border transition-colors',
-      open ? 'border-accent/30 bg-secondary/35' : 'border-white/[0.06] bg-secondary/20 hover:border-white/15'
+      open ? 'border-accent/30 bg-raised/35' : 'border-line bg-raised/20 hover:border-line-strong'
     )}>
       <button
         type="button"
@@ -58,24 +58,24 @@ function HistoryRow({
         aria-expanded={open}
         className="w-full flex items-center gap-3 p-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-xl"
       >
-        <span className="w-11 shrink-0 text-[11px] font-bold text-slate-400 tabular-nums">
+        <span className="w-11 shrink-0 text-[11px] font-bold text-subtle tabular-nums">
           {formatDay(challenge.date)}
         </span>
 
         <span className={cn(
           'w-8 h-8 shrink-0 rounded-lg border flex items-center justify-center',
-          solved ? 'border-green-500/30 bg-green-500/10 text-green-400' : 'border-white/10 bg-white/[0.03] text-slate-500'
+          solved ? 'border-green-500/30 bg-green-500/10 text-green-400' : 'border-line-strong bg-raised text-faint'
         )}>
           <Icon className="w-4 h-4" />
         </span>
 
         <span className="flex-1 min-w-0">
-          <span className="block text-[13px] font-semibold text-white truncate">{challenge.title}</span>
+          <span className="block text-[13px] font-semibold text-strong truncate">{challenge.title}</span>
           <span className="flex items-center gap-2 mt-1">
             <span className={cn('text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded border', DIFFICULTY_TONE[challenge.difficulty])}>
               {challenge.difficulty}
             </span>
-            <span className="text-[10px] text-slate-500 truncate">
+            <span className="text-[10px] text-faint truncate">
               {challenge.type} &middot; +{challenge.xpReward} XP
             </span>
           </span>
@@ -87,19 +87,19 @@ function HistoryRow({
             <span className="hidden sm:inline">Solved</span>
           </span>
         ) : (
-          <span className="shrink-0 text-[10px] font-bold uppercase tracking-wide text-slate-600 hidden sm:inline">
+          <span className="shrink-0 text-[10px] font-bold uppercase tracking-wide text-faint hidden sm:inline">
             Missed
           </span>
         )}
 
         <ChevronDown className={cn(
-          'w-4 h-4 shrink-0 text-slate-500 transition-transform',
+          'w-4 h-4 shrink-0 text-faint transition-transform',
           open && 'rotate-180 text-accent'
         )} />
       </button>
 
       {open && (
-        <div className="px-3 pb-4 pt-1 border-t border-white/[0.06] mt-1">
+        <div className="px-3 pb-4 pt-1 border-t border-line mt-1">
           <div className="pt-3">
             <ChallengeBody challenge={challenge} solved={solved} onSolve={onSolve} size="sm" />
           </div>
@@ -127,7 +127,7 @@ export function ChallengeHistory() {
   return (
     <section>
       <div className="mb-4">
-        <h2 className="text-sm font-bold text-white tracking-tight mb-2.5">Past challenges</h2>
+        <h2 className="text-sm font-bold text-strong tracking-tight mb-2.5">Past challenges</h2>
         <div className="flex flex-wrap gap-1.5">
           {FILTERS.map(f => (
             <button
@@ -139,7 +139,7 @@ export function ChallengeHistory() {
                 'px-3 py-1 rounded-full text-[11px] font-semibold border transition-colors',
                 type === f
                   ? 'bg-accent/15 text-accent border-accent/40'
-                  : 'bg-white/[0.04] text-slate-400 border-white/10 hover:text-white hover:border-white/25'
+                  : 'bg-raised text-subtle border-line-strong hover:text-strong hover:border-line-strong'
               )}
             >
               {f}
@@ -149,7 +149,7 @@ export function ChallengeHistory() {
       </div>
 
       {past.length === 0 ? (
-        <p className="text-xs text-slate-500 py-6 text-center rounded-xl border border-white/[0.06] bg-secondary/15">
+        <p className="text-xs text-faint py-6 text-center rounded-xl border border-line bg-raised/15">
           Nothing here yet.
         </p>
       ) : (

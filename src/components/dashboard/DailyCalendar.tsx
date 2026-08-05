@@ -38,7 +38,7 @@ export default function DailyCalendar() {
   const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
   return (
-    <div className="bg-secondary/40 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)] w-full font-sans border border-white/10">
+    <div className="bg-raised/40 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)] w-full font-sans border border-line-strong">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-baseline gap-2">
@@ -46,7 +46,7 @@ export default function DailyCalendar() {
           <span className="text-xs text-gray-500">{timeLeft} left</span>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={prevMonth} className="text-gray-400 hover:text-white cursor-pointer" aria-label="Previous month">
+          <button onClick={prevMonth} className="text-gray-400 hover:text-strong cursor-pointer" aria-label="Previous month">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
@@ -63,7 +63,7 @@ export default function DailyCalendar() {
             onClick={nextMonth}
             disabled={isCurrentMonth}
             aria-label="Next month"
-            className={`text-gray-400 ${isCurrentMonth ? 'opacity-50 cursor-not-allowed' : 'hover:text-white cursor-pointer'}`}
+            className={`text-gray-400 ${isCurrentMonth ? 'opacity-50 cursor-not-allowed' : 'hover:text-strong cursor-pointer'}`}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -103,7 +103,7 @@ export default function DailyCalendar() {
               title={marker ? `${day}: ${marker.label}` : undefined}
             >
               {isToday ? (
-                <svg className="w-6 h-6 text-blue-500 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="w-6 h-6 text-blue-500 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] light:drop-shadow-none mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
               ) : (

@@ -36,26 +36,26 @@ export function Accordion({ items, allowMultiple = false, className, defaultOpen
       {items.map(item => {
         const isOpen = openIds.has(item.id)
         return (
-          <div key={item.id} className="border border-white/8 rounded-xl overflow-hidden">
+          <div key={item.id} className="border border-line rounded-xl overflow-hidden">
             <button
               type="button"
               onClick={() => toggle(item.id)}
-              className="w-full flex items-center justify-between px-4 py-3.5 text-left bg-secondary/30 hover:bg-secondary/50 transition-colors"
+              className="w-full flex items-center justify-between px-4 py-3.5 text-left bg-raised/30 hover:bg-raised/50 transition-colors"
               aria-expanded={isOpen}
             >
               <div className="flex items-center gap-3">
-                <span className="text-sm font-medium text-tertiary">{item.title}</span>
-                {item.meta && <span className="text-xs text-muted">{item.meta}</span>}
+                <span className="text-sm font-medium text-strong">{item.title}</span>
+                {item.meta && <span className="text-xs text-subtle">{item.meta}</span>}
               </div>
               <svg
-                className={cn('w-4 h-4 text-muted flex-shrink-0 transition-transform duration-200', isOpen && 'rotate-180')}
+                className={cn('w-4 h-4 text-subtle flex-shrink-0 transition-transform duration-200', isOpen && 'rotate-180')}
                 fill="none" viewBox="0 0 24 24" stroke="currentColor"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             {isOpen && (
-              <div className="px-4 py-4 border-t border-white/5 bg-primary/40">
+              <div className="px-4 py-4 border-t border-line bg-page/40">
                 {item.content}
               </div>
             )}

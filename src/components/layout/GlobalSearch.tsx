@@ -96,7 +96,7 @@ export function GlobalSearch() {
       case 'Course': return 'bg-blue-500/10 text-blue-400 border-blue-500/20'
       case 'Hackathon': return 'bg-purple-500/10 text-purple-400 border-purple-500/20'
       case 'Contest': return 'bg-orange-500/10 text-orange-400 border-orange-500/20'
-      default: return 'bg-white/10 text-white'
+      default: return 'bg-line-strong text-strong'
     }
   }
 
@@ -113,20 +113,20 @@ export function GlobalSearch() {
       />
       
       {isOpen && results.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-[#0B1120]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-page/95 backdrop-blur-xl border border-line-strong rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
           <ul className="max-h-[60vh] overflow-y-auto p-2">
             {results.map(result => (
               <li key={`${result.type}-${result.id}`}>
                 <button
-                  className="w-full text-left px-4 py-3 hover:bg-white/[0.04] rounded-lg transition-colors flex items-center justify-between group"
+                  className="w-full text-left px-4 py-3 hover:bg-raised rounded-lg transition-colors flex items-center justify-between group"
                   onClick={() => handleResultClick(result.url)}
                 >
                   <div className="flex flex-col">
-                    <span className="text-white font-medium group-hover:text-accent transition-colors">
+                    <span className="text-strong font-medium group-hover:text-accent transition-colors">
                       {result.title}
                     </span>
                     {result.subtitle && (
-                      <span className="text-xs text-muted mt-0.5 capitalize">
+                      <span className="text-xs text-subtle mt-0.5 capitalize">
                         {result.subtitle}
                       </span>
                     )}
@@ -142,8 +142,8 @@ export function GlobalSearch() {
       )}
 
       {isOpen && query.trim() && results.length === 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-[#0B1120]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl p-6 text-center animate-in fade-in slide-in-from-top-2 duration-200">
-          <p className="text-muted text-sm">No results found for "{query}"</p>
+        <div className="absolute top-full left-0 right-0 mt-2 bg-page/95 backdrop-blur-xl border border-line-strong rounded-xl shadow-2xl p-6 text-center animate-in fade-in slide-in-from-top-2 duration-200">
+          <p className="text-subtle text-sm">No results found for "{query}"</p>
         </div>
       )}
     </div>

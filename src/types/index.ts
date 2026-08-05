@@ -2,6 +2,6 @@ export type { Course, CourseInstructor, CourseInstructorStats, CourseLesson, Cou
 export type { Problem, StudyPlan, Difficulty, ProblemStatus, ProgrammingLanguage, ProblemExample, ProblemTestCase } from './problem'
 export type { Contest, ContestStatus, ContestDifficulty, ContestProblem, LeaderboardEntry } from './contest'
 export type { Hackathon, HackathonMode, HackathonStatus, HackathonSponsor, HackathonJudge, HackathonTimelinePhase, HackathonTrack, HackathonPrizeTier, HackathonFAQ } from './hackathon'
-export type { User, UserSolvedStats, ContinueLearningItem, EventItem } from './user'
+export type { User, UserSolvedStats, ContinueLearningItem } from './user'
 export type { Masterclass } from './masterclass'
 export type { DailyChallenge, DailyChallengeType, ChallengeDifficulty } from './daily'

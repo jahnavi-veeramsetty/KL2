@@ -54,7 +54,7 @@ export default function CoursesPage() {
         searchPlaceholder="Search courses..."
         sortOptions={SORT_OPTIONS}
       />
-      <div className="text-xs text-muted mb-4">
+      <div className="text-xs text-subtle mb-4">
         {filtered.length} {filtered.length === 1 ? 'course' : 'courses'} found
       </div>
 

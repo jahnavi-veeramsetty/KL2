@@ -1,119 +1,95 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { upcomingEvents } from '../../data/events'
+import { ROUTES } from '../../constants/routes'
+import { type EventKind, eventDayKey, eventsThisWeek, weekDays } from '../../lib/events'
 import { cn } from '../../lib/cn'
-import type { EventItem } from '../../types'
+import { ViewAllLink } from '../../ui/ViewAllLink'
+import { useSettings } from '../../hooks/useSettings'
 
-const getDaysInCurrentWeek = () => {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  
-  // Assuming Monday is the first day of the week
-  const day = today.getDay()
-  const diffToMonday = today.getDate() - day + (day === 0 ? -6 : 1) // adjust when day is sunday
-  
-  const monday = new Date(today.setDate(diffToMonday))
-  
-  const weekDays = []
-  for (let i = 0; i < 7; i++) {
-    const nextDate = new Date(monday)
-    nextDate.setDate(monday.getDate() + i)
-    weekDays.push(nextDate)
-  }
-  return weekDays
-}
-
-const colorStyles = {
-  teal: 'bg-teal-500/20 text-teal-300 border-teal-500/30 hover:bg-teal-500/30',
-  blue: 'bg-blue-500/20 text-blue-300 border-blue-500/30 hover:bg-blue-500/30',
-  purple: 'bg-purple-500/20 text-purple-300 border-purple-500/30 hover:bg-purple-500/30',
-  orange: 'bg-orange-500/20 text-orange-300 border-orange-500/30 hover:bg-orange-500/30',
-  green: 'bg-green-500/20 text-green-300 border-green-500/30 hover:bg-green-500/30',
+/**
+ * The current week, from the real schedule.
+ *
+ * Previously fed by data/events.ts, whose five entries had invented `eventId`s
+ * matching nothing in the app — every tile linked to /events/:id, a route that
+ * did not exist. Now each tile points at the actual contest, hackathon or
+ * masterclass detail page.
+ */
+const KIND_STYLE: Record<EventKind, string> = {
+  contest: 'bg-amber-500/15 text-amber-300 border-amber-500/30 hover:bg-amber-500/25',
+  hackathon: 'bg-violet-500/15 text-violet-300 border-violet-500/30 hover:bg-violet-500/25',
+  masterclass: 'bg-pink-500/15 text-pink-300 border-pink-500/30 hover:bg-pink-500/25',
 }
 
 export function UpcomingEvents() {
-  const weekDays = useMemo(() => getDaysInCurrentWeek(), [])
-  
-  // Group events by date string "YYYY-MM-DD"
-  const eventsByDate = useMemo(() => {
-    const map = new Map<string, EventItem[]>()
-    upcomingEvents.forEach(event => {
-      const dateKey = new Date(event.isoDate).toISOString().split('T')[0]
-      if (!map.has(dateKey)) {
-        map.set(dateKey, [])
-      }
-      map.get(dateKey)!.push(event)
-    })
-    return map
-  }, [])
+  const { settings } = useSettings()
+  const days = useMemo(() => weekDays(settings.weekStartsOn), [settings.weekStartsOn])
+  const byDay = useMemo(() => eventsThisWeek(), [])
+  const todayKey = eventDayKey(new Date())
 
   return (
     <div className="flex flex-col w-full">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-white tracking-tight">Upcoming Events</h2>
-        <Link 
-          to="/events" 
-          className="text-sm font-medium text-accent hover:text-white transition-colors"
-        >
-          View All
-        </Link>
+        <h2 className="text-xl font-bold text-strong tracking-tight">This week</h2>
+        <ViewAllLink to={ROUTES.EVENTS} />
       </div>
 
-      <div className="w-full overflow-x-auto no-scrollbar bg-[#111827]/60 rounded-2xl border border-white/5 shadow-xl backdrop-blur-sm">
-        <div className="min-w-[800px] grid grid-cols-7 divide-x divide-white/5">
-          {weekDays.map((date, i) => {
-            const dateKey = date.toISOString().split('T')[0]
-            const dayEvents = eventsByDate.get(dateKey) || []
-            const isToday = new Date().toISOString().split('T')[0] === dateKey
-            
+      <div className="w-full overflow-x-auto no-scrollbar bg-panel/60 rounded-2xl border border-line shadow-xl backdrop-blur-sm">
+        <div className="min-w-[760px] grid grid-cols-7 divide-x divide-white/5">
+          {days.map(date => {
+            // Built from local date parts — toISOString buckets by UTC and
+            // slips a day for anyone east of it.
+            const key = eventDayKey(date)
+            const dayEvents = byDay.get(key) ?? []
+            const isToday = key === todayKey
+
             return (
-              <div 
-                key={i} 
+              <div
+                key={key}
                 className={cn(
-                  "flex flex-col h-full min-h-[160px] p-3 transition-colors",
-                  isToday ? "bg-white/[0.02]" : "hover:bg-white/[0.01]"
+                  'flex flex-col h-full min-h-[160px] p-3 transition-colors',
+                  isToday ? 'bg-raised' : 'hover:bg-raised'
                 )}
               >
-                {/* Day Header */}
                 <div className="flex flex-col items-center mb-3">
                   <span className={cn(
-                    "text-xs font-semibold uppercase tracking-wider mb-1",
-                    isToday ? "text-accent" : "text-slate-400"
+                    'text-xs font-semibold uppercase tracking-wider mb-1',
+                    isToday ? 'text-accent' : 'text-subtle'
                   )}>
                     {date.toLocaleDateString('en-US', { weekday: 'short' })}
                   </span>
                   <span className={cn(
-                    "flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium",
-                    isToday ? "bg-accent text-[#060b1a]" : "text-slate-300"
+                    'flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium tabular-nums',
+                    isToday ? 'bg-accent text-on-accent' : 'text-body'
                   )}>
                     {date.getDate()}
                   </span>
                 </div>
 
-                {/* Events */}
                 <div className="flex flex-col gap-2 flex-1">
                   {dayEvents.map(event => (
                     <Link
                       key={event.id}
-                      to={`/events/${event.eventId}`}
+                      to={event.to}
                       className={cn(
-                        "flex flex-col p-2.5 rounded-xl border text-xs transition-all duration-200 cursor-pointer group",
-                        colorStyles[event.color]
+                        'group flex flex-col p-2.5 rounded-xl border text-xs transition-colors',
+                        KIND_STYLE[event.kind]
                       )}
                     >
-                      <span className="font-semibold line-clamp-2 leading-snug group-hover:text-white transition-colors">
+                      <span className="font-semibold line-clamp-2 leading-snug group-hover:text-strong transition-colors">
                         {event.title}
                       </span>
-                      <span className="text-[10px] mt-1.5 opacity-80 font-medium flex items-center justify-between">
-                        {event.date.replace(/,.*$/, '')}
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"><polyline points="9 18 15 12 9 6" /></svg>
+                      <span className="flex items-center justify-between gap-1 text-[10px] mt-1.5 opacity-80 font-medium tabular-nums">
+                        {event.start.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                        {event.status === 'live' && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
+                        )}
                       </span>
                     </Link>
                   ))}
-                  
+
                   {dayEvents.length === 0 && (
                     <div className="flex-1 flex items-center justify-center">
-                      <span className="text-xs text-slate-500/50 font-medium">No events</span>
+                      <span className="text-xs text-faint/50 font-medium">&mdash;</span>
                     </div>
                   )}
                 </div>

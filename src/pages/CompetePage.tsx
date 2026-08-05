@@ -30,8 +30,8 @@ function SectionHead({ title, count, tone }: { title: string; count: number; ton
   return (
     <div className="flex items-center gap-3 mb-4">
       <h3 className={cn('text-xs font-bold uppercase tracking-[0.12em]', tone)}>{title}</h3>
-      <span className="text-[11px] font-semibold text-slate-600 tabular-nums">{count}</span>
-      <span className="flex-1 h-px bg-white/[0.06]" />
+      <span className="text-[11px] font-semibold text-faint tabular-nums">{count}</span>
+      <span className="flex-1 h-px bg-raised" />
     </div>
   )
 }
@@ -78,7 +78,7 @@ export default function CompetePage() {
               'px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-colors',
               division === d
                 ? 'bg-accent/15 text-accent border-accent/40'
-                : 'bg-white/[0.04] text-slate-400 border-white/10 hover:text-white hover:border-white/25'
+                : 'bg-raised text-subtle border-line-strong hover:text-strong hover:border-line-strong'
             )}
           >
             {d}
@@ -122,7 +122,7 @@ export default function CompetePage() {
 
           {past.length > 0 && (
             <section>
-              <SectionHead title="Past results" count={past.length} tone="text-slate-500" />
+              <SectionHead title="Past results" count={past.length} tone="text-faint" />
               <div className="space-y-2.5">
                 {past
                   .slice()
@@ -145,8 +145,8 @@ export default function CompetePage() {
             <div className="hidden lg:block">
               {/* Was headed "Global Leaderboard" while rendering a single
                   contest's standings. Named for what it actually is. */}
-              <h2 className="text-sm font-bold text-white tracking-tight mb-1">Last contest standings</h2>
-              <p className="text-[11px] text-slate-500 mb-3">{lastFinished.title}</p>
+              <h2 className="text-sm font-bold text-strong tracking-tight mb-1">Last contest standings</h2>
+              <p className="text-[11px] text-faint mb-3">{lastFinished.title}</p>
               <LeaderboardPanel
                 entries={lastFinished.leaderboard}
                 yourRank={lastFinished.yourRank}

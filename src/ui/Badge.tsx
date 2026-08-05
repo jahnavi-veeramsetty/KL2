@@ -26,7 +26,7 @@ const colorMap: Record<BadgeColor, string> = {
   success: 'bg-green-500/15 text-green-400 border-green-500/30',
   warning: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
   danger:  'bg-red-500/15 text-red-400 border-red-500/30',
-  neutral: 'bg-white/8 text-muted border-white/10',
+  neutral: 'bg-raised text-subtle border-line-strong',
   purple:  'bg-purple-500/15 text-purple-400 border-purple-500/30',
   orange:  'bg-orange-500/15 text-orange-400 border-orange-500/30',
 }

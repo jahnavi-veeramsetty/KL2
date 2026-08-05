@@ -1,14 +1,17 @@
-import { Github } from 'lucide-react'
-
 /**
  * Provider buttons for the auth pages.
  *
- * MOCK: there is no OAuth here. Each button just completes the local session
- * via the caller's onProvider handler, the same way the password form does.
- * Wiring real sign-in means a backend redirect flow plus client IDs — the
- * markup below is what stays.
+ * Google only. GitHub was here because auth templates always carry it, but this
+ * is a learning platform whose students sign up with a college address, not a
+ * developer tool — a provider nobody uses is a wider decision surface in front
+ * of the one button that matters.
+ *
+ * MOCK: there is no OAuth here. The button just completes the local session via
+ * the caller's onProvider handler, the same way the password form does. Wiring
+ * real sign-in means a backend redirect flow plus client IDs — the markup below
+ * is what stays.
  */
-export type AuthProvider = 'google' | 'github'
+export type AuthProvider = 'google'
 
 /** Google's mark is four-colour, so it can't come from a monochrome icon set. */
 function GoogleMark() {
@@ -24,8 +27,8 @@ function GoogleMark() {
 
 const BUTTON =
   'relative flex items-center justify-center gap-2 w-full py-2.5 md:py-3 rounded-2xl text-xs font-semibold text-white/90 ' +
-  'bg-white/[0.06] border border-white/[0.1] backdrop-blur-md transition-all duration-300 ' +
-  'hover:bg-white/[0.12] hover:border-white/25 hover:-translate-y-px active:translate-y-0 ' +
+  'bg-raised border border-line-strong backdrop-blur-md transition-all duration-300 ' +
+  'hover:bg-line-strong hover:border-line-strong hover:-translate-y-px active:translate-y-0 ' +
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40'
 
 export function SocialAuthButtons({
@@ -37,21 +40,15 @@ export function SocialAuthButtons({
 }) {
   return (
     <div className="relative z-10">
-      <div className="grid grid-cols-2 gap-3">
-        <button type="button" onClick={() => onProvider('google')} className={BUTTON}>
-          <GoogleMark />
-          Google
-        </button>
-        <button type="button" onClick={() => onProvider('github')} className={BUTTON}>
-          <Github className="w-4 h-4" strokeWidth={1.8} />
-          GitHub
-        </button>
-      </div>
+      <button type="button" onClick={() => onProvider('google')} className={BUTTON}>
+        <GoogleMark />
+        Continue with Google
+      </button>
 
       <div className="flex items-center gap-3 my-4">
-        <span className="h-px flex-1 bg-white/10" />
+        <span className="h-px flex-1 bg-line-strong" />
         <span className="text-[10px] uppercase tracking-[0.2em] text-brand-neutral/40">{label}</span>
-        <span className="h-px flex-1 bg-white/10" />
+        <span className="h-px flex-1 bg-line-strong" />
       </div>
     </div>
   )

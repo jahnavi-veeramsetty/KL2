@@ -57,7 +57,7 @@ export function NotificationBell() {
 
     return (
       <div>
-        <p className="px-4 py-2 text-[9px] font-bold uppercase tracking-[0.14em] text-slate-600 bg-white/[0.02]">
+        <p className="px-4 py-2 text-[9px] font-bold uppercase tracking-[0.14em] text-faint bg-raised">
           {label}
         </p>
         {group.map(n => {
@@ -71,14 +71,14 @@ export function NotificationBell() {
 
               <span className="flex-1 min-w-0">
                 <span className="flex items-start gap-2">
-                  <span className={cn('flex-1 text-[13px] leading-snug', n.isRead ? 'text-slate-400 font-medium' : 'text-white font-semibold')}>
+                  <span className={cn('flex-1 text-[13px] leading-snug', n.isRead ? 'text-subtle font-medium' : 'text-strong font-semibold')}>
                     {n.title}
                   </span>
-                  <span className="text-[10px] text-slate-600 tabular-nums shrink-0 mt-0.5">
+                  <span className="text-[10px] text-faint tabular-nums shrink-0 mt-0.5">
                     {formatAgo(n.minutesAgo)}
                   </span>
                 </span>
-                <span className="block text-[11.5px] text-slate-500 leading-snug mt-1 line-clamp-2">
+                <span className="block text-[11.5px] text-faint leading-snug mt-1 line-clamp-2">
                   {n.body}
                 </span>
               </span>
@@ -89,8 +89,8 @@ export function NotificationBell() {
           )
 
           const className = cn(
-            'w-full flex items-start gap-3 px-4 py-3 text-left border-b border-white/[0.04] last:border-b-0 transition-colors',
-            n.isRead ? 'hover:bg-white/[0.03]' : 'bg-accent/[0.04] hover:bg-accent/[0.08]'
+            'w-full flex items-start gap-3 px-4 py-3 text-left border-b border-line last:border-b-0 transition-colors',
+            n.isRead ? 'hover:bg-raised' : 'bg-accent/[0.04] hover:bg-accent/[0.08]'
           )
 
           return n.to ? (
@@ -116,13 +116,13 @@ export function NotificationBell() {
         aria-expanded={open}
         className={cn(
           'relative w-10 h-10 lg:w-9 lg:h-9 flex items-center justify-center rounded-full transition-colors',
-          open ? 'bg-white/[0.12] text-white' : 'hover:bg-white/[0.07] text-slate-400 hover:text-white'
+          open ? 'bg-line-strong text-strong' : 'hover:bg-raised text-subtle hover:text-strong'
         )}
       >
         <Bell className="w-6 h-6 lg:w-5 lg:h-5" strokeWidth={1.8} />
 
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] px-1 rounded-full bg-red-500 border-2 border-neutral flex items-center justify-center text-[9px] font-bold text-white tabular-nums">
+          <span className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] px-1 rounded-full bg-red-500 border-2 border-panel flex items-center justify-center text-[9px] font-bold text-strong tabular-nums">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
@@ -136,11 +136,11 @@ export function NotificationBell() {
             // Full-width sheet on phones, anchored dropdown from lg up — a
             // 380px panel does not fit a 360px screen.
             'fixed left-3 right-3 top-[68px] lg:absolute lg:left-auto lg:right-0 lg:top-[calc(100%+10px)] lg:w-[380px]',
-            'z-[70] rounded-2xl border border-white/10 bg-[#0b1122] shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden'
+            'z-[70] rounded-2xl border border-line-strong bg-page shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden'
           )}
         >
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.07]">
-            <h2 className="text-sm font-bold text-white tracking-tight">Notifications</h2>
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-line">
+            <h2 className="text-sm font-bold text-strong tracking-tight">Notifications</h2>
             {unreadCount > 0 && (
               <span className="text-[10px] font-bold text-accent bg-accent/12 border border-accent/25 rounded-full px-2 py-0.5 tabular-nums">
                 {unreadCount} new
@@ -152,7 +152,7 @@ export function NotificationBell() {
                 <button
                   type="button"
                   onClick={markAllRead}
-                  className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 hover:text-white px-2 py-1 rounded-lg hover:bg-white/[0.07] transition-colors"
+                  className="flex items-center gap-1.5 text-[11px] font-semibold text-subtle hover:text-strong px-2 py-1 rounded-lg hover:bg-raised transition-colors"
                 >
                   <Check className="w-3.5 h-3.5" />
                   Mark all read
@@ -162,7 +162,7 @@ export function NotificationBell() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close notifications"
-                className="lg:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.07] transition-colors"
+                className="lg:hidden w-7 h-7 flex items-center justify-center rounded-lg text-subtle hover:text-strong hover:bg-raised transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -172,8 +172,8 @@ export function NotificationBell() {
           <div className="max-h-[min(70vh,26rem)] overflow-y-auto no-scrollbar">
             {items.length === 0 ? (
               <div className="px-4 py-10 text-center">
-                <BellOff className="w-6 h-6 text-slate-600 mx-auto mb-2.5" />
-                <p className="text-xs text-slate-500">Nothing new. You are all caught up.</p>
+                <BellOff className="w-6 h-6 text-faint mx-auto mb-2.5" />
+                <p className="text-xs text-faint">Nothing new. You are all caught up.</p>
               </div>
             ) : (
               <>

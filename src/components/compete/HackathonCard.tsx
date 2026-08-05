@@ -36,10 +36,10 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
       to={ROUTES.HACKATHON_DETAIL(hackathon.id)}
       className="block group focus-visible:outline-none h-full"
     >
-      <Card className="flex flex-col h-full overflow-hidden bg-[#0A0F1C]/80 border-white/5 hover:border-accent/40 hover:bg-[#0A0F1C] transition-all duration-300 shadow-none hover:shadow-xl hover:shadow-accent/5">
+      <Card className="flex flex-col h-full overflow-hidden bg-page/80 border-line hover:border-accent/40 hover:bg-page transition-all duration-300 shadow-none hover:shadow-xl hover:shadow-accent/5">
 
         {/* Banner — shorter on phones, where full width makes 16:10 very tall */}
-        <div className="relative w-full aspect-[21/9] sm:aspect-[16/10] overflow-hidden flex-shrink-0 bg-neutral/30">
+        <div className="on-dark relative w-full aspect-[21/9] sm:aspect-[16/10] overflow-hidden flex-shrink-0 bg-raised">
           <img
             src={hackathon.banner}
             alt={hackathon.title}
@@ -72,16 +72,16 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
           </div>
 
           {/* Title + tagline */}
-          <h3 className="text-white font-bold text-[15px] sm:text-base leading-snug line-clamp-2 mb-1 sm:mb-1.5 group-hover:text-accent transition-colors">
+          <h3 className="text-strong font-bold text-[15px] sm:text-base leading-snug line-clamp-2 mb-1 sm:mb-1.5">
             {hackathon.title}
           </h3>
-          <p className="text-[11px] text-slate-400 line-clamp-2 mb-2 sm:mb-3">{hackathon.tagline}</p>
+          <p className="text-[11px] text-subtle line-clamp-2 mb-2 sm:mb-3">{hackathon.tagline}</p>
 
           {/* Meta. The date sits back in the grid but carries its own colour —
               indigo is unused elsewhere on the card (cyan is themes, amber the
               prize, green the Live badge), so it separates from the grey meta
               without a chip around it. */}
-          <div className="grid grid-cols-2 gap-y-1.5 gap-x-2 text-[11px] text-slate-400 font-medium mb-2 sm:mb-3">
+          <div className="grid grid-cols-2 gap-y-1.5 gap-x-2 text-[11px] text-subtle font-medium mb-2 sm:mb-3">
             <div className="flex items-center gap-1.5 text-indigo-300 font-semibold" title={`${dateLabel} ${formatDate(hackathon.startDate)}`}>
               <Calendar className="w-3.5 h-3.5 shrink-0 text-indigo-400" />
               <span className="truncate">{formatDate(hackathon.startDate)}</span>
@@ -100,9 +100,9 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
           <div className="mt-auto" />
 
           {/* Prize + action. A span, not a button — the whole card is already a link. */}
-          <div className="pt-2.5 sm:pt-3 border-t border-white/5 flex items-end justify-between gap-2">
+          <div className="pt-2.5 sm:pt-3 border-t border-line flex items-end justify-between gap-2">
             <div className="flex flex-col min-w-0">
-              <span className="text-slate-500 text-[10px] font-medium mb-0.5">Prize pool</span>
+              <span className="text-faint text-[10px] font-medium mb-0.5">Prize pool</span>
               <span className="flex items-center gap-1.5 text-amber-400 font-bold text-lg sm:text-xl leading-none truncate">
                 <Trophy className="w-4 h-4 shrink-0" />
                 {hackathon.prizePool}
@@ -112,8 +112,8 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
             <span
               className={
                 isPast
-                  ? 'text-xs font-bold uppercase tracking-wide px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-white/5 text-slate-500 border border-white/10 shrink-0'
-                  : 'text-xs font-bold uppercase tracking-wide px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-accent text-[#060b1a] group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 shrink-0'
+                  ? 'text-xs font-bold uppercase tracking-wide px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-raised text-faint border border-line-strong shrink-0'
+                  : 'text-xs font-bold uppercase tracking-wide px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-accent text-on-accent group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 shrink-0'
               }
             >
               {isPast ? 'Ended' : isOngoing ? 'Join' : 'Register'}

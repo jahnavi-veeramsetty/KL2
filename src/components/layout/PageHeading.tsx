@@ -16,7 +16,7 @@ export default function PageHeading() {
   if (!title) return null
 
   return (
-    <h1 className="text-2xl font-bold text-white tracking-tight mb-5">
+    <h1 className="text-2xl font-bold text-strong tracking-tight mb-5">
       {title}
     </h1>
   )

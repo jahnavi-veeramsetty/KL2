@@ -25,19 +25,19 @@ export function DailyStats() {
   ]
 
   return (
-    <div className="rounded-2xl border border-white/[0.07] bg-secondary/30 p-3.5">
-      <h2 className="text-sm font-bold text-white tracking-tight mb-2.5">Your progress</h2>
+    <div className="rounded-2xl border border-line bg-raised/30 p-3.5">
+      <h2 className="text-sm font-bold text-strong tracking-tight mb-2.5">Your progress</h2>
 
       <div className="flex flex-col">
         {rows.map(({ icon: Icon, label, value, sub, tone }) => (
           <div
             key={label}
-            className="flex items-center gap-2.5 py-2 border-b border-white/[0.05] last:border-b-0"
+            className="flex items-center gap-2.5 py-2 border-b border-line last:border-b-0"
           >
             <Icon className={cn('w-3.5 h-3.5 shrink-0', tone)} />
-            <span className="text-[11.5px] text-slate-400 font-medium">{label}</span>
-            <span className="ml-auto text-[10px] text-slate-600 tabular-nums">{sub}</span>
-            <span className="text-[13px] font-bold text-white tabular-nums w-14 text-right">
+            <span className="text-[11.5px] text-subtle font-medium">{label}</span>
+            <span className="ml-auto text-[10px] text-faint tabular-nums">{sub}</span>
+            <span className="text-[13px] font-bold text-strong tabular-nums w-14 text-right">
               {value}
             </span>
           </div>

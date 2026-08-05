@@ -44,13 +44,15 @@ export function ShelfList<T extends Shelvable>({
       {shelves.map(shelf => (
         <section key={shelf.key} aria-label={shelf.title}>
           <div className="flex items-baseline justify-between gap-3 mb-2.5">
-            <h2 className="text-sm font-bold text-white tracking-tight">{shelf.title}</h2>
+            <h2 className="text-sm font-bold text-strong tracking-tight">{shelf.title}</h2>
             <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-accent tabular-nums">
               {shelf.items.length}
             </span>
           </div>
 
-          <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x scroll-px-6 -mx-6 px-6 pb-1">
+          {/* pt-1/pb-3: overflow-x-auto clips vertically too, so the tiles'
+              hover lift needs room above and their shadow room below. */}
+          <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x scroll-px-6 -mx-6 px-6 pt-1 pb-3">
             {shelf.items.map(item => (
               <div key={item.id} className="snap-start shrink-0">
                 {renderTile(item)}

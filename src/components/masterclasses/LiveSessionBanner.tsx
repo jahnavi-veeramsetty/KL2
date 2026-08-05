@@ -39,7 +39,7 @@ export function LiveSessionBanner({ masterclass }: { masterclass: Masterclass })
       : formatted
 
   return (
-    <section className="relative rounded-2xl overflow-hidden border border-white/10 mb-6 isolate">
+    <section className="on-dark relative rounded-2xl overflow-hidden border border-line-strong mb-6 isolate">
       {/* Artwork */}
       <img
         src={masterclass.thumbnail}
@@ -72,30 +72,30 @@ export function LiveSessionBanner({ masterclass }: { masterclass: Masterclass })
                 {isSoon ? 'Starting soon' : 'Next session'}
               </span>
             )}
-            <span className="px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] font-bold text-white/80 uppercase tracking-[0.12em]">
+            <span className="px-2.5 py-1 rounded-full bg-line-strong border border-line-strong text-[10px] font-bold text-white/80 uppercase tracking-[0.12em]">
               {masterclass.category}
             </span>
-            <span className="px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] font-bold text-white/80 uppercase tracking-[0.12em]">
+            <span className="px-2.5 py-1 rounded-full bg-line-strong border border-line-strong text-[10px] font-bold text-white/80 uppercase tracking-[0.12em]">
               {masterclass.level}
             </span>
           </div>
 
-          <h2 className="text-xl sm:text-2xl lg:text-[28px] font-bold text-white tracking-tight leading-tight line-clamp-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
+          <h2 className="text-xl sm:text-2xl lg:text-[28px] font-bold text-strong tracking-tight leading-tight line-clamp-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
             {masterclass.title}
           </h2>
-          <p className="text-[13px] text-slate-300 mt-2 max-w-xl line-clamp-2">
+          <p className="text-[13px] text-body mt-2 max-w-xl line-clamp-2">
             {masterclass.shortDescription}
           </p>
 
           {/* When it runs, given its own weight */}
-          <div className="inline-flex flex-wrap items-center gap-x-3 gap-y-2 mt-4 px-3.5 py-2.5 rounded-xl bg-white/[0.07] border border-white/15 backdrop-blur-sm">
+          <div className="inline-flex flex-wrap items-center gap-x-3 gap-y-2 mt-4 px-3.5 py-2.5 rounded-xl bg-raised border border-line-strong backdrop-blur-sm">
             <span className="flex items-center gap-2">
               <CalendarDays className="w-4 h-4 text-accent shrink-0" />
-              <span className="text-[13px] font-bold text-white tracking-tight">{dayPart}</span>
+              <span className="text-[13px] font-bold text-strong tracking-tight">{dayPart}</span>
             </span>
             {timePart && (
               <>
-                <span className="w-px h-4 bg-white/15" />
+                <span className="w-px h-4 bg-line-strong" />
                 <span className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-accent shrink-0" />
                   <span className="text-[13px] font-bold text-accent tracking-tight tabular-nums">{timePart}</span>
@@ -104,7 +104,7 @@ export function LiveSessionBanner({ masterclass }: { masterclass: Masterclass })
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-[11px] text-slate-400 font-medium">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-[11px] text-subtle font-medium">
             <span className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5" />
               {formatDuration(masterclass.durationHours)} session
@@ -125,13 +125,13 @@ export function LiveSessionBanner({ masterclass }: { masterclass: Masterclass })
           </p>
           <p className={cn(
             'text-xl sm:text-2xl font-bold tracking-tight tabular-nums leading-none',
-            isLive ? 'text-green-400' : 'text-white'
+            isLive ? 'text-green-400' : 'text-strong'
           )}>
             {countdown}
           </p>
 
           <div className="flex items-center gap-3 mt-4 lg:justify-end">
-            <span className="text-sm font-bold text-white tabular-nums">
+            <span className="text-sm font-bold text-strong tabular-nums">
               {formatRupees(masterclass.price)}
             </span>
             <Link
@@ -140,7 +140,7 @@ export function LiveSessionBanner({ masterclass }: { masterclass: Masterclass })
                 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wide transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60',
                 isLive
                   ? 'bg-green-500 text-[#04140d] hover:bg-green-400 shadow-[0_0_22px_rgba(34,197,94,0.35)]'
-                  : 'bg-accent text-[#060b1a] hover:bg-accent/90 shadow-[0_0_22px_rgba(34,211,238,0.28)]'
+                  : 'bg-accent text-on-accent hover:bg-accent/90 shadow-[0_0_22px_rgba(34,211,238,0.28)]'
               )}
             >
               {isLive ? 'Join session' : 'Reserve seat'}

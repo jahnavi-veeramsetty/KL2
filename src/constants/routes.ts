@@ -18,7 +18,13 @@ export const ROUTES = {
   LEADERBOARD: '/compete/leaderboard',
   HACKATHONS: '/hackathons',
   CONTEST_DETAIL: (contestId: string) => `/compete/contests/${contestId}`,
-  HACKATHON_DETAIL: (hackathonId: string) => `/compete/hackathons/${hackathonId}`,
+  /* Under /hackathons, not /compete. Hackathon and Coding Contest are siblings
+     in the sidebar, but the detail page used to live at /compete/hackathons/:id
+     — and NavLink treats any descendant path as active, so opening a hackathon
+     lit up Coding Contest instead. A URL has to say where the thing lives. */
+  HACKATHON_DETAIL: (hackathonId: string) => `/hackathons/${hackathonId}`,
+
+  EVENTS: '/events',
 
   ARCADE: '/arcade',
 

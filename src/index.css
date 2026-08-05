@@ -1,17 +1,49 @@
 @import "tailwindcss";
 
-@theme {
-  /* ─── Core palette ─────────────────────────────────── */
-  --color-primary:       #060B19;   /* page background (space navy) */
-  --color-secondary:     #1E293B;   /* card / panel background */
-  --color-tertiary:      #F8FAFC;   /* primary text (near-white) */
-  --color-neutral:       #0F172A;
-  --color-muted:         #94A3B8;   /* secondary / dimmed text */
-  --color-border:        rgba(255,255,255,0.08);
+/* A `light:` variant, so a component can opt one utility out of the light
+   theme inline. The token swap handles colour; this is for the handful of
+   places where the dark theme's *technique* has no light equivalent —
+   gradients and glows, which need light against them to be anything at all.
+   Keyed to the attribute rather than a media query, same as the theme. */
+@custom-variant light (:root[data-theme="light"] &);
 
+@theme {
   /* ─── Accent ────────────────────────────────────────── */
   --color-accent:        #22D3EE;   /* cyan-400 — links, focus, hover */
   --color-accent-strong: #06B6D4;   /* cyan-500 — primary fills */
+  /* Ink on top of an accent fill. Bright cyan needs dark ink; the light
+     theme's deeper cyan needs white. Hardcoding either one fails a theme. */
+  --color-on-accent:     #060B19;
+
+  /* ─── Themed surfaces & text ────────────────────────────
+     Semantic, not literal: every one of these is redefined under
+     :root[data-theme="light"] below, so a utility written against them flips
+     with the theme. Literal classes like bg-[#0A0F1C] cannot.
+
+     Surfaces are a depth ladder, not three shades of dark — page is the floor,
+     panel rests on it, raised is nested inside a panel. Text is a hierarchy
+     ladder: strong / body / subtle / faint. Each step is small on a swatch and
+     obvious in place, because what you read is the boundary between two of
+     them, never one on its own. */
+  --color-page:        #060B19;   /* app background            */
+  --color-panel:       #0F1526;   /* cards, sidebars, dropdowns*/
+  --color-raised:      #161d33;   /* hover / nested surfaces   */
+  --color-line:        rgba(255,255,255,0.07);
+  --color-line-strong: rgba(255,255,255,0.14);
+  --color-strong:      #FFFFFF;   /* headings, key figures     */
+  --color-body:        #CBD5E1;   /* default copy              */
+  --color-subtle:      #94A3B8;   /* secondary meta            */
+  --color-faint:       #64748B;   /* labels, disabled          */
+
+  /* ─── Landing palette ───────────────────────────────── */
+  /* The landing page uses its own scheme, hardcoded until now in
+     VisionSection's C map while 131 brand-* class usages across the app
+     compiled to nothing — text silently inherited and backgrounds rendered
+     transparent, which is why the mobile hamburger was invisible. */
+  --color-brand-primary:   #002B72;   /* deep blue — orbs, fills */
+  --color-brand-secondary: #64748B;   /* slate — supporting copy */
+  --color-brand-tertiary:  #FFFDF0;   /* cream — landing accent, CTAs */
+  --color-brand-neutral:   #F8FAFC;   /* near-white — headings, body */
 
   /* ─── Difficulty / status ───────────────────────────── */
   --color-easy:          #22C55E;   /* green-500 */
@@ -37,8 +69,8 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: var(--color-primary);
-    color: var(--color-tertiary);
+    background-color: var(--color-page);
+    color: var(--color-strong);
     min-height: 100vh;
     margin: 0;
   }
@@ -53,6 +85,168 @@
   *:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
+  }
+
+  /* App chrome — top bar, side rail, bottom nav — stays dark in both themes.
+     The navigation is the product's frame rather than part of the page, and
+     keeping it constant means the brand mark, the streak flame and the rail's
+     active states read the same whichever theme the content is in.
+
+     Unlike .on-dark below this restores the full opaque dark palette, since
+     these are real surfaces and not a tint over artwork. */
+  .theme-dark {
+    --color-page:        #060B19;
+    --color-panel:       #0F1526;
+    --color-raised:      #161d33;
+    --color-line:        rgba(255,255,255,0.07);
+    --color-line-strong: rgba(255,255,255,0.14);
+    --color-strong:      #FFFFFF;
+    --color-body:        #CBD5E1;
+    --color-subtle:      #94A3B8;
+    --color-faint:       #64748B;
+
+    --color-accent:        #22D3EE;
+    --color-accent-strong: #06B6D4;
+    --color-on-accent:     #060B19;
+  }
+
+  /* A region that stays dark in both themes — artwork banners, image overlays,
+     anything where the backdrop is a photo or a fixed dark gradient.
+
+     It re-declares the semantic tokens rather than overriding utilities, so a
+     component inside needs no theme-aware classes at all: text-strong is still
+     white here while it is near-black on the page around it. Surfaces become
+     translucent white so chips read as a tint of the artwork underneath. */
+  .on-dark {
+    --color-page:        #050914;
+    --color-panel:       rgba(0,0,0,0.45);
+    --color-raised:      rgba(255,255,255,0.10);
+    --color-line:        rgba(255,255,255,0.10);
+    --color-line-strong: rgba(255,255,255,0.18);
+    --color-strong:      #FFFFFF;
+    --color-body:        #E2E8F0;
+    --color-subtle:      #CBD5E1;
+    --color-faint:       #94A3B8;
+
+    /* Accent goes back to its dark-theme brightness here too. The light
+       theme's deep teal is tuned for white paper; on a photo it reads as a
+       muddy hole, and a CTA sitting on artwork wants the neon. */
+    --color-accent:        #22D3EE;
+    --color-accent-strong: #06B6D4;
+    --color-on-accent:     #060B19;
+  }
+
+  /* The "% OFF" chip. A 10% wash of emerald-400 reads as a lit highlight on
+     near-black and dissolves into white — and the discount is the one thing on
+     a card that must never be missable. The light theme flips it to a solid
+     fill so it keeps the weight of a real offer badge. */
+  .offer-chip {
+    color: #34D399;
+    background-color: rgba(52, 211, 153, 0.12);
+  }
+  :root[data-theme="light"] .offer-chip {
+    color: #FFFFFF;
+    background-color: #047857;
+  }
+  :root[data-theme="light"] :is(.on-dark, .theme-dark) .offer-chip {
+    color: #34D399;
+    background-color: rgba(52, 211, 153, 0.12);
+  }
+
+  /* Month tracker cell states.
+     "Missed" and "no challenge" were both a pale neutral box — one filled with
+     raised, one outlined — which is a distinction you can only see if you
+     already know it is there. They now differ on two channels instead of a
+     half-step of grey: missed carries the negative hue, no-challenge carries
+     the hatch and no fill at all.
+
+     The hatch has to live here rather than in an inline style object, because
+     white diagonals over a white card are nothing. */
+  .day-missed {
+    background-color: rgba(244, 63, 94, 0.14);
+    border-color: rgba(244, 63, 94, 0.38);
+    color: #FB7185;
+  }
+  :root[data-theme="light"] .day-missed {
+    background-color: #FCE1E4;
+    border-color: rgba(190, 18, 60, 0.38);
+    color: #9F1239;
+  }
+  .day-rest {
+    background-image: linear-gradient(135deg, transparent 44%, rgba(255,255,255,0.16) 44%, rgba(255,255,255,0.16) 56%, transparent 56%);
+  }
+  :root[data-theme="light"] .day-rest {
+    background-image: linear-gradient(135deg, transparent 44%, rgba(15,23,42,0.20) 44%, rgba(15,23,42,0.20) 56%, transparent 56%);
+  }
+
+  /* Segmented switches — daily/weekly, the standings scope, the events view.
+     The track was a literal bg-black/40 and the active pill a white sliver of
+     line-strong. Both are dark-theme devices: a well cut into near-black, lit
+     by the pill. Invert the ground and the well becomes a black gash and the
+     pill turns into a grey smear under near-black label text.
+
+     Light gets the other half of the same idea — the track is the recess and
+     the pill is a raised white chip that catches a shadow. */
+  .switch-track {
+    background-color: rgba(0, 0, 0, 0.40);
+  }
+  .switch-thumb {
+    background-color: var(--color-line-strong);
+    color: var(--color-strong);
+  }
+  :root[data-theme="light"] .switch-track {
+    background-color: #E6EAF2;
+  }
+  :root[data-theme="light"] .switch-thumb {
+    background-color: #FFFFFF;
+    color: #0F172A;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.16), 0 1px 3px rgba(15, 23, 42, 0.06);
+  }
+  :root[data-theme="light"] :is(.on-dark, .theme-dark) .switch-track {
+    background-color: rgba(0, 0, 0, 0.40);
+  }
+  :root[data-theme="light"] :is(.on-dark, .theme-dark) .switch-thumb {
+    background-color: var(--color-line-strong);
+    color: var(--color-strong);
+    box-shadow: none;
+  }
+
+  /* Default card edge. Lives here rather than as a literal utility so each
+     theme gets an opacity that actually reads against its own ground — a card
+     on #F6F7FB needs a real line, not a 20% tint. Any border-* utility a caller
+     passes still wins, since utilities outrank this layer. */
+  .card-edge {
+    border-color: rgba(59, 130, 246, 0.20);
+  }
+  .card-edge:hover {
+    border-color: rgba(59, 130, 246, 0.40);
+  }
+  :root[data-theme="light"] .card-edge {
+    border-color: rgba(15, 23, 42, 0.16);
+  }
+
+  /* Featured "spotlight" cards — the contest hero, today's challenge.
+     Their gradients were written as fixed near-black hexes, which would have
+     left a handful of black slabs floating in the light theme. Declared here
+     instead so each theme gets a gradient pitched at its own ground, and the
+     text tokens inside keep working untouched. */
+  .spotlight-accent {
+    background-image: linear-gradient(to bottom right, #0d2a4d, #102f4f, #0a1e3d);
+  }
+  .spotlight-success {
+    background-image: linear-gradient(to bottom right, #0a2018, #0b1a24, #050e18);
+  }
+  /* Flat in light, not a paler gradient. A three-stop ramp on near-black reads
+     as depth because the stops are far apart in tone; the same ramp between
+     three near-whites is a smudge with no shape to it. One honest tint does
+     the job the gradient was there to do — mark the card as featured. */
+  :root[data-theme="light"] .spotlight-accent {
+    background-image: none;
+    background-color: #E8F4FD;
+  }
+  :root[data-theme="light"] .spotlight-success {
+    background-image: none;
+    background-color: #E4F7EA;
   }
 
   /* Hide scrollbars globally while keeping scroll functionality */
@@ -90,3 +284,314 @@
   }
 
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Light theme.
+
+   Only the token values change — no utility is redefined — so any component
+   written against the semantic tokens flips automatically. Applied via a
+   data-theme attribute on <html> rather than a media query, because the user's
+   explicit choice has to beat the OS preference.
+   ───────────────────────────────────────────────────────────── */
+:root[data-theme="light"] {
+  --color-page:        #F6F7FB;
+  --color-panel:       #FFFFFF;
+  --color-raised:      #EFF2F8;
+  /* Heavier than the dark theme's equivalents. A 7%-white hairline is plenty
+     of separation against near-black, but the same weight on #F6F7FB leaves
+     card edges you have to hunt for. */
+  --color-line:        rgba(15,23,42,0.16);
+  --color-line-strong: rgba(15,23,42,0.26);
+  --color-strong:      #0F172A;
+  --color-body:        #334155;
+  --color-subtle:      #64748B;
+  --color-faint:       #94A3B8;
+
+  /* Cyan at full brightness is unreadable on white — deepen it for light.
+     Pitched as ink: #0E7490 clears 5:1 on the page. The CTA fills that used
+     to lean on this token get their own treatment further down, so this no
+     longer has to be dark enough to work as a button and drab as text. */
+  --color-accent:        #0E7490;
+  --color-accent-strong: #0A5468;
+  --color-on-accent:     #FFFFFF;
+
+  /* Status colours are picked to glow on near-black; green-500 lands at 2.3:1
+     on white. Same hues, taken down to where they read as text. */
+  --color-easy:          #15803D;
+  --color-success:       #15803D;
+  --color-medium:        #B45309;
+  --color-warning:       #B45309;
+  --color-hard:          #DC2626;
+  --color-danger:        #DC2626;
+
+  /* A light editor rather than a dark island: the panel chrome around it uses
+     the flipping tokens, so a fixed dark canvas would put near-black text on
+     near-black panels. */
+  --color-editor-bg:     #FFFFFF;
+  --color-editor-panel:  #F1F5F9;
+}
+
+:root[data-theme="light"] body {
+  background-color: var(--color-page);
+  color: var(--color-strong);
+}
+
+/* Chrome goes fully opaque in the light theme.
+   The bar and the bottom nav are bg-panel/90 and /95 with a backdrop blur —
+   over near-black those 5–10% let the page hint through, but over #F6F7FB they
+   wash the bar out to a paler grey than the side rail beside it, which is
+   opaque. Same surface, two different colours. This is unlayered, so it beats
+   the utility that set the alpha. */
+:root[data-theme="light"] .theme-dark {
+  background-color: #0F1526;
+  backdrop-filter: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Profile page scales.
+
+   That page is built from inline style objects, which cannot read a utility
+   class — but they can read a custom property, and a custom property flips
+   with the theme. So the ramps it needs live here as variables rather than as
+   literals baked into the component.
+   ───────────────────────────────────────────────────────────── */
+
+/* Contribution heatmap. Five steps from "nothing" to "a lot". Dark climbs out
+   of the page into neon; light starts at a grey that reads as an empty cell on
+   white and deepens into the accent — the reverse direction, because on paper
+   more activity means more ink, not more light. */
+:root {
+  --heat-0: #0F172A;
+  --heat-1: #164E63;
+  --heat-2: #0E7490;
+  --heat-3: #06B6D4;
+  --heat-4: #22D3EE;
+}
+:root[data-theme="light"] {
+  --heat-0: #E7EBF2;
+  --heat-1: #B6E4F0;
+  --heat-2: #63C4DC;
+  --heat-3: #1D93B4;
+  --heat-4: #0B5F79;
+}
+
+/* Accent tints, for inline styles that cannot write bg-accent/10. */
+:root {
+  --accent-wash: rgba(34, 211, 238, 0.08);
+  --accent-edge: rgba(34, 211, 238, 0.22);
+}
+:root[data-theme="light"] {
+  --accent-wash: rgba(14, 116, 144, 0.10);
+  --accent-edge: rgba(14, 116, 144, 0.32);
+}
+
+/* Badge rarity. The dark values are picked to glow; the light ones are taken
+   down to where they read as ink on a white chip. */
+:root {
+  --rarity-common:    #94A3B8;
+  --rarity-rare:      #60A5FA;
+  --rarity-epic:      #22D3EE;
+  --rarity-legendary: #FBBF24;
+}
+:root[data-theme="light"] {
+  --rarity-common:    #475569;
+  --rarity-rare:      #2563EB;
+  --rarity-epic:      #0E7490;
+  --rarity-legendary: #B45309;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Settings that are more than a stored flag.
+   Both are keyed off an attribute on <html>, written by lib/settings.ts, so
+   nothing has to subscribe to the store to honour them.
+   ───────────────────────────────────────────────────────────── */
+
+/* Editor text size. The gutter takes the line height only — numbers stay
+   small, and still sit on the same baselines as the code. */
+:root                          { --editor-font-size: 0.875rem;  --editor-line-height: 1.5rem; }
+:root[data-editor-font="small"] { --editor-font-size: 0.8125rem; --editor-line-height: 1.375rem; }
+:root[data-editor-font="large"] { --editor-font-size: 1rem;      --editor-line-height: 1.75rem; }
+
+.code-pane   { font-size: var(--editor-font-size); line-height: var(--editor-line-height); }
+.code-gutter { line-height: var(--editor-line-height); }
+
+/* Reduce motion. Near-zero rather than `none`: a 0.01ms transition still fires
+   transitionend, so anything waiting on that event does not hang. Scroll
+   behaviour goes too — a smooth-scrolled jump is motion as much as a fade.
+   The OS-level preference is honoured on its own, whatever the setting says. */
+:root[data-reduced-motion] *,
+:root[data-reduced-motion] *::before,
+:root[data-reduced-motion] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+/* The hover lifts, by class. Not a blanket rule on every hovered element:
+   Tailwind v4 compiles these to the `translate` property, and so does the
+   settings switch knob — a catch-all would freeze the switch mid-throw. */
+:root[data-reduced-motion] .hover\:-translate-y-1:hover,
+:root[data-reduced-motion] .hover\:-translate-y-0\.5:hover,
+:root[data-reduced-motion] .hover\:-translate-y-px:hover {
+  /* Zero the custom properties the utility feeds into, rather than writing
+     `translate: none` — the minifier folds that into `transform: none`, which
+     is a different property and leaves the lift intact. */
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Card hover on paper.
+   The dark theme answers the pointer with a blue bloom around the card. At 12%
+   over white that is nothing at all, so light casts a shadow instead — the
+   card lifts and drops it. Same statement, in a medium that has light in it.
+   Unlayered so it beats the per-card hover:shadow-* a few callers pass. */
+:root[data-theme="light"] .card-edge:hover {
+  border-color: rgba(14, 116, 144, 0.45);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.13), 0 3px 8px rgba(15, 23, 42, 0.07);
+}
+
+/* Primary CTA fill in the light theme — Enroll, Register, Join, Start.
+   A flat slab of deep teal is the safe answer and it reads as drab: on
+   near-black a single cyan carries because the ground does the contrast work,
+   but on white the button is the only saturated thing in view and has to hold
+   its own. So it gets depth instead of just darkness — a short vertical ramp
+   from a live cyan into a deep one, which is what makes it look pressed out of
+   the page rather than painted on it. The top stop is the limiting one for
+   contrast and sits at 4.6:1 under white.
+
+   Applied to the utility rather than the token because the token is also ink,
+   and text has no business being a gradient. Always-dark regions are excluded
+   — their CTAs sit on artwork and keep the neon flat fill. */
+:root[data-theme="light"] :is(.bg-accent, .bg-accent-strong):not(.on-dark *, .theme-dark *) {
+  background-image: linear-gradient(180deg, #0E8199 0%, #094F63 100%);
+}
+:root[data-theme="light"] :is(.bg-accent, .bg-accent-strong):hover:not(.on-dark *, .theme-dark *),
+:root[data-theme="light"] .group:hover :is(.bg-accent, .bg-accent-strong):not(.on-dark *, .theme-dark *) {
+  background-image: linear-gradient(180deg, #128FA8 0%, #0A5A70 100%);
+}
+
+/* The live-session CTAs are green-500, a signal colour picked to glow. On
+   white it goes neon and stops matching the weight of every other button.
+   Same ramp, one hue over — and white ink, since the near-black the dark
+   theme puts on bright green has nothing left to sit against here. */
+:root[data-theme="light"] .bg-green-500:not(.on-dark *, .theme-dark *) {
+  background-image: linear-gradient(180deg, #17A34A 0%, #0D6B32 100%);
+  color: #FFFFFF;
+}
+:root[data-theme="light"] .bg-green-500:hover:not(.on-dark *, .theme-dark *),
+:root[data-theme="light"] .group:hover .bg-green-500:not(.on-dark *, .theme-dark *) {
+  background-image: linear-gradient(180deg, #1BB955 0%, #0F7A3A 100%);
+}
+
+/* CTA glow → CTA shadow.
+   Primary buttons carry an arbitrary `shadow-[0_0_Npx_rgba(34,211,238,…)]`.
+   A cyan bloom with no offset is how a button looks lit from behind on
+   near-black; on white the same bloom has nothing to glow against and just
+   fogs the button's edge, which is what makes the CTAs read as weak. Light
+   gets a real drop shadow instead — grounded, tinted toward the accent so it
+   still belongs to the button. Matched on the class substring because each
+   arbitrary value is its own class; unlayered, so it beats the utility.
+   Regions that stay dark keep the glow. */
+:root[data-theme="light"] :is([class*="rgba(34,211,238"], [class*="rgba(34,197,94"], [class*="shadow-cyan-500"]):not(.on-dark *, .theme-dark *) {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.10), 0 6px 16px rgba(9, 79, 99, 0.24);
+}
+:root[data-theme="light"] :is([class*="rgba(34,211,238"], [class*="rgba(34,197,94"], [class*="shadow-cyan-500"]):hover:not(.on-dark *, .theme-dark *),
+:root[data-theme="light"] .group:hover :is([class*="rgba(34,211,238"], [class*="rgba(34,197,94"], [class*="shadow-cyan-500"]):not(.on-dark *, .theme-dark *) {
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.12), 0 10px 24px rgba(9, 79, 99, 0.32);
+}
+
+/* The starfield and landing artwork are a deliberate dark experience; the
+   marketing pages keep their own palette in both themes. */
+:root[data-theme="light"] .space-grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+}
+
+/* Scroll thumbs are painted in white — invisible on a light pane. */
+:root[data-theme="light"] .theme-dark .scroll-hover:hover,
+:root[data-theme="light"] .theme-dark .scroll-hover:focus-within {
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+:root[data-theme="light"] .scroll-hover:hover,
+:root[data-theme="light"] .scroll-hover:focus-within {
+  scrollbar-color: rgba(15, 23, 42, 0.25) transparent;
+}
+:root[data-theme="light"] .scroll-hover:hover::-webkit-scrollbar-thumb,
+:root[data-theme="light"] .scroll-hover:focus-within::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.25);
+  background-clip: content-box;
+}
+:root[data-theme="light"] .scroll-hover:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.4);
+  background-clip: content-box;
+}
+/* ─────────────────────────────────────────────────────────────
+   Accent text in the light theme.
+
+   Roughly 150 places say text-green-400, text-amber-400 and so on for
+   status and emphasis. Those shades are picked to glow on near-black and
+   land around 1.8:1 on white — legible nowhere. Rewriting each call site
+   with a light: variant would touch a hundred files and drift the moment
+   someone adds another, so the swap happens here, once.
+
+   Only the text utility is redirected; bg-*-400 and border-*-400 fills are
+   left alone, since those are surfaces rather than ink.
+   ───────────────────────────────────────────────────────────── */
+:root[data-theme="light"] .text-green-400 { color: #15803d; }
+:root[data-theme="light"] .text-green-300 { color: #15803d; }
+:root[data-theme="light"] .text-emerald-400 { color: #047857; }
+:root[data-theme="light"] .text-teal-400 { color: #0f766e; }
+:root[data-theme="light"] .text-amber-400 { color: #b45309; }
+:root[data-theme="light"] .text-amber-300 { color: #b45309; }
+:root[data-theme="light"] .text-yellow-400 { color: #a16207; }
+:root[data-theme="light"] .text-orange-400 { color: #c2410c; }
+:root[data-theme="light"] .text-orange-300 { color: #c2410c; }
+:root[data-theme="light"] .text-red-400 { color: #dc2626; }
+:root[data-theme="light"] .text-red-300 { color: #dc2626; }
+:root[data-theme="light"] .text-rose-400 { color: #e11d48; }
+:root[data-theme="light"] .text-blue-400 { color: #2563eb; }
+:root[data-theme="light"] .text-sky-300 { color: #0369a1; }
+:root[data-theme="light"] .text-cyan-400 { color: #0e7490; }
+:root[data-theme="light"] .text-indigo-400 { color: #4f46e5; }
+:root[data-theme="light"] .text-indigo-300 { color: #4f46e5; }
+:root[data-theme="light"] .text-violet-300 { color: #6d28d9; }
+:root[data-theme="light"] .text-purple-400 { color: #7e22ce; }
+:root[data-theme="light"] .text-pink-400 { color: #db2777; }
+:root[data-theme="light"] .text-pink-300 { color: #db2777; }
+:root[data-theme="light"] .text-lime-400 { color: #4d7c0f; }
+
+/* Inside an always-dark region the original bright shade is correct. */
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-green-400 { color: #4ade80; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-green-300 { color: #86efac; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-emerald-400 { color: #34d399; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-teal-400 { color: #2dd4bf; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-amber-400 { color: #fbbf24; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-amber-300 { color: #fcd34d; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-yellow-400 { color: #facc15; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-orange-400 { color: #fb923c; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-orange-300 { color: #fdba74; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-red-400 { color: #f87171; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-red-300 { color: #fca5a5; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-rose-400 { color: #fb7185; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-blue-400 { color: #60a5fa; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-sky-300 { color: #7dd3fc; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-cyan-400 { color: #22d3ee; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-indigo-400 { color: #818cf8; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-indigo-300 { color: #a5b4fc; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-violet-300 { color: #c4b5fd; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-purple-400 { color: #c084fc; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-pink-400 { color: #f472b6; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-pink-300 { color: #f9a8d4; }
+:root[data-theme="light"] :is(.on-dark, .theme-dark) .text-lime-400 { color: #a3e635; }

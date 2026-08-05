@@ -5,6 +5,7 @@ import { useSidebar } from '../../hooks/useSidebar'
 import { ROUTES } from '../../constants/routes'
 import { GlobalSearch } from './GlobalSearch'
 import { NotificationBell } from './NotificationBell'
+import { ThemeToggle } from './ThemeToggle'
 
 export default function TopBar() {
   const { profile } = useProfile()
@@ -14,7 +15,7 @@ export default function TopBar() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 h-16 lg:h-14 flex items-center justify-between px-4 lg:px-6 gap-3 border-b border-white/[0.06] bg-neutral/90 backdrop-blur-md"
+      className="theme-dark fixed top-0 left-0 right-0 z-50 h-16 lg:h-14 flex items-center justify-between px-4 lg:px-6 gap-3 border-b border-line bg-panel/90 backdrop-blur-md"
     >
 
       {/* Wordmark — always here now, so it never changes with the rail */}
@@ -35,7 +36,7 @@ export default function TopBar() {
       {/* Right — XP + Streak + Bell */}
       <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 ml-auto">
         {/* XP */}
-        <div className="hidden lg:flex items-center gap-1.5 text-sm font-semibold text-white">
+        <div className="hidden lg:flex items-center gap-1.5 text-sm font-semibold text-strong">
           <svg className="w-[18px] h-[18px] text-yellow-400 drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
           </svg>
@@ -50,6 +51,7 @@ export default function TopBar() {
           <span>{streak}</span>
         </div>
 
+        <ThemeToggle />
         <NotificationBell />
 
         {/* Menu — mobile only. Sits on the right so the drawer slides out from
@@ -57,7 +59,7 @@ export default function TopBar() {
         <button
           type="button"
           onClick={() => setMobileOpen(true)}
-          className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg text-slate-300 hover:text-white hover:bg-white/[0.07] transition-colors"
+          className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg text-body hover:text-strong hover:bg-raised transition-colors"
           aria-label="Open navigation menu"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

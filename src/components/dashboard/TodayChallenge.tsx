@@ -33,10 +33,10 @@ export function TodayChallenge() {
   // No entry scheduled for today. Saying so beats rendering an empty panel.
   if (!challenge) {
     return (
-      <div className="rounded-2xl border border-white/[0.07] bg-[#0b1122] px-5 py-4 sm:px-6 sm:py-5">
-        <p className="text-sm font-semibold text-white">No challenge today</p>
-        <p className="text-xs text-slate-400 mt-1">
-          The next one unlocks in <span className="tabular-nums text-slate-300">{formatted}</span>.
+      <div className="rounded-2xl border border-line bg-page px-5 py-4 sm:px-6 sm:py-5">
+        <p className="text-sm font-semibold text-strong">No challenge today</p>
+        <p className="text-xs text-subtle mt-1">
+          The next one unlocks in <span className="tabular-nums text-body">{formatted}</span>.
         </p>
       </div>
     )
@@ -50,15 +50,17 @@ export function TodayChallenge() {
       className={cn(
         'relative overflow-hidden rounded-2xl border px-5 py-4 sm:px-6 sm:py-5',
         done
-          ? 'border-green-500/25 bg-gradient-to-br from-[#0a2018] to-[#071018]'
-          : 'border-accent/25 bg-gradient-to-br from-[#0d2a4d] via-[#102f4f] to-[#0a1e3d]'
+          ? 'border-green-500/25 spotlight-success'
+          : 'border-accent/25 spotlight-accent'
       )}
     >
       {/* Ambient wash — decorative only */}
       <div
         aria-hidden="true"
         className={cn(
-          'pointer-events-none absolute -top-24 -right-16 h-64 w-64 rounded-full blur-3xl',
+          // Hidden in light: a blurred colour orb is a light source, and there
+          // is nothing for it to light on a white card.
+          'pointer-events-none absolute -top-24 -right-16 h-64 w-64 rounded-full blur-3xl light:hidden',
           done ? 'bg-green-500/15' : 'bg-accent/20'
         )}
       />
@@ -77,7 +79,7 @@ export function TodayChallenge() {
             )}
           </div>
 
-          <h2 className="mt-1.5 text-lg sm:text-xl font-bold text-white tracking-tight leading-snug line-clamp-2">
+          <h2 className="mt-1.5 text-lg sm:text-xl font-bold text-strong tracking-tight leading-snug line-clamp-2">
             {challenge.title}
           </h2>
 
@@ -88,7 +90,7 @@ export function TodayChallenge() {
             <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-md border border-violet-400/25 bg-violet-400/10 text-violet-300">
               <Zap className="w-3 h-3" /> +{challenge.xpReward} XP
             </span>
-            <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-1 rounded-md border border-white/10 bg-white/[0.05] text-slate-300">
+            <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-1 rounded-md border border-line-strong bg-raised text-body">
               {challenge.type}
             </span>
           </div>
@@ -100,14 +102,14 @@ export function TodayChallenge() {
             className={cn(
               'text-xs font-bold uppercase tracking-wide px-5 py-2.5 rounded-xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60',
               done
-                ? 'bg-white/[0.07] text-white border border-white/10 hover:bg-white/[0.12]'
-                : 'bg-accent text-[#060b1a] hover:bg-accent/90 shadow-[0_0_18px_rgba(34,211,238,0.25)]'
+                ? 'bg-raised text-strong border border-line-strong hover:bg-line-strong'
+                : 'bg-accent text-on-accent hover:bg-accent/90 shadow-[0_0_18px_rgba(34,211,238,0.25)]'
             )}
           >
             {done ? 'Review' : 'Solve now'}
           </Link>
-          <span className="text-[11px] text-slate-400 tabular-nums">
-            resets in <span className="text-slate-300">{formatted}</span>
+          <span className="text-[11px] text-subtle tabular-nums">
+            resets in <span className="text-body">{formatted}</span>
           </span>
         </div>
       </div>

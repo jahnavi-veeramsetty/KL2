@@ -18,10 +18,10 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-6">
               <img src={logo} alt="Knowvation Learnings Logo" className="h-16 w-auto object-contain" />
             </div>
-            <p className="text-lg text-muted max-w-md mb-2">
+            <p className="text-lg text-subtle max-w-md mb-2">
               Redefining learning for the global citizen.
             </p>
-            <p className="text-lg text-muted max-w-md mb-12">
+            <p className="text-lg text-subtle max-w-md mb-12">
               Knowledge is the ultimate asset.
             </p>
 
@@ -33,7 +33,7 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Email address"
-                  className="bg-transparent border-none outline-none w-full text-tertiary placeholder:text-white/30 italic text-lg focus:ring-0 px-0"
+                  className="bg-transparent border-none outline-none w-full text-strong placeholder:text-white/30 italic text-lg focus:ring-0 px-0"
                 />
                 <button className="flex-shrink-0 w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-[#0B1121] transition-colors ml-4">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
@@ -60,11 +60,11 @@ export default function Footer() {
             <div>
               <h3 className="text-xs font-bold tracking-widest text-accent mb-6 uppercase">Company</h3>
               <ul className="space-y-4">
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Our Vision</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Community</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Contact</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">For Businesses</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Our Vision</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Community</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Careers</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">For Businesses</a></li>
               </ul>
             </div>
 
@@ -72,12 +72,12 @@ export default function Footer() {
             <div>
               <h3 className="text-xs font-bold tracking-widest text-accent mb-6 uppercase">Subjects</h3>
               <ul className="space-y-4">
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Data Science</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Engineering</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">AI & ML</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Cloud</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Cybersecurity</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Design</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Data Science</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Engineering</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">AI & ML</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Cloud</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Cybersecurity</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Design</a></li>
               </ul>
             </div>
 
@@ -85,16 +85,16 @@ export default function Footer() {
             <div>
               <h3 className="text-xs font-bold tracking-widest text-accent mb-6 uppercase">Legal</h3>
               <ul className="space-y-4">
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="text-sm text-muted hover:text-white transition-colors">Imprint</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="text-sm text-subtle hover:text-white transition-colors">Imprint</a></li>
               </ul>
             </div>
 
             {/* Contact */}
             <div className="sm:col-span-2">
               <h3 className="text-xs font-bold tracking-widest text-accent mb-6 uppercase">Reach Us</h3>
-              <ul className="space-y-5 text-xs lg:text-[13px] text-muted">
+              <ul className="space-y-5 text-xs lg:text-[13px] text-subtle">
                 <li className="flex items-start gap-3 leading-relaxed">
                   <span className="mt-0.5 text-accent flex-shrink-0">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>

@@ -16,7 +16,7 @@ export function IconButton({ label, size = 'md', variant = 'ghost', className, c
       title={label}
       className={cn(
         'inline-flex items-center justify-center rounded-lg transition-all duration-200',
-        variant === 'ghost' ? 'hover:bg-white/10 text-muted hover:text-tertiary' : 'bg-white/10 border border-white/10 hover:bg-white/20 text-muted hover:text-tertiary',
+        variant === 'ghost' ? 'hover:bg-line-strong text-subtle hover:text-strong' : 'bg-line-strong border border-line-strong hover:bg-line-strong text-subtle hover:text-strong',
         sizeMap[size],
         className
       )}

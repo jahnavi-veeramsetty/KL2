@@ -10,7 +10,7 @@ export function SearchInput({ className, value, onClear, shortcut, ...props }: S
   return (
     <div className={cn('relative flex items-center', className)}>
       <svg
-        className="absolute left-3 w-4 h-4 text-muted pointer-events-none"
+        className="absolute left-3 w-4 h-4 text-subtle pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -22,14 +22,14 @@ export function SearchInput({ className, value, onClear, shortcut, ...props }: S
         type="text"
         value={value}
         className={cn(
-          "w-full pl-10 py-2.5 bg-white/[0.03] border border-white/5 rounded-xl text-sm text-tertiary placeholder-muted/80 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent/50 transition-all duration-200",
+          "w-full pl-10 py-2.5 bg-raised border border-line rounded-xl text-sm text-strong placeholder:text-faint focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent/50 transition-all duration-200",
           (value && onClear) ? "pr-9" : shortcut ? "pr-20" : "pr-4"
         )}
         {...props}
       />
       {shortcut && !value && (
         <div className="absolute right-3 flex items-center pointer-events-none">
-          <span className="px-2 py-1 rounded bg-white/5 border border-white/10 text-[11px] font-medium text-muted/80 font-mono">
+          <span className="px-2 py-1 rounded bg-raised border border-line-strong text-[11px] font-medium text-subtle/80 font-mono">
             {shortcut}
           </span>
         </div>
@@ -38,7 +38,7 @@ export function SearchInput({ className, value, onClear, shortcut, ...props }: S
         <button
           type="button"
           onClick={onClear}
-          className="absolute right-3 text-muted hover:text-tertiary transition-colors"
+          className="absolute right-3 text-subtle hover:text-strong transition-colors"
           aria-label="Clear search"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -46,6 +46,9 @@ export interface UserProfile {
   id: string
   username: string
   fullName: string
+  /** On the profile rather than hardcoded per page — settings and the header
+      were each carrying their own copy of the same literal. */
+  email: string
   avatarUrl: string
   title: string
   memberSince: string
@@ -109,6 +112,7 @@ export const mockProfileData: UserProfile = {
   id: 'usr_001',
   username: 'alex_codes',
   fullName: 'Alex Chen',
+  email: 'alex.chen@example.com',
   avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex&backgroundColor=b6e3f4',
   title: 'Lvl 14 · Algorithm Adept',
   memberSince: '2024-02-15',

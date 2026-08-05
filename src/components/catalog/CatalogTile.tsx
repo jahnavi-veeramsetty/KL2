@@ -48,9 +48,9 @@ export function CatalogTile({
   return (
     <Link
       to={to}
-      className="group block w-52 rounded-2xl overflow-hidden bg-[#0A0F1C]/80 border border-white/5 hover:border-accent/40 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+      className="group block w-52 rounded-2xl overflow-hidden bg-page/80 border card-edge hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
     >
-      <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#0f1523]">
+      <div className="on-dark relative w-full aspect-[16/10] overflow-hidden bg-panel">
         <img
           src={thumbnail}
           alt={title}
@@ -67,19 +67,19 @@ export function CatalogTile({
           </span>
           {level && (
             <>
-              <span className="w-1 h-1 rounded-full bg-white/20 shrink-0" />
-              <span className="text-[9px] font-medium text-slate-400 shrink-0">{level}</span>
+              <span className="w-1 h-1 rounded-full bg-line-strong shrink-0" />
+              <span className="text-[9px] font-medium text-subtle shrink-0">{level}</span>
             </>
           )}
         </div>
 
-        <h3 className="text-white font-bold text-[13.5px] leading-snug line-clamp-2 mt-1 mb-1.5 group-hover:text-accent transition-colors">
+        <h3 className="text-strong font-bold text-[13.5px] leading-snug line-clamp-2 mt-1 mb-1.5">
           {title}
         </h3>
 
-        <div className="flex items-center gap-2 text-[10px] text-slate-400 font-medium mb-1.5">
+        <div className="flex items-center gap-2 text-[10px] text-subtle font-medium mb-1.5">
           <span>{formatDuration(durationHours)}</span>
-          <span className="w-1 h-1 rounded-full bg-slate-600" />
+          <span className="w-1 h-1 rounded-full bg-faint" />
           <span className="text-amber-400">★ {rating.toFixed(1)}</span>
         </div>
 
@@ -99,15 +99,15 @@ export function CatalogTile({
         <DiscountLine price={price} size="sm" className="mb-1" />
 
         <div className="flex items-center justify-between gap-2">
-          <span className="text-white font-bold text-[15px] tracking-tight tabular-nums">
+          <span className="text-strong font-bold text-[15px] tracking-tight tabular-nums">
             {formatRupees(price)}
           </span>
           {/* A span, not a button — the whole tile is already a link. */}
           <span className={cn(
             'text-[9.5px] font-bold uppercase tracking-wide px-2.5 py-1.5 rounded-lg shrink-0 transition-colors',
             started
-              ? 'bg-white/5 text-white border border-white/10 group-hover:bg-white/10'
-              : 'bg-accent text-[#060b1a] group-hover:bg-accent/90'
+              ? 'bg-raised text-strong border border-line-strong group-hover:bg-line-strong'
+              : 'bg-accent text-on-accent group-hover:bg-accent/90'
           )}>
             {label}
           </span>

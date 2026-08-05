@@ -21,9 +21,9 @@ export function TopicFilterModal({ selectedTopics, onTopicToggle, onClear }: Top
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="h-10 px-4 rounded-lg bg-secondary border border-white/[0.08] text-sm font-medium text-white hover:bg-white/[0.04] transition-colors flex items-center gap-2 whitespace-nowrap"
+        className="h-10 px-4 rounded-lg bg-panel border border-line text-sm font-medium text-strong hover:bg-raised transition-colors flex items-center gap-2 whitespace-nowrap"
       >
-        <svg className="w-4 h-4 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-4 h-4 text-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
         </svg>
         Topics {selectedTopics.length > 0 && <span className="ml-1 px-1.5 py-0.5 rounded-md bg-accent/20 text-accent text-xs">{selectedTopics.length}</span>}
@@ -46,13 +46,13 @@ export function TopicFilterModal({ selectedTopics, onTopicToggle, onClear }: Top
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="relative w-full max-w-lg bg-[#0f172a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]"
+              className="relative w-full max-w-lg bg-panel border border-line-strong rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]"
             >
-              <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-                <h2 className="text-lg font-bold text-white">Filter by Topic</h2>
+              <div className="flex items-center justify-between px-6 py-4 border-b border-line-strong">
+                <h2 className="text-lg font-bold text-strong">Filter by Topic</h2>
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="p-2 -mr-2 text-muted hover:text-white rounded-lg hover:bg-white/5 transition-colors"
+                  className="p-2 -mr-2 text-subtle hover:text-strong rounded-lg hover:bg-raised transition-colors"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -74,16 +74,16 @@ export function TopicFilterModal({ selectedTopics, onTopicToggle, onClear }: Top
                 </div>
               </div>
 
-              <div className="px-6 py-4 border-t border-white/10 bg-[#060b1a] flex justify-between items-center">
+              <div className="px-6 py-4 border-t border-line-strong bg-page flex justify-between items-center">
                 <button
                   onClick={onClear}
-                  className="text-sm font-medium text-muted hover:text-white transition-colors"
+                  className="text-sm font-medium text-subtle hover:text-strong transition-colors"
                 >
                   Clear all
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="px-5 py-2 bg-accent text-[#060b1a] text-sm font-bold rounded-lg hover:bg-accent-strong transition-colors"
+                  className="px-5 py-2 bg-accent text-on-accent text-sm font-bold rounded-lg hover:bg-accent-strong transition-colors"
                 >
                   Apply Filters
                 </button>

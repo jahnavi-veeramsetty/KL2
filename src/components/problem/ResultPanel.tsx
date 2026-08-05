@@ -1,3 +1,5 @@
+import { CheckCircle2, XCircle } from 'lucide-react'
+
 type ResultStatus = 'accepted' | 'wrong' | 'error' | null
 
 interface ResultPanelProps {
@@ -21,12 +23,12 @@ export function ResultPanel({ status, runtime, memory, wrongInput, wrongExpected
       {status === 'accepted' && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <span className="text-easy text-lg">✓</span>
+            <CheckCircle2 className="w-[18px] h-[18px] text-easy shrink-0" strokeWidth={2.2} aria-hidden />
             <span className="text-easy font-bold">Accepted</span>
           </div>
-          <div className="flex items-center gap-6 text-xs text-muted">
-            <span>Runtime: <strong className="text-tertiary">{runtime}</strong></span>
-            <span>Memory: <strong className="text-tertiary">{memory}</strong></span>
+          <div className="flex items-center gap-6 text-xs text-subtle">
+            <span>Runtime: <strong className="text-strong">{runtime}</strong></span>
+            <span>Memory: <strong className="text-strong">{memory}</strong></span>
           </div>
         </div>
       )}
@@ -34,13 +36,13 @@ export function ResultPanel({ status, runtime, memory, wrongInput, wrongExpected
       {status === 'wrong' && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <span className="text-danger text-lg">✗</span>
-            <span className="text-danger font-bold">Wrong Answer</span>
+            <XCircle className="w-[18px] h-[18px] text-danger shrink-0" strokeWidth={2.2} aria-hidden />
+            <span className="text-danger font-bold">Wrong answer</span>
           </div>
           <div className="text-xs space-y-1">
-            {wrongInput && <div className="text-muted">Input: <span className="font-mono text-tertiary">{wrongInput}</span></div>}
-            {wrongExpected && <div className="text-muted">Expected: <span className="font-mono text-easy">{wrongExpected}</span></div>}
-            {wrongGot && <div className="text-muted">Got: <span className="font-mono text-danger">{wrongGot}</span></div>}
+            {wrongInput && <div className="text-subtle">Input: <span className="font-mono text-strong">{wrongInput}</span></div>}
+            {wrongExpected && <div className="text-subtle">Expected: <span className="font-mono text-easy">{wrongExpected}</span></div>}
+            {wrongGot && <div className="text-subtle">Got: <span className="font-mono text-danger">{wrongGot}</span></div>}
           </div>
         </div>
       )}
@@ -51,7 +53,7 @@ export function ResultPanel({ status, runtime, memory, wrongInput, wrongExpected
             <span className="text-warning text-lg">!</span>
             <span className="text-warning font-bold">Runtime Error</span>
           </div>
-          <p className="text-xs text-muted">Check your code for edge cases and null pointer errors.</p>
+          <p className="text-xs text-subtle">Check your code for edge cases and null pointer errors.</p>
         </div>
       )}
     </div>

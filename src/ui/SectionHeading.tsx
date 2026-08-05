@@ -11,7 +11,7 @@ interface SectionHeadingProps {
 export function SectionHeading({ title, viewAllLabel = 'View All', viewAllTo, onViewAll, className = '' }: SectionHeadingProps) {
   return (
     <div className={`flex items-center justify-between mb-6 ${className}`}>
-      <h3 className="text-white font-bold text-2xl tracking-wide">{title}</h3>
+      <h3 className="text-strong font-bold text-2xl tracking-wide">{title}</h3>
       {(viewAllTo || onViewAll) && (
         viewAllTo ? (
           <Link

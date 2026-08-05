@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Check, Pause, Play } from 'lucide-react'
 import { useParams, Navigate, Link } from 'react-router-dom'
 import { problems } from '../data'
 import { ROUTES } from '../constants/routes'
@@ -10,6 +11,7 @@ import { ProblemDescriptionPanel } from '../components/problem/ProblemDescriptio
 import { TestCasePanel } from '../components/problem/TestCasePanel'
 import { ResultPanel } from '../components/problem/ResultPanel'
 import type { ProgrammingLanguage } from '../types'
+import { useSettings } from '../hooks/useSettings'
 import { padTwo } from '../lib/format'
 
 type ResultStatus = 'accepted' | 'wrong' | 'error' | null
@@ -25,8 +27,11 @@ export default function ProblemPage() {
   const { problemId } = useParams<{ problemId: string }>()
   const problem = problems.find(p => p.id === problemId || p.slug === problemId)
 
-  const [language, setLanguage] = useState<ProgrammingLanguage>('python')
-  const [code, setCode] = useState<string>(problem?.starterCode['python'] || '')
+  // Seeded from Settings → Appearance, then owned locally — switching language
+  // on one problem should not rewrite the account-wide default.
+  const { settings } = useSettings()
+  const [language, setLanguage] = useState<ProgrammingLanguage>(settings.defaultLanguage)
+  const [code, setCode] = useState<string>(problem?.starterCode[settings.defaultLanguage] || '')
   const [activePanel, setActivePanel] = useState('description')
   const [resultStatus, setResultStatus] = useState<ResultStatus>(null)
   const [resultData, setResultData] = useState<{ runtime?: string; memory?: string }>({})
@@ -82,30 +87,30 @@ export default function ProblemPage() {
   return (
     <div className="h-screen flex flex-col overflow-hidden" style={{ backgroundColor: 'var(--color-editor-bg)', fontFamily: 'var(--font-sans)' }}>
       {/* Top bar */}
-      <header className="flex items-center gap-3 px-4 h-12 border-b border-white/8 bg-editor-panel flex-shrink-0">
+      <header className="flex items-center gap-3 px-4 h-12 border-b border-line bg-editor-panel flex-shrink-0">
         <Link
           to={ROUTES.PRACTICE}
-          className="text-muted hover:text-tertiary transition-colors"
+          className="text-subtle hover:text-strong transition-colors"
           aria-label="Back to practice"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
-        <span className="text-sm font-semibold text-tertiary truncate max-w-48 hidden sm:block">
+        <span className="text-sm font-semibold text-strong truncate max-w-48 hidden sm:block">
           {problem.number}. {problem.title}
         </span>
         <Badge color={difficultyColor[problem.difficulty]} size="sm">{problem.difficulty}</Badge>
         <div className="flex items-center gap-1 ml-2">
           {prevProblem && (
-            <Link to={ROUTES.PROBLEM(prevProblem.slug)} className="p-1 text-muted hover:text-tertiary" aria-label="Previous problem">
+            <Link to={ROUTES.PROBLEM(prevProblem.slug)} className="p-1 text-subtle hover:text-strong" aria-label="Previous problem">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </Link>
           )}
           {nextProblem && (
-            <Link to={ROUTES.PROBLEM(nextProblem.slug)} className="p-1 text-muted hover:text-tertiary" aria-label="Next problem">
+            <Link to={ROUTES.PROBLEM(nextProblem.slug)} className="p-1 text-subtle hover:text-strong" aria-label="Next problem">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -113,11 +118,25 @@ export default function ProblemPage() {
           )}
         </div>
         <div className="ml-auto flex items-center gap-3">
-          <span className="text-xs font-mono text-muted">{timerStr}</span>
-          <Button size="sm" variant="secondary" onClick={handleRun}>
-            ▶ Run
+          {/* The timer is a stopwatch, not a countdown — label it so, and give
+              it a pause the header always had state for but never exposed. */}
+          <button
+            type="button"
+            onClick={() => setTimerActive(v => !v)}
+            aria-label={timerActive ? 'Pause timer' : 'Resume timer'}
+            className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-mono tabular-nums text-subtle hover:text-strong hover:bg-raised transition-colors"
+          >
+            {timerActive
+              ? <Pause className="w-3 h-3" strokeWidth={2} aria-hidden />
+              : <Play className="w-3 h-3 fill-current" strokeWidth={0} aria-hidden />}
+            {timerStr}
+          </button>
+          <Button size="sm" variant="secondary" onClick={handleRun} className="gap-1.5">
+            <Play className="w-3.5 h-3.5 fill-current" strokeWidth={0} aria-hidden />
+            Run
           </Button>
-          <Button size="sm" onClick={handleSubmit}>
+          <Button size="sm" onClick={handleSubmit} className="gap-1.5">
+            <Check className="w-3.5 h-3.5" strokeWidth={2.5} aria-hidden />
             Submit
           </Button>
         </div>
@@ -126,7 +145,7 @@ export default function ProblemPage() {
       {/* Main split layout */}
       <div className="flex flex-1 overflow-hidden min-h-0">
         {/* Left panel */}
-        <div className="flex flex-col w-full md:w-2/5 lg:w-[42%] border-r border-white/8 min-h-0">
+        <div className="flex flex-col w-full md:w-2/5 lg:w-[42%] border-r border-line min-h-0">
           <div className="flex-shrink-0 px-4 pt-3 pb-0">
             <Tabs tabs={PANEL_TABS} activeTab={activePanel} onChange={setActivePanel} size="sm" />
           </div>
@@ -135,16 +154,16 @@ export default function ProblemPage() {
               <ProblemDescriptionPanel problem={problem} />
             )}
             {activePanel === 'editorial' && (
-              <div className="p-5 text-sm text-muted">Editorial coming soon. Check back after the contest ends.</div>
+              <div className="p-5 text-sm text-subtle">Editorial coming soon. Check back after the contest ends.</div>
             )}
             {activePanel === 'solutions' && (
-              <div className="p-5 text-sm text-muted">Community solutions coming soon.</div>
+              <div className="p-5 text-sm text-subtle">Community solutions coming soon.</div>
             )}
             {activePanel === 'submissions' && (
               <div className="p-5">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="text-muted border-b border-white/5">
+                    <tr className="text-subtle border-b border-line">
                       <th className="text-left pb-2">Status</th>
                       <th className="text-left pb-2">Runtime</th>
                       <th className="text-left pb-2">Memory</th>
@@ -152,7 +171,7 @@ export default function ProblemPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="text-muted border-b border-white/5">
+                    <tr className="text-subtle border-b border-line">
                       <td className="py-2 text-easy">Accepted</td>
                       <td className="py-2">48ms</td>
                       <td className="py-2">16.2 MB</td>

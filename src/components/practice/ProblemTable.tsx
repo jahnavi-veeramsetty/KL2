@@ -1,3 +1,4 @@
+import { Bookmark } from 'lucide-react'
 import type { Problem } from '../../types'
 import { ProblemRow } from './ProblemRow'
 import { EmptyState } from '../../ui'
@@ -19,17 +20,20 @@ export function ProblemTable({ problems, onBookmarkToggle }: ProblemTableProps) 
   }
 
   return (
-    <div className="rounded-xl border border-white/8 overflow-hidden">
+    <div className="rounded-xl border border-line overflow-hidden">
       <table className="w-full text-left">
-        <thead className="bg-secondary/50 border-b border-white/8">
+        <thead className="bg-raised/50 border-b border-line">
           <tr>
-            <th className="px-4 py-3 text-xs font-semibold text-muted w-10 text-center">Status</th>
-            <th className="px-2 py-3 text-xs font-semibold text-muted w-12">#</th>
-            <th className="px-2 py-3 text-xs font-semibold text-muted">Title</th>
-            <th className="hidden md:table-cell px-2 py-3 text-xs font-semibold text-muted">Topics</th>
-            <th className="px-2 py-3 text-xs font-semibold text-muted w-24">Difficulty</th>
-            <th className="hidden lg:table-cell px-2 py-3 text-xs font-semibold text-muted w-20">Acceptance</th>
-            <th className="px-4 py-3 text-xs font-semibold text-muted w-10">🔖</th>
+            <th className="px-4 py-3 text-xs font-semibold text-subtle w-10 text-center">Status</th>
+            <th className="px-2 py-3 text-xs font-semibold text-subtle w-12">#</th>
+            <th className="px-2 py-3 text-xs font-semibold text-subtle">Title</th>
+            <th className="hidden md:table-cell px-2 py-3 text-xs font-semibold text-subtle">Topics</th>
+            <th className="px-2 py-3 text-xs font-semibold text-subtle w-24">Difficulty</th>
+            <th className="hidden lg:table-cell px-2 py-3 text-xs font-semibold text-subtle w-20">Acceptance</th>
+            <th className="px-4 py-3 w-10">
+              <span className="sr-only">Bookmarked</span>
+              <Bookmark className="w-3.5 h-3.5 text-faint mx-auto" strokeWidth={1.8} aria-hidden />
+            </th>
           </tr>
         </thead>
         <tbody>

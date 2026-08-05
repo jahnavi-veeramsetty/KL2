@@ -29,14 +29,14 @@ export function DailyChallengeCard({ challenge, isToday = false }: DailyChalleng
   return (
     <div className={`rounded-3xl p-6 lg:p-8 border transition-all ${
       isToday 
-        ? 'bg-gradient-to-br from-[#0a1128] to-[#060b1a] border-accent/30 shadow-[0_0_30px_rgba(34,211,238,0.1)]' 
-        : 'bg-secondary/20 border-white/5 opacity-80 hover:opacity-100'
+        ? 'spotlight-accent border-accent/30 shadow-[0_0_30px_rgba(34,211,238,0.1)]' 
+        : 'bg-raised/20 border-line opacity-80 hover:opacity-100'
     }`}>
       
       {/* Header Info */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-slate-300">
+          <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-raised border border-line-strong text-body">
             {getIcon()}
             {challenge.type}
           </span>
@@ -51,7 +51,7 @@ export function DailyChallengeCard({ challenge, isToday = false }: DailyChalleng
       </div>
 
       {/* Content */}
-      <h3 className={`font-extrabold text-white mb-8 ${isToday ? 'text-2xl md:text-3xl' : 'text-xl'}`}>
+      <h3 className={`font-extrabold text-strong mb-8 ${isToday ? 'text-2xl md:text-3xl' : 'text-xl'}`}>
         {challenge.title}
       </h3>
 

@@ -37,7 +37,7 @@ export function Breadcrumbs({ items, className = '', backTo }: BreadcrumbsProps)
           type="button"
           onClick={() => (canGoBack ? navigate(-1) : navigate(backTo))}
           aria-label="Go back"
-          className="group -ml-1 flex items-center gap-1.5 h-8 px-2 sm:px-0 sm:w-8 sm:justify-center shrink-0 rounded-lg text-muted hover:text-tertiary hover:bg-white/[0.06] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+          className="group -ml-1 flex items-center gap-1.5 h-8 px-2 sm:px-0 sm:w-8 sm:justify-center shrink-0 rounded-lg text-subtle hover:text-strong hover:bg-raised transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
         >
           <svg
             className="w-4 h-4 transition-transform group-hover:-translate-x-0.5"
@@ -65,13 +65,13 @@ export function Breadcrumbs({ items, className = '', backTo }: BreadcrumbsProps)
           const isLast = idx === items.length - 1
           return (
             <span key={idx} className="flex items-center gap-2 min-w-0">
-              {idx > 0 && <span className="text-muted shrink-0">/</span>}
+              {idx > 0 && <span className="text-subtle shrink-0">/</span>}
               {!isLast && item.to ? (
-                <Link to={item.to} className="text-muted hover:text-accent transition-colors truncate">
+                <Link to={item.to} className="text-subtle hover:text-accent transition-colors truncate">
                   {item.label}
                 </Link>
               ) : (
-                <span className={cn('truncate', isLast ? 'text-tertiary font-medium' : 'text-muted')}>
+                <span className={cn('truncate', isLast ? 'text-strong font-medium' : 'text-subtle')}>
                   {item.label}
                 </span>
               )}

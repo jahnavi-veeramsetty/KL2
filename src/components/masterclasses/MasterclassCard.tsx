@@ -21,10 +21,10 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
       to={ROUTES.MASTERCLASS_DETAIL(course.id)}
       className={cn('@container block group focus-visible:outline-none h-full', className)}
     >
-      <Card className="flex flex-row sm:flex-col h-full overflow-hidden gap-3 sm:gap-0 p-3 sm:p-0 rounded-2xl sm:rounded-[20px] bg-[#0A0F1C]/80 border-white/5 hover:border-accent/40 hover:bg-[#0A0F1C] transition-all duration-300 shadow-none hover:shadow-xl hover:shadow-accent/5">
+      <Card className="flex flex-row sm:flex-col h-full overflow-hidden gap-3 sm:gap-0 p-3 sm:p-0 rounded-2xl sm:rounded-[20px] bg-page/80 border-line hover:border-accent/40 hover:bg-page transition-all duration-300 shadow-none hover:shadow-xl hover:shadow-accent/5">
 
         {/* Thumbnail — left rail on phones, full-bleed banner from sm up */}
-        <div className="relative w-[108px] shrink-0 self-stretch rounded-xl overflow-hidden bg-[#0f1523] sm:w-full sm:self-auto sm:rounded-none sm:aspect-[16/10]">
+        <div className="on-dark relative w-[108px] shrink-0 self-stretch rounded-xl overflow-hidden bg-panel sm:w-full sm:self-auto sm:rounded-none sm:aspect-[16/10]">
           <img
             src={course.thumbnail}
             alt={course.title}
@@ -37,13 +37,13 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
               size now, so the content column carries no duplicate. */}
           <div className="flex absolute top-1.5 left-1.5 sm:top-2 sm:left-2 flex-wrap gap-1 sm:gap-1.5 z-10">
             {course.isBestseller && (
-              <span className="bg-amber-500 text-white text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+              <span className="bg-amber-500 text-strong text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                 <span className="hidden sm:inline">Selling Fast</span>
                 <span className="sm:hidden">Hot</span>
               </span>
             )}
             {course.isNew && (
-              <span className="bg-accent-strong text-white text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+              <span className="bg-accent-strong text-strong text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                 New
               </span>
             )}
@@ -58,22 +58,22 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
               <span className="text-[10px] font-bold text-accent/90 uppercase tracking-wider truncate">
                 {course.category}
               </span>
-              <span className="w-1 h-1 rounded-full bg-white/20 shrink-0" />
-              <span className="text-[10px] font-medium text-slate-400 shrink-0">
+              <span className="w-1 h-1 rounded-full bg-line-strong shrink-0" />
+              <span className="text-[10px] font-medium text-subtle shrink-0">
                 {course.level}
               </span>
             </div>
           </div>
 
           {/* Title */}
-          <h3 className="text-white font-bold text-sm @min-[17rem]:text-[15px] @min-[20rem]:text-base leading-snug line-clamp-2 mb-1.5 sm:mb-2 group-hover:text-accent transition-colors">
+          <h3 className="text-strong font-bold text-sm @min-[17rem]:text-[15px] @min-[20rem]:text-base leading-snug line-clamp-2 mb-1.5 sm:mb-2">
             {course.title}
           </h3>
 
           {/* Consolidated Meta Row */}
-          <div className="flex flex-wrap items-center gap-x-2 sm:gap-x-3 gap-y-1 text-[10px] sm:text-[11px] text-slate-400 font-medium mb-1.5 sm:mb-2">
-            <span className="text-slate-300 truncate max-w-full">{course.instructor.name}</span>
-            <span className="w-1 h-1 rounded-full bg-slate-600 shrink-0" />
+          <div className="flex flex-wrap items-center gap-x-2 sm:gap-x-3 gap-y-1 text-[10px] sm:text-[11px] text-subtle font-medium mb-1.5 sm:mb-2">
+            <span className="text-body truncate max-w-full">{course.instructor.name}</span>
+            <span className="w-1 h-1 rounded-full bg-faint shrink-0" />
             <div className="flex items-center gap-1 shrink-0">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
               <span>{formatDuration(course.durationHours)}</span>
@@ -93,26 +93,26 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
           <div className="sm:hidden">
             <DiscountLine price={course.price} size="sm" className="mb-1" />
             <div className="flex items-center justify-between gap-2">
-              <span className="text-white font-bold text-base tracking-tight tabular-nums">
+              <span className="text-strong font-bold text-base tracking-tight tabular-nums">
                 {formatRupees(course.price)}
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg bg-accent text-[#060b1a] shrink-0">
+              <span className="text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg bg-accent text-on-accent shrink-0">
                 Enroll
               </span>
             </div>
           </div>
 
-          <div className="hidden sm:flex pt-3 border-t border-white/5 items-end justify-between gap-2">
+          <div className="hidden sm:flex pt-3 border-t border-line items-end justify-between gap-2">
             <div className="flex flex-col min-w-0">
               <DiscountLine price={course.price} size="sm" className="mb-1 @min-[20rem]:hidden" />
               <DiscountLine price={course.price} className="mb-1 hidden @min-[20rem]:flex" />
-              <span className="text-white font-bold text-base @min-[17rem]:text-lg @min-[20rem]:text-xl tracking-tight leading-none tabular-nums">
+              <span className="text-strong font-bold text-base @min-[17rem]:text-lg @min-[20rem]:text-xl tracking-tight leading-none tabular-nums">
                 {formatRupees(course.price)}
               </span>
             </div>
 
             {/* A span, not a button — the whole card is already a link. */}
-            <span className="text-[10px] @min-[17rem]:text-[11px] @min-[20rem]:text-xs font-bold uppercase tracking-wide px-3 py-2 @min-[17rem]:px-4 @min-[20rem]:px-5 @min-[20rem]:py-2.5 rounded-lg transition-all duration-300 bg-accent text-[#060b1a] group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] shrink-0">
+            <span className="text-[10px] @min-[17rem]:text-[11px] @min-[20rem]:text-xs font-bold uppercase tracking-wide px-3 py-2 @min-[17rem]:px-4 @min-[20rem]:px-5 @min-[20rem]:py-2.5 rounded-lg transition-all duration-300 bg-accent text-on-accent group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] shrink-0">
               Enroll
             </span>
           </div>

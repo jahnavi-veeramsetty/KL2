@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom'
-import { LayoutGrid, BookOpen, Video, Target, Star } from 'lucide-react'
+import { LayoutGrid, BookOpen, MonitorPlay, Puzzle, Flame } from 'lucide-react'
 import { ROUTES } from '../../constants/routes'
 import { cn } from '../../lib/cn'
 
@@ -15,9 +15,9 @@ import { cn } from '../../lib/cn'
 const TABS = [
   { label: 'Home', to: ROUTES.DASHBOARD, icon: LayoutGrid },
   { label: 'Courses', to: ROUTES.COURSES, icon: BookOpen },
-  { label: 'Classes', to: ROUTES.MASTERCLASSES, icon: Video },
-  { label: 'Problems', to: ROUTES.PRACTICE, icon: Target },
-  { label: 'Daily', to: ROUTES.DAILY_CHALLENGE, icon: Star },
+  { label: 'Classes', to: ROUTES.MASTERCLASSES, icon: MonitorPlay },
+  { label: 'Problems', to: ROUTES.PRACTICE, icon: Puzzle },
+  { label: 'Daily', to: ROUTES.DAILY_CHALLENGE, icon: Flame },
 ]
 
 export default function BottomNav() {
@@ -26,13 +26,13 @@ export default function BottomNav() {
   const tabClass = (active: boolean) =>
     cn(
       'relative flex flex-col items-center justify-center gap-1.5 h-full text-[11px] font-semibold tracking-tight transition-colors',
-      active ? 'text-accent' : 'text-slate-400 hover:text-slate-200'
+      active ? 'text-accent' : 'text-subtle hover:text-body'
     )
 
   return (
     <nav
       aria-label="Primary"
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 h-[72px] pb-[env(safe-area-inset-bottom)] grid grid-cols-5 items-stretch rounded-t-3xl overflow-hidden border-t border-white/[0.06] bg-neutral/95 backdrop-blur-xl shadow-[0_-8px_24px_rgba(0,0,0,0.4)]"
+      className="theme-dark lg:hidden fixed bottom-0 left-0 right-0 z-40 h-[72px] pb-[env(safe-area-inset-bottom)] grid grid-cols-5 items-stretch rounded-t-3xl overflow-hidden border-t border-line bg-panel/95 backdrop-blur-xl shadow-[0_-8px_24px_rgba(0,0,0,0.4)]"
     >
       {TABS.map(({ label, to, icon: Icon }) => {
         const active = pathname === to

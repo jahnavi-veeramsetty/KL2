@@ -23,7 +23,7 @@ import { cn } from '../../lib/cn'
  * of everyone is a number nobody feels; #2 at your college is one people
  * screenshot.
  */
-const RANK_TONE = ['text-amber-400', 'text-slate-300', 'text-orange-400']
+const RANK_TONE = ['text-amber-400', 'text-body', 'text-orange-400']
 
 export function ScopedStandings() {
   const [scope, setScope] = useState<LeaderboardScope>('college')
@@ -46,16 +46,16 @@ export function ScopedStandings() {
   const leader = isGroupBoard ? undefined : rivalsAround({ kind: scope }, 'all', 1).find(r => r.gap > 0)
 
   return (
-    <div className="rounded-2xl border border-white/[0.07] bg-secondary/30 p-5">
+    <div className="rounded-2xl border border-line bg-raised/30 p-5">
       <div className="flex items-baseline justify-between gap-3 mb-3">
-        <h2 className="text-sm font-bold text-white tracking-tight">Standings</h2>
-        <span className="text-[11px] text-slate-500 truncate max-w-[55%] text-right">
+        <h2 className="text-sm font-bold text-strong tracking-tight">Standings</h2>
+        <span className="text-[11px] text-faint truncate max-w-[55%] text-right">
           {isGroupBoard ? 'by average score' : filterLabel({ kind: scope })}
         </span>
       </div>
 
       {/* Scope switch */}
-      <div className="flex gap-0.5 p-0.5 rounded-xl bg-black/40 border border-white/[0.07] mb-3.5">
+      <div className="flex gap-0.5 p-0.5 rounded-xl switch-track border border-line mb-3.5">
         {SCOPES.map(s => (
           <button
             key={s}
@@ -64,7 +64,7 @@ export function ScopedStandings() {
             aria-pressed={scope === s}
             className={cn(
               'flex-1 py-1.5 rounded-lg text-[10.5px] font-bold transition-colors',
-              scope === s ? 'bg-white/[0.12] text-white' : 'text-slate-500 hover:text-slate-300'
+              scope === s ? 'switch-thumb' : 'text-faint hover:text-body'
             )}
           >
             {scopeTab(s)}
@@ -78,10 +78,10 @@ export function ScopedStandings() {
           #{isGroupBoard ? (yourGroup?.rank ?? '—') : standing.rank}
         </span>
         <div className="flex-1 min-w-0">
-          <p className="text-[12px] font-semibold text-white truncate">
+          <p className="text-[12px] font-semibold text-strong truncate">
             {isGroupBoard ? (yourGroup?.name ?? 'Yours') : 'You'}
           </p>
-          <p className="text-[10px] text-slate-500 tabular-nums truncate">
+          <p className="text-[10px] text-faint tabular-nums truncate">
             {isGroupBoard
               ? `avg ${yourGroup?.averageScore.toLocaleString() ?? 0} · ${yourGroup?.competing ?? 0} competing`
               : `top ${standing.topPercent}% of ${standing.total.toLocaleString()}`}
@@ -94,21 +94,21 @@ export function ScopedStandings() {
           ? groups.map(g => (
               <div
                 key={g.id}
-                className="flex items-center gap-2.5 py-2 border-b border-white/[0.05] last:border-b-0"
+                className="flex items-center gap-2.5 py-2 border-b border-line last:border-b-0"
               >
-                <span className={cn('w-5 text-right text-[11px] font-bold tabular-nums', RANK_TONE[g.rank - 1] ?? 'text-slate-600')}>
+                <span className={cn('w-5 text-right text-[11px] font-bold tabular-nums', RANK_TONE[g.rank - 1] ?? 'text-faint')}>
                   {g.rank}
                 </span>
-                <span className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center text-[9px] font-bold text-accent shrink-0">
+                <span className="w-7 h-7 rounded-lg bg-raised border border-line-strong flex items-center justify-center text-[9px] font-bold text-accent shrink-0">
                   {g.short}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className={cn('text-[12px] font-semibold truncate', g.isYours ? 'text-accent' : 'text-white')}>
+                  <p className={cn('text-[12px] font-semibold truncate', g.isYours ? 'text-accent' : 'text-strong')}>
                     {g.name}
                   </p>
-                  <p className="text-[9.5px] text-slate-500 truncate">{g.competing} competing</p>
+                  <p className="text-[9.5px] text-faint truncate">{g.competing} competing</p>
                 </div>
-                <span className="text-[11px] font-bold text-slate-300 tabular-nums shrink-0">
+                <span className="text-[11px] font-bold text-body tabular-nums shrink-0">
                   {g.averageScore.toLocaleString()}
                 </span>
               </div>
@@ -116,20 +116,20 @@ export function ScopedStandings() {
           : students.map((player, i) => {
               const you = player.id === YOUR_PLAYER_ID
               return (
-                <div key={player.id} className="flex items-center gap-2.5 py-2 border-b border-white/[0.05] last:border-b-0">
-                  <span className={cn('w-5 text-right text-[11px] font-bold tabular-nums', RANK_TONE[i] ?? 'text-slate-600')}>
+                <div key={player.id} className="flex items-center gap-2.5 py-2 border-b border-line last:border-b-0">
+                  <span className={cn('w-5 text-right text-[11px] font-bold tabular-nums', RANK_TONE[i] ?? 'text-faint')}>
                     {i + 1}
                   </span>
                   <Avatar name={player.username} size="sm" src={player.avatar} />
                   <div className="flex-1 min-w-0">
-                    <p className={cn('text-[12px] font-semibold truncate', you ? 'text-accent' : 'text-white')}>
+                    <p className={cn('text-[12px] font-semibold truncate', you ? 'text-accent' : 'text-strong')}>
                       {player.username}
                     </p>
-                    <p className="text-[9.5px] text-slate-500 truncate">
+                    <p className="text-[9.5px] text-faint truncate">
                       {player.branch} &middot; year {player.year}
                     </p>
                   </div>
-                  <span className="text-[11px] font-bold text-slate-300 tabular-nums shrink-0">
+                  <span className="text-[11px] font-bold text-body tabular-nums shrink-0">
                     {player.score.toLocaleString()}
                   </span>
                 </div>
@@ -139,16 +139,16 @@ export function ScopedStandings() {
 
       {/* One actionable line — a ranking says where you are, this says what moves it */}
       {leader && (
-        <p className="text-[11px] text-slate-400 mt-3 pt-3 border-t border-white/[0.06]">
-          <span className="tabular-nums text-white font-semibold">{leader.gap.toLocaleString()}</span>
+        <p className="text-[11px] text-subtle mt-3 pt-3 border-t border-line">
+          <span className="tabular-nums text-strong font-semibold">{leader.gap.toLocaleString()}</span>
           {' '}points behind{' '}
-          <span className="text-white font-semibold">{leader.player.username}</span>.
+          <span className="text-strong font-semibold">{leader.player.username}</span>.
         </p>
       )}
 
       <Link
         to={ROUTES.LEADERBOARD}
-        className="flex items-center justify-center gap-1.5 mt-3 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-[11px] font-bold uppercase tracking-wide text-slate-300 hover:bg-white/[0.09] hover:text-white transition-colors"
+        className="flex items-center justify-center gap-1.5 mt-3 py-2.5 rounded-xl bg-raised border border-line-strong text-[11px] font-bold uppercase tracking-wide text-body hover:bg-raised hover:text-strong transition-colors"
       >
         Full leaderboard <ArrowRight className="w-3.5 h-3.5" />
       </Link>

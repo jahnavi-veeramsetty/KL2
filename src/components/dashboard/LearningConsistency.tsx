@@ -29,10 +29,10 @@ export function LearningConsistency() {
   const goal = nextMilestone(profile.stats.currentStreak)
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-primary/80 p-4">
+    <div className="rounded-2xl border border-line bg-page/80 p-4">
       {/* Header */}
       <div className="flex items-start justify-between gap-3 mb-1">
-        <h3 className="text-sm font-bold text-white tracking-tight">Learning consistency</h3>
+        <h3 className="text-sm font-bold text-strong tracking-tight">Learning consistency</h3>
         <span
           className="flex items-center gap-1 shrink-0 text-[10px] font-bold text-orange-300 bg-orange-500/12 border border-orange-500/25 rounded-full px-2 py-1 tabular-nums"
           title={`Next streak milestone: ${goal} days`}
@@ -40,15 +40,15 @@ export function LearningConsistency() {
           <Target className="w-3 h-3" /> Goal {goal}
         </span>
       </div>
-      <p className="text-[11px] text-slate-500 mb-4">Track your progress day by day.</p>
+      <p className="text-[11px] text-faint mb-4">Track your progress day by day.</p>
 
       {/* Streak + score */}
       <div className="grid grid-cols-2 gap-3 mb-5">
-        <div className="pr-3 border-r border-white/[0.07]">
-          <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-slate-500 mb-1.5">
+        <div className="pr-3 border-r border-line">
+          <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-faint mb-1.5">
             Current streak
           </p>
-          <p className="flex items-center gap-1.5 text-2xl font-bold text-white tracking-tight leading-none tabular-nums">
+          <p className="flex items-center gap-1.5 text-2xl font-bold text-strong tracking-tight leading-none tabular-nums">
             <Flame className="w-5 h-5 text-orange-400 shrink-0" />
             {profile.stats.currentStreak}
           </p>
@@ -58,15 +58,15 @@ export function LearningConsistency() {
         </div>
 
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-slate-500 mb-1.5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-faint mb-1.5">
             Consistency
           </p>
-          <p className="flex items-center gap-1.5 text-2xl font-bold text-white tracking-tight leading-none tabular-nums">
+          <p className="flex items-center gap-1.5 text-2xl font-bold text-strong tracking-tight leading-none tabular-nums">
             <Zap className="w-5 h-5 text-amber-400 shrink-0" />
             {stats.completionRate}
-            <span className="text-sm text-slate-500 font-semibold">%</span>
+            <span className="text-sm text-faint font-semibold">%</span>
           </p>
-          <span className="inline-block mt-2 text-[10px] font-semibold text-slate-400 tabular-nums">
+          <span className="inline-block mt-2 text-[10px] font-semibold text-subtle tabular-nums">
             {stats.solved} of {stats.total} solved
           </span>
         </div>

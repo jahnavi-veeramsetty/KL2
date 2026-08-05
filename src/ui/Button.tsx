@@ -14,9 +14,11 @@ export function Button({
   ...props
 }: ButtonProps) {
   const variantStyles: Record<string, string> = {
-    primary: 'bg-accent-strong hover:bg-accent text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:-translate-y-0.5',
-    secondary: 'bg-white/10 hover:bg-white/20 text-white border border-white/10 hover:-translate-y-0.5',
-    ghost: 'hover:bg-white/10 text-muted hover:text-tertiary',
+    // text-on-accent, not text-strong: text-strong is near-black in the light
+    // theme, which put dark ink on the dark teal fill.
+    primary: 'bg-accent-strong hover:bg-accent text-on-accent shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:-translate-y-0.5',
+    secondary: 'bg-line-strong hover:bg-line-strong text-strong border border-line-strong hover:-translate-y-0.5',
+    ghost: 'hover:bg-line-strong text-subtle hover:text-strong',
     link: 'text-accent hover:text-accent/80 p-0 hover:bg-transparent underline-offset-4 hover:underline',
   }
 

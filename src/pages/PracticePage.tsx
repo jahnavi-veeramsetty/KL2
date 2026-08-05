@@ -65,7 +65,7 @@ export default function PracticePage() {
         <aside 
           className={`
             fixed top-20 lg:top-14 h-[calc(100vh-5rem)] lg:h-[calc(100vh-3.5rem)]
-            w-72 bg-primary border-r border-white/8 z-40
+            w-72 bg-page border-r border-line z-40
             overflow-y-auto no-scrollbar transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
             ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:hidden
             flex-shrink-0 p-4
@@ -82,7 +82,7 @@ export default function PracticePage() {
         <main className="flex-1 h-full min-w-0 p-4 md:p-8 overflow-y-auto no-scrollbar">
           {/* Mobile sidebar toggle */}
           <button
-            className="lg:hidden mb-4 flex items-center gap-2 text-sm text-muted hover:text-tertiary"
+            className="lg:hidden mb-4 flex items-center gap-2 text-sm text-subtle hover:text-strong"
             onClick={() => setSidebarOpen(true)}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -108,32 +108,38 @@ export default function PracticePage() {
               onTopicToggle={handleTopicToggle}
               onClear={() => setSelectedTopics([])}
             />
-            <Select 
-              options={[
-                { label: 'Difficulty', value: 'all' },
-                { label: 'Easy', value: 'Easy' },
-                { label: 'Medium', value: 'Medium' },
-                { label: 'Hard', value: 'Hard' }
-              ]}
-              value={selectedDifficulty || 'all'}
-              onChange={(e) => setSelectedDifficulty(e.target.value === 'all' ? null : e.target.value as Difficulty)}
-              className="sm:w-36"
-            />
-            <Select 
-              options={[
-                { label: 'Status', value: 'all' },
-                { label: 'Solved', value: 'solved' },
-                { label: 'Attempted', value: 'attempted' },
-                { label: 'Todo', value: 'todo' }
-              ]}
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value as ProblemStatus | 'all')}
-              className="sm:w-36"
-            />
+            {/* Two half-width selects on one line below sm. `sm:contents`
+                dissolves this wrapper from sm up, so they become direct flex
+                children again and the desktop row is unchanged — same approach
+                as the course and masterclass filters. */}
+            <div className="grid grid-cols-2 gap-3 sm:contents">
+              <Select
+                options={[
+                  { label: 'Difficulty', value: 'all' },
+                  { label: 'Easy', value: 'Easy' },
+                  { label: 'Medium', value: 'Medium' },
+                  { label: 'Hard', value: 'Hard' }
+                ]}
+                value={selectedDifficulty || 'all'}
+                onChange={(e) => setSelectedDifficulty(e.target.value === 'all' ? null : e.target.value as Difficulty)}
+                className="min-w-0 sm:w-36"
+              />
+              <Select
+                options={[
+                  { label: 'Status', value: 'all' },
+                  { label: 'Solved', value: 'solved' },
+                  { label: 'Attempted', value: 'attempted' },
+                  { label: 'Todo', value: 'todo' }
+                ]}
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value as ProblemStatus | 'all')}
+                className="min-w-0 sm:w-36"
+              />
+            </div>
           </div>
 
           {/* Count */}
-          <p className="text-xs text-muted mb-3">
+          <p className="text-xs text-subtle mb-3">
             Showing {filtered.length} of {allProblems.length} problems
           </p>
 
@@ -144,7 +150,7 @@ export default function PracticePage() {
         <aside 
           className={`
             hidden lg:block
-            h-full w-72 bg-primary border-l border-white/8 z-40
+            h-full w-72 bg-page border-l border-line z-40
             overflow-y-auto no-scrollbar
             flex-shrink-0 p-4
           `}

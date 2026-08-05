@@ -26,7 +26,7 @@ const NAV_WIDTH = { collapsed: 72, expanded: 240 }
 function ContentFallback() {
   return (
     <div className="w-full flex items-center justify-center py-24" role="status" aria-label="Loading page">
-      <div className="w-8 h-8 rounded-full border-2 border-white/15 border-t-white/60 animate-spin" />
+      <div className="w-8 h-8 rounded-full border-2 border-line-strong border-t-white/60 animate-spin" />
     </div>
   )
 }
@@ -59,7 +59,7 @@ export default function AppLayout({ variant = 'default' }: { variant?: LayoutVar
   if (variant === 'bare') {
     return (
       <div
-        className="min-h-screen w-full bg-primary transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        className="min-h-screen w-full bg-page transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
         style={{ paddingLeft }}
       >
         <SideNav />
@@ -84,7 +84,7 @@ export default function AppLayout({ variant = 'default' }: { variant?: LayoutVar
       <SideNav />
       <BottomNav />
       <div className="flex flex-col min-h-screen w-full relative">
-        <div className="flex flex-col flex-1 z-10 relative bg-primary space-grid w-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-b border-white/5">
+        <div className="flex flex-col flex-1 z-10 relative bg-page space-grid w-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-b border-line">
           <TopBar />
           <main className="flex-1 pt-16 lg:pt-14 pb-28 lg:pb-16 px-6 md:px-10 mx-auto w-full max-w-7xl">
             <div className="pt-6">

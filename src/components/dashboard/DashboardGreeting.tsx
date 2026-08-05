@@ -40,10 +40,10 @@ export function DashboardGreeting() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+      <h1 className="text-xl sm:text-2xl font-bold text-strong tracking-tight">
         {greetingFor(new Date().getHours())}, {firstName}
       </h1>
-      <p className="text-sm text-slate-400 mt-1">
+      <p className="text-sm text-subtle mt-1">
         {streakLine(profile.stats.currentStreak, profile.stats.longestStreak, today?.isCompleted ?? false)}
       </p>
     </div>

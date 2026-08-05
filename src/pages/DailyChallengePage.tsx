@@ -50,13 +50,13 @@ export default function DailyChallengePage() {
     <div className="space-y-6">
       {/* Meta bar — the two facts that frame the day, on one line */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
-        <span className="text-slate-400 font-medium">{todayLabel}</span>
-        <span className="flex items-center gap-1.5 text-slate-500 tabular-nums">
+        <span className="text-subtle font-medium">{todayLabel}</span>
+        <span className="flex items-center gap-1.5 text-faint tabular-nums">
           <Clock className="w-3.5 h-3.5" />
           resets in {formatted}
         </span>
         <span className="flex items-center gap-1.5 font-bold text-orange-400 tabular-nums ml-auto">
-          <Flame className="w-4 h-4 drop-shadow-[0_0_5px_rgba(249,115,22,0.8)]" />
+          <Flame className="w-4 h-4 drop-shadow-[0_0_5px_rgba(249,115,22,0.8)] light:drop-shadow-none" />
           {profile.stats.currentStreak} day streak
         </span>
       </div>
@@ -68,8 +68,8 @@ export default function DailyChallengePage() {
           className={cn(
             'min-w-0 rounded-2xl border p-5 sm:p-7',
             solved
-              ? 'border-green-500/25 bg-gradient-to-br from-[#0a2018] to-[#070f18]'
-              : 'border-white/10 bg-gradient-to-br from-[#0c142b] to-[#070c18]'
+              ? 'border-green-500/25 spotlight-success'
+              : 'border-line-strong spotlight-accent'
           )}
         >
           <span className={cn(
@@ -79,12 +79,12 @@ export default function DailyChallengePage() {
             {solved ? 'Solved today' : "Today's challenge"}
           </span>
 
-          <h2 className="text-xl sm:text-2xl lg:text-[28px] font-bold text-white leading-tight tracking-tight mt-3 mb-4">
+          <h2 className="text-xl sm:text-2xl lg:text-[28px] font-bold text-strong leading-tight tracking-tight mt-3 mb-4">
             {challenge.title}
           </h2>
 
           <div className="flex flex-wrap items-center gap-2 mb-5">
-            <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-slate-200">
+            <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-raised border border-line-strong text-body">
               <Icon className="w-3.5 h-3.5" />
               {challenge.type}
             </span>
@@ -116,7 +116,7 @@ export default function DailyChallengePage() {
 
         {/* Calendar + scores */}
         <aside className="w-full min-w-0 space-y-4 xl:sticky xl:top-24">
-          <div className="rounded-2xl border border-white/[0.07] bg-secondary/30 p-3.5">
+          <div className="rounded-2xl border border-line bg-raised/30 p-3.5">
             <MonthTracker />
           </div>
           <DailyStats />

@@ -19,10 +19,10 @@ export function PracticeStatsStrip() {
         { label: 'Medium', value: solved.medium, sub: `of ${mediumCount}`, color: '#F59E0B' },
         { label: 'Hard', value: solved.hard, sub: `of ${hardCount}`, color: '#EF4444' },
       ].map(({ label, value, sub, color }) => (
-        <div key={label} className="bg-secondary/30 border border-white/8 rounded-xl p-4 text-center">
+        <div key={label} className="bg-raised/30 border border-line rounded-xl p-4 text-center">
           <div className="text-2xl font-bold" style={{ color }}>{value}</div>
-          <div className="text-xs font-medium text-tertiary">{label}</div>
-          <div className="text-xs text-muted">{sub}</div>
+          <div className="text-xs font-medium text-strong">{label}</div>
+          <div className="text-xs text-subtle">{sub}</div>
         </div>
       ))}
     </div>

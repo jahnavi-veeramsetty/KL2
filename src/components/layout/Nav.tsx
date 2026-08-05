@@ -63,13 +63,13 @@ function HamburgerIcon({ open }: { open: boolean }) {
   return (
     <div className="relative w-5 h-4 flex flex-col justify-between" aria-hidden="true">
       <span
-        className={`block h-0.5 w-full bg-tertiary rounded transition-all duration-300 origin-center ${open ? "rotate-45 translate-y-[7px]" : ""}`}
+        className={`block h-0.5 w-full bg-brand-neutral rounded transition-all duration-300 origin-center ${open ? "rotate-45 translate-y-[7px]" : ""}`}
       />
       <span
-        className={`block h-0.5 w-full bg-tertiary rounded transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`}
+        className={`block h-0.5 w-full bg-brand-neutral rounded transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`}
       />
       <span
-        className={`block h-0.5 w-full bg-tertiary rounded transition-all duration-300 origin-center ${open ? "-rotate-45 -translate-y-[7px]" : ""}`}
+        className={`block h-0.5 w-full bg-brand-neutral rounded transition-all duration-300 origin-center ${open ? "-rotate-45 -translate-y-[7px]" : ""}`}
       />
     </div>
   );
@@ -107,6 +107,21 @@ export default function Nav() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Escape closes it, and the page behind must not scroll while it is open.
+  useEffect(() => {
+    if (!mobileOpen) return
+
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMobileOpen(false) }
+    const previous = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    window.addEventListener("keydown", onKey)
+
+    return () => {
+      document.body.style.overflow = previous
+      window.removeEventListener("keydown", onKey)
+    }
+  }, [mobileOpen]);
 
   // Close mobile menu on resize to desktop
   useEffect(() => {
@@ -158,18 +173,6 @@ export default function Nav() {
                 className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-brand-tertiary border border-brand-tertiary/25 bg-brand-tertiary/5 backdrop-blur-sm hover:bg-brand-tertiary/12 hover:border-brand-tertiary/45 hover:scale-[1.03] hover:-translate-y-px active:scale-100 transition-all duration-250 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 shadow-sm hover:shadow-brand-tertiary/10"
               >
                 Sign In
-                <svg
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-3.5 h-3.5 opacity-70"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                    clipRule="evenodd"
-                  />
-                </svg>
               </Link>
             )}
 
@@ -187,50 +190,90 @@ export default function Nav() {
           </div>
         </div>
 
-        {/* Mobile dropdown menu */}
-        <div
-          id="mobile-nav-menu"
-          role="navigation"
-          aria-label="Mobile navigation"
-          className={`md:hidden overflow-hidden transition-all duration-400 ease-in-out ${mobileOpen ? "max-h-96 opacity-100 pb-4" : "max-h-0 opacity-0"
-            }`}
-        >
-          {/* The bar itself is transparent by design — the desktop links are
-              individually glassy pills. The open menu therefore needs its own
-              surface, or it renders straight over the page behind it. */}
-          <div className="flex flex-col gap-1 mt-3 p-3 rounded-2xl border border-white/10 bg-[#000918]/92 backdrop-blur-xl shadow-[0_16px_40px_rgba(0,0,0,0.55)]">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                onClick={() => setMobileOpen(false)}
-                className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-neutral/75 hover:text-brand-neutral hover:bg-white/6 transition-all duration-200"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="mt-2 pt-2 border-t border-white/10">
-              {isAuthenticated ? (
-                <Link
-                  to={ROUTES.DASHBOARD}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-brand-tertiary hover:bg-brand-tertiary/8 transition-all duration-200"
-                >
-                  Dashboard →
-                </Link>
-              ) : (
-                <Link
-                  to={ROUTES.LOGIN}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-brand-tertiary hover:bg-brand-tertiary/8 transition-all duration-200"
-                >
-                  Sign In →
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
       </div>
+
+      {/* Scrim */}
+      <div
+        onClick={() => setMobileOpen(false)}
+        aria-hidden="true"
+        className={`md:hidden fixed inset-0 bg-black/65 backdrop-blur-[2px] transition-opacity duration-300 ${
+          mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      />
+
+      {/* Drawer. Slides from the right, matching the signed-in app's SideNav —
+          the same gesture should reveal the menu before and after signing in. */}
+      <aside
+        id="mobile-nav-menu"
+        aria-label="Mobile navigation"
+        aria-hidden={!mobileOpen}
+        className={`md:hidden fixed top-0 right-0 h-[100dvh] w-[300px] max-w-[82vw] flex flex-col
+          bg-[#000918]/97 backdrop-blur-xl border-l border-white/10
+          shadow-[-16px_0_48px_rgba(0,0,0,0.6)]
+          transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+          ${mobileOpen ? "translate-x-0 visible" : "translate-x-full invisible"}`}
+      >
+        <div className="flex items-center justify-between gap-3 h-20 px-5 border-b border-white/10 shrink-0">
+          <img src={logo} alt="Knowvation Learnings" className="h-8 w-auto object-contain" />
+          <button
+            type="button"
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close navigation menu"
+            className="w-10 h-10 flex items-center justify-center rounded-xl text-brand-neutral/70 hover:text-white hover:bg-white/8 transition-colors"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="flex flex-col gap-1 p-4">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={() => setMobileOpen(false)}
+              className="px-3 py-3.5 rounded-xl text-base font-medium text-brand-neutral/80 hover:text-white hover:bg-white/6 transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* The reason most people open this menu, so it gets the weight —
+            pinned to the bottom, full width, and the only filled control here. */}
+        <div className="mt-auto p-4 border-t border-white/10 space-y-3">
+          {isAuthenticated ? (
+            <Link
+              to={ROUTES.DASHBOARD}
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-white/10 border border-white/20 text-sm font-bold text-white hover:bg-white/15 transition-colors"
+            >
+              Go to dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                to={ROUTES.LOGIN}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-brand-tertiary text-[#000918] text-sm font-bold tracking-wide shadow-[0_0_24px_rgba(199,217,255,0.28)] hover:brightness-110 transition-all"
+              >
+                Sign in
+              </Link>
+              <p className="text-center text-xs text-brand-neutral/50">
+                New here?{" "}
+                <Link
+                  to={ROUTES.SIGNUP}
+                  onClick={() => setMobileOpen(false)}
+                  className="text-white font-semibold hover:underline"
+                >
+                  Create an account
+                </Link>
+              </p>
+            </>
+          )}
+        </div>
+      </aside>
     </header>
   );
 }

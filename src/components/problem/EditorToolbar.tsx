@@ -10,7 +10,7 @@ interface EditorToolbarProps {
 
 export function EditorToolbar({ language, onLanguageChange, onReset }: EditorToolbarProps) {
   return (
-    <div className="flex items-center justify-between px-3 py-2 bg-editor-panel border-b border-white/8">
+    <div className="flex items-center justify-between px-3 py-2 bg-editor-panel border-b border-line">
       <LanguageSelect value={language} onChange={onLanguageChange} />
       <div className="flex items-center gap-1">
         <IconButton label="Reset code" size="sm" onClick={onReset}>

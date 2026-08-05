@@ -83,7 +83,9 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-[#000511] flex p-4 md:p-8 relative font-sans">
+    // on-dark: the auth screens are a deliberate dark experience in both
+    // themes, so this subtree keeps dark tokens.
+    <div className="on-dark min-h-[100dvh] bg-[#000511] flex p-4 md:p-8 relative font-sans">
 
       {/* Interactive Network Background */}
       <StarfieldBackground />

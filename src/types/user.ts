@@ -38,13 +38,3 @@ export interface ContinueLearningItem {
   color?: 'teal' | 'green' | 'blue'
 }
 
-export interface EventItem {
-  id: number
-  eventId: string
-  title: string
-  date: string
-  isoDate: string
-  type: string
-  image: string
-  color: 'teal' | 'blue' | 'purple' | 'orange' | 'green'
-}

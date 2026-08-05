@@ -18,7 +18,7 @@ import { cn } from '../../lib/cn'
  */
 function rankTone(rank: number): string {
   if (rank === 1) return 'text-amber-400'
-  if (rank === 2) return 'text-slate-300'
+  if (rank === 2) return 'text-body'
   if (rank === 3) return 'text-orange-400'
   return 'text-accent'
 }
@@ -31,7 +31,7 @@ export function PastContestRow({ contest }: { contest: Contest }) {
   return (
     <Link
       to={ROUTES.CONTEST_DETAIL(contest.id)}
-      className="group flex items-center gap-4 p-4 rounded-xl bg-secondary/25 border border-white/[0.06] hover:border-accent/30 hover:bg-secondary/40 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+      className="group flex items-center gap-4 p-4 rounded-xl bg-raised/25 border border-line hover:border-accent/30 hover:bg-raised/40 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
     >
       {/* Placement */}
       <div className="w-14 shrink-0 text-center">
@@ -40,31 +40,31 @@ export function PastContestRow({ contest }: { contest: Contest }) {
             <p className={cn('text-lg font-bold tracking-tight leading-none tabular-nums', rankTone(contest.yourRank!))}>
               #{contest.yourRank}
             </p>
-            <p className="text-[9px] font-bold uppercase tracking-[0.1em] text-slate-600 mt-1">Rank</p>
+            <p className="text-[9px] font-bold uppercase tracking-[0.1em] text-faint mt-1">Rank</p>
           </>
         ) : (
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-faint">
             Not entered
           </p>
         )}
       </div>
 
-      <div className="w-px self-stretch bg-white/[0.06]" />
+      <div className="w-px self-stretch bg-raised" />
 
       {/* Contest */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-white truncate group-hover:text-accent transition-colors">
+        <p className="text-sm font-semibold text-strong truncate group-hover:text-accent transition-colors">
           {contest.title}
         </p>
-        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 mt-1 text-[11px] text-slate-500">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 mt-1 text-[11px] text-faint">
           <span>{formatDate(contest.startTime)}</span>
-          <span className="w-1 h-1 rounded-full bg-slate-700" />
+          <span className="w-1 h-1 rounded-full bg-faint" />
           <span>{contest.difficulty}</span>
-          <span className="w-1 h-1 rounded-full bg-slate-700" />
+          <span className="w-1 h-1 rounded-full bg-faint" />
           <span className="tabular-nums">{contest.participants.toLocaleString()} entered</span>
           {total !== undefined && (
             <>
-              <span className="w-1 h-1 rounded-full bg-slate-700" />
+              <span className="w-1 h-1 rounded-full bg-faint" />
               <span className="tabular-nums">{solved}/{total} solved</span>
             </>
           )}
@@ -74,9 +74,9 @@ export function PastContestRow({ contest }: { contest: Contest }) {
       {/* Score + prize */}
       <div className="shrink-0 text-right hidden sm:block">
         {contest.yourScore !== undefined && (
-          <p className="text-sm font-bold text-white tabular-nums leading-none">
+          <p className="text-sm font-bold text-strong tabular-nums leading-none">
             {contest.yourScore}
-            <span className="text-[10px] font-medium text-slate-500 ml-1">pts</span>
+            <span className="text-[10px] font-medium text-faint ml-1">pts</span>
           </p>
         )}
         {contest.prize && (
@@ -86,7 +86,7 @@ export function PastContestRow({ contest }: { contest: Contest }) {
         )}
       </div>
 
-      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-accent transition-colors shrink-0" />
+      <ChevronRight className="w-4 h-4 text-faint group-hover:text-accent transition-colors shrink-0" />
     </Link>
   )
 }

@@ -40,7 +40,7 @@ export default function HeroLeftContent({ className = "" }: HeroLeftContentProps
       {/* ── Main headline ── */}
       <div className="opacity-0-init animate-fade-slide-up delay-200">
         <h1
-          className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.12] tracking-tight text-brand-neutral"
+          className="text-[27px] min-[400px]:text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.14] tracking-tight text-brand-neutral"
           style={{ fontFamily: "var(--font-plus-jakarta)" }}
         >
           <span className="block">Ignite.</span>
@@ -77,7 +77,7 @@ export default function HeroLeftContent({ className = "" }: HeroLeftContentProps
       </div>
 
       {/* ── Secondary CTA ── */}
-      <div className="opacity-0-init animate-fade-slide-up delay-500 flex items-center gap-4">
+      <div className="opacity-0-init animate-fade-slide-up delay-500 flex flex-wrap items-center gap-x-4 gap-y-3">
         <a
           href="/courses"
           id="hero-browse-courses-cta"
@@ -111,7 +111,7 @@ export default function HeroLeftContent({ className = "" }: HeroLeftContentProps
               </div>
             ))}
           </div>
-          <span className="text-xs text-brand-secondary">+2,400 joined this month</span>
+          <span className="text-xs text-brand-secondary whitespace-nowrap">+2,400 joined</span>
         </div>
       </div>
     </div>

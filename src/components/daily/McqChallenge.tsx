@@ -60,8 +60,8 @@ export function McqChallenge({ challenge, solved, onSolve }: McqChallengeProps) 
               revealed && isAnswer && 'border-green-500/45 bg-green-500/[0.1]',
               wrong && 'border-red-500/45 bg-red-500/[0.08]',
               !revealed && !wrong && isPicked && 'border-accent/50 bg-accent/[0.08]',
-              !revealed && !wrong && !isPicked && 'border-white/10 bg-white/[0.03] hover:border-white/25',
-              revealed && !isAnswer && 'border-white/[0.07] bg-white/[0.02] opacity-60'
+              !revealed && !wrong && !isPicked && 'border-line-strong bg-raised hover:border-line-strong',
+              revealed && !isAnswer && 'border-line bg-raised opacity-60'
             )}
           >
             <span className={cn(
@@ -72,14 +72,14 @@ export function McqChallenge({ challenge, solved, onSolve }: McqChallengeProps) 
                   ? 'border-red-500/50 bg-red-500/20 text-red-300'
                   : isPicked
                     ? 'border-accent/50 bg-accent/15 text-accent'
-                    : 'border-white/12 text-slate-500'
+                    : 'border-line-strong text-faint'
             )}>
               {revealed && isAnswer ? <Check className="w-3.5 h-3.5" /> : wrong ? <X className="w-3.5 h-3.5" /> : LETTERS[i]}
             </span>
 
             <span className={cn(
               'text-sm font-medium',
-              revealed && isAnswer ? 'text-green-200' : wrong ? 'text-red-200' : 'text-slate-200'
+              revealed && isAnswer ? 'text-green-200' : wrong ? 'text-red-200' : 'text-body'
             )}>
               {option}
             </span>
@@ -93,7 +93,7 @@ export function McqChallenge({ challenge, solved, onSolve }: McqChallengeProps) 
             type="button"
             onClick={submit}
             disabled={picked === null}
-            className="px-6 py-2.5 rounded-xl bg-accent text-[#060b1a] text-xs font-bold uppercase tracking-wide transition-colors hover:bg-accent/90 disabled:opacity-35 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 rounded-xl bg-accent text-on-accent text-xs font-bold uppercase tracking-wide transition-colors hover:bg-accent/90 disabled:opacity-35 disabled:cursor-not-allowed"
           >
             Check answer
           </button>

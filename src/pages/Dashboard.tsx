@@ -53,7 +53,7 @@ export default function DashboardPage() {
           Hidden below xl for now: stacked under the work column it was a long
           scroll past content the phone user did not ask for. */}
       <aside
-        className="hidden xl:block xl:pl-5 xl:pr-3.5 xl:pt-20 xl:pb-12 xl:border-l xl:border-white/[0.06] xl:bg-neutral xl:h-full xl:overflow-y-auto scroll-hover"
+        className="hidden xl:block xl:pl-5 xl:pr-3.5 xl:pt-20 xl:pb-12 xl:border-l xl:border-line xl:bg-panel xl:h-full xl:overflow-y-auto scroll-hover"
         aria-label="Your activity"
       >
         <ProductivityRail />

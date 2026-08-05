@@ -7,6 +7,7 @@ import { RequireAuth, RedirectIfAuthed } from './components/auth/RouteGuards'
 import { ProfileProvider } from './contexts/ProfileContext'
 import { SidebarProvider } from './contexts/SidebarContext'
 import { isAuthenticated } from './lib/auth'
+import { OfflineBanner } from './components/system/OfflineBanner'
 
 // Landing page stays eager: it is the public entry point and must paint immediately.
 import LandingPage from './pages/LandingPage'
@@ -21,6 +22,8 @@ const CompetePage = lazy(() => import('./pages/CompetePage'))
 const HackathonsPage = lazy(() => import('./pages/HackathonsPage'))
 const ContestDetailPage = lazy(() => import('./pages/ContestDetailPage'))
 const LeaderboardPage = lazy(() => import('./pages/LeaderboardPage'))
+const EventsPage = lazy(() => import('./pages/EventsPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const HackathonDetailPage = lazy(() => import('./pages/HackathonDetailPage'))
 const ArcadePage = lazy(() => import('./pages/ArcadePage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage'))
@@ -34,8 +37,8 @@ const DailyChallengePage = lazy(() => import('./pages/DailyChallengePage'))
 
 function RouteFallback() {
   return (
-    <div className="min-h-screen w-full bg-primary flex items-center justify-center" role="status" aria-label="Loading page">
-      <div className="w-8 h-8 rounded-full border-2 border-white/15 border-t-white/60 animate-spin" />
+    <div className="min-h-screen w-full bg-page flex items-center justify-center" role="status" aria-label="Loading page">
+      <div className="w-8 h-8 rounded-full border-2 border-line-strong border-t-strong/60 animate-spin" />
     </div>
   )
 }
@@ -50,6 +53,7 @@ function App() {
       <ScrollToTop />
       <ProfileProvider>
         <SidebarProvider>
+          <OfflineBanner />
           <Routes>
             {/* Public — the landing page decides for itself based on session */}
             <Route path={ROUTES.HOME} element={<RootPage />} />
@@ -93,8 +97,9 @@ function App() {
                 <Route path={ROUTES.HACKATHONS} element={<HackathonsPage />} />
                 <Route path={ROUTES.LEADERBOARD} element={<LeaderboardPage />} />
                 <Route path="/compete/contests/:contestId" element={<ContestDetailPage />} />
-                <Route path="/compete/hackathons/:hackathonId" element={<HackathonDetailPage />} />
+                <Route path="/hackathons/:hackathonId" element={<HackathonDetailPage />} />
 
+                <Route path={ROUTES.EVENTS} element={<EventsPage />} />
                 <Route path={ROUTES.ARCADE} element={<ArcadePage />} />
               </Route>
 
@@ -114,8 +119,14 @@ function App() {
             <Route path="/learn" element={<Navigate to={ROUTES.COURSES} replace />} />
             <Route path="/learn/:sectionId" element={<Navigate to={ROUTES.COURSES} replace />} />
 
-            {/* Catch all */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* Catch all. A silent redirect to "/" moved people without
+                explaining anything — and for a signed-in user "/" redirects
+                again to the dashboard, so a typo landed them somewhere they
+                never asked for. */}
+            <Route
+              path="*"
+              element={<Suspense fallback={<RouteFallback />}><NotFoundPage /></Suspense>}
+            />
           </Routes>
         </SidebarProvider>
       </ProfileProvider>

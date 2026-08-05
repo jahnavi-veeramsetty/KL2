@@ -44,19 +44,19 @@ export function RatingCard() {
   const last = points[points.length - 1]
 
   const DeltaIcon = delta > 0 ? TrendingUp : delta < 0 ? TrendingDown : Minus
-  const deltaTone = delta > 0 ? 'text-green-400' : delta < 0 ? 'text-red-400' : 'text-slate-400'
+  const deltaTone = delta > 0 ? 'text-green-400' : delta < 0 ? 'text-red-400' : 'text-subtle'
 
   return (
-    <div className="rounded-2xl border border-white/[0.07] bg-secondary/30 p-5">
+    <div className="rounded-2xl border border-line bg-raised/30 p-5">
       <div className="flex items-baseline justify-between gap-3 mb-4">
-        <h3 className="text-sm font-bold text-white tracking-tight">Your rating</h3>
-        <span className="text-[11px] text-slate-500 tabular-nums">
+        <h3 className="text-sm font-bold text-strong tracking-tight">Your rating</h3>
+        <span className="text-[11px] text-faint tabular-nums">
           {history.length} contests
         </span>
       </div>
 
       <div className="flex items-end gap-4 mb-1">
-        <p className="text-3xl font-bold text-white tracking-tight leading-none tabular-nums">
+        <p className="text-3xl font-bold text-strong tracking-tight leading-none tabular-nums">
           {latest.rating}
         </p>
         <span className={cn('flex items-center gap-1 text-xs font-bold tabular-nums pb-0.5', deltaTone)}>
@@ -64,12 +64,12 @@ export function RatingCard() {
           {delta > 0 ? '+' : ''}{delta}
         </span>
       </div>
-      <p className="text-[11px] text-slate-500">
-        Peak <span className="text-slate-300 font-semibold tabular-nums">{peak.rating}</span>
+      <p className="text-[11px] text-faint">
+        Peak <span className="text-body font-semibold tabular-nums">{peak.rating}</span>
         {' · '}
-        Rank <span className="text-slate-300 font-semibold tabular-nums">#{profile.stats.globalRank.toLocaleString()}</span>
+        Rank <span className="text-body font-semibold tabular-nums">#{profile.stats.globalRank.toLocaleString()}</span>
         {' · '}
-        Top <span className="text-slate-300 font-semibold tabular-nums">{(100 - profile.stats.percentile).toFixed(1)}%</span>
+        Top <span className="text-body font-semibold tabular-nums">{(100 - profile.stats.percentile).toFixed(1)}%</span>
       </p>
 
       {/* Progression */}
@@ -100,14 +100,14 @@ export function RatingCard() {
         <circle cx={last.x} cy={last.y} r="3.5" fill="var(--color-accent)" vectorEffect="non-scaling-stroke" />
       </svg>
 
-      <div className="flex items-center justify-between text-[10px] text-slate-500 mt-2 gap-2">
+      <div className="flex items-center justify-between text-[10px] text-faint mt-2 gap-2">
         <span className="truncate">{history[0].contestName}</span>
         <span className="truncate text-right">{latest.contestName}</span>
       </div>
 
-      <p className="text-[11px] text-slate-500 mt-3 pt-3 border-t border-white/[0.06]">
+      <p className="text-[11px] text-faint mt-3 pt-3 border-t border-line">
         Last placement{' '}
-        <span className="text-slate-300 font-semibold tabular-nums">#{latest.placement.toLocaleString()}</span>
+        <span className="text-body font-semibold tabular-nums">#{latest.placement.toLocaleString()}</span>
       </p>
     </div>
   )

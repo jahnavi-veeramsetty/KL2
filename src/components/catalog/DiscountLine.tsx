@@ -22,12 +22,14 @@ export function DiscountLine({
 
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
-      <span className={cn('text-slate-400 font-medium line-through', sm ? 'text-[10px]' : 'text-xs')}>
+      <span className={cn('text-subtle font-medium line-through', sm ? 'text-[10px]' : 'text-xs')}>
         {formatRupees(listPrice(price))}
       </span>
       <span
         className={cn(
-          'text-emerald-400 font-bold bg-emerald-400/10 rounded leading-none whitespace-nowrap',
+          // offer-chip rather than emerald utilities: the dark theme wants a
+          // lit tint, the light theme a solid badge. See index.css.
+          'offer-chip font-bold rounded leading-none whitespace-nowrap',
           sm ? 'text-[9px] px-1.5 py-0.5' : 'text-[10px] px-2 py-0.5'
         )}
       >
