@@ -9,9 +9,11 @@ interface ResultPanelProps {
   wrongInput?: string
   wrongExpected?: string
   wrongGot?: string
+  hiddenCasesPassed?: number
+  totalHiddenCases?: number
 }
 
-export function ResultPanel({ status, runtime, memory, wrongInput, wrongExpected, wrongGot }: ResultPanelProps) {
+export function ResultPanel({ status, runtime, memory, wrongInput, wrongExpected, wrongGot, hiddenCasesPassed, totalHiddenCases }: ResultPanelProps) {
   if (!status) return null
 
   return (
@@ -26,10 +28,17 @@ export function ResultPanel({ status, runtime, memory, wrongInput, wrongExpected
             <CheckCircle2 className="w-[18px] h-[18px] text-easy shrink-0" strokeWidth={2.2} aria-hidden />
             <span className="text-easy font-bold">Accepted</span>
           </div>
-          <div className="flex items-center gap-6 text-xs text-subtle">
+          <div className="flex items-center gap-6 text-xs text-subtle mt-1">
             <span>Runtime: <strong className="text-strong">{runtime}</strong></span>
             <span>Memory: <strong className="text-strong">{memory}</strong></span>
           </div>
+          {hiddenCasesPassed !== undefined && totalHiddenCases !== undefined && (
+            <div className="text-xs mt-2">
+              <span className="bg-easy/10 border border-easy/30 text-easy px-2.5 py-1 rounded-full font-medium inline-block">
+                Passed {hiddenCasesPassed} / {totalHiddenCases} Hidden Test Cases
+              </span>
+            </div>
+          )}
         </div>
       )}
 

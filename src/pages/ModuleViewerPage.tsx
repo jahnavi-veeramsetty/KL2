@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { CheckCircle, ChevronRight, ChevronDown, PlayCircle, FileText, Code, Menu, Maximize, Minimize, Copy, Search, ClipboardList, BrainCircuit, Rocket } from 'lucide-react'
 import { ThemeToggle } from '../components/layout/ThemeToggle'
 import { moduleDataMap, type ContentBlock } from '../data/lms/moduleContent'
 import { lmsCourses } from '../data/lms/courseContent'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 // --- Code Block Component ---
 function CodeBlock({ language, code }: { language?: string, code: string }) {
@@ -51,7 +52,19 @@ function CodeBlock({ language, code }: { language?: string, code: string }) {
 }
 
 // --- Content Renderer Component ---
-function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
+function parseMarkdown(text: string) {
+  if (!text) return ''
+  let html = text
+  // Bold (acting as a title)
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="block font-bold text-strong text-base mb-1 mt-0.5">$1</strong>')
+  // Italic
+  html = html.replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+  // Inline code
+  html = html.replace(/`([^`]+)`/g, '<code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">$1</code>')
+  return html
+}
+
+function ContentRenderer({ blocks, courseId, moduleId, topicId }: { blocks: ContentBlock[], courseId?: string, moduleId?: string, topicId?: string }) {
   return (
     <div className="space-y-6 text-body">
       {blocks.map((block, index) => {
@@ -59,12 +72,12 @@ function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
           case 'heading':
             const HeadingTag = `h${block.level}` as any
             return (
-              <HeadingTag key={index} className={`font-bold text-strong ${block.level === 1 ? 'text-3xl mb-6' : block.level === 2 ? 'text-2xl mt-8 mb-4' : 'text-xl mt-6 mb-3'}`}>
+              <HeadingTag key={index} className={`font-bold text-strong first:mt-0 ${block.level === 1 ? 'text-3xl mb-6' : block.level === 2 ? 'text-2xl mt-8 mb-4' : 'text-xl mt-6 mb-3'}`}>
                 {block.text}
               </HeadingTag>
             )
           case 'paragraph':
-            return <p key={index} className="leading-relaxed" dangerouslySetInnerHTML={{ __html: block.html }} />
+            return <p key={index} className="leading-relaxed" dangerouslySetInnerHTML={{ __html: parseMarkdown(block.html) }} />
           case 'code':
             return <CodeBlock key={index} language={block.language} code={block.code} />
           case 'table':
@@ -73,13 +86,13 @@ function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
                 <table className="w-full text-sm text-left">
                   <thead className="bg-panel text-strong font-bold border-b border-line">
                     <tr>
-                      {block.headers.map((h, i) => <th key={i} className="px-4 py-3">{h}</th>)}
+                      {block.headers.map((h, i) => <th key={i} className="px-4 py-3">{parseMarkdown(h)}</th>)}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-line">
                     {block.rows.map((row, i) => (
                       <tr key={i} className="hover:bg-raised/30 transition-colors">
-                        {row.map((cell, j) => <td key={j} className="px-4 py-3">{cell}</td>)}
+                        {row.map((cell, j) => <td key={j} className="px-4 py-3" dangerouslySetInnerHTML={{ __html: parseMarkdown(cell) }} />)}
                       </tr>
                     ))}
                   </tbody>
@@ -87,14 +100,107 @@ function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
               </div>
             )
           case 'list':
-            const ListTag = block.format === 'number' ? 'ol' : 'ul'
-            const listClass = block.format === 'number' ? 'list-decimal' : 'list-disc'
+            const prevBlock = blocks[index - 1]
+            const isOutcomes = prevBlock && prevBlock.type === 'heading' && prevBlock.text.toLowerCase().includes('outcome')
+
+            if (isOutcomes) {
+              return (
+                <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
+                  {block.items.map((item, i) => (
+                    <div key={i} className="bg-panel p-5 rounded-2xl border border-line shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 group">
+                      <div className="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                        <CheckCircle className="w-5 h-5" />
+                      </div>
+                      <div className="flex-1 font-semibold text-strong self-center leading-relaxed" dangerouslySetInnerHTML={{ __html: parseMarkdown(item) }} />
+                    </div>
+                  ))}
+                </div>
+              )
+            }
+
+            if (block.format === 'number') {
+              return (
+                <div key={index} className="flex flex-col gap-4 my-8">
+                  {block.items.map((item, i) => (
+                    <div key={i} className="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                        {i + 1}
+                      </div>
+                      <div className="flex-1 leading-relaxed text-body" dangerouslySetInnerHTML={{ __html: parseMarkdown(item) }} />
+                    </div>
+                  ))}
+                </div>
+              )
+            }
             return (
-              <ListTag key={index} className={`${listClass} pl-6 space-y-2 my-4`}>
+              <div key={index} className="flex flex-col gap-3 my-6">
                 {block.items.map((item, i) => (
-                  <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
+                  <div key={i} className="flex gap-4 items-start group">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                      <div className="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors" />
+                    </div>
+                    <div className="flex-1 leading-relaxed text-body pt-0.5" dangerouslySetInnerHTML={{ __html: parseMarkdown(item) }} />
+                  </div>
                 ))}
-              </ListTag>
+              </div>
+            )
+          case 'challenge_list':
+            return (
+              <div key={index} className="overflow-x-auto my-6 border border-line rounded-2xl bg-panel shadow-sm">
+                <table className="w-full text-sm text-left">
+                  <thead className="bg-raised text-subtle text-[11px] uppercase tracking-wider font-bold border-b border-line">
+                    <tr>
+                      <th className="px-6 py-4 w-16 text-center">Status</th>
+                      <th className="px-6 py-4 w-20 text-center">No.</th>
+                      <th className="px-6 py-4">Title</th>
+                      <th className="px-6 py-4 w-32">Difficulty</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-line">
+                    {block.challenges?.map((challenge: any, i: number) => (
+                      <tr key={i} className="hover:bg-raised/30 transition-colors group">
+                        <td className="px-6 py-4 text-center">
+                          {challenge.status === 'Solved' ? (
+                            <CheckCircle className="w-5 h-5 text-emerald-500 mx-auto" strokeWidth={2.5} />
+                          ) : challenge.status === 'Attempted' ? (
+                            <svg className="w-5 h-5 text-orange-500 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeDasharray="4 4" strokeLinecap="round">
+                              <circle cx="12" cy="12" r="9" />
+                            </svg>
+                          ) : (
+                            <svg className="w-5 h-5 text-subtle mx-auto opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <circle cx="12" cy="12" r="9" />
+                            </svg>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 text-center text-strong font-medium">
+                          {i + 1}
+                        </td>
+                        <td className="px-6 py-4">
+                          <Link 
+                            to={`/lms/${courseId}/challenge/${challenge.id}`}
+                            state={{ returnTo: `/lms/${courseId}/module/${moduleId}/topic/${topicId}` }}
+                            className="font-bold text-strong hover:text-accent transition-colors flex items-center gap-2"
+                          >
+                            {challenge.title}
+                            <div className="w-5 h-5 rounded-full bg-accent/10 text-accent flex items-center justify-center opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                              <ChevronRight className="w-3 h-3" />
+                            </div>
+                          </Link>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`text-[10px] font-bold px-2 py-1 rounded-md border uppercase tracking-widest ${
+                            challenge.difficulty === 'Easy' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
+                            challenge.difficulty === 'Medium' ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20' :
+                            'bg-red-500/10 text-red-500 border-red-500/20'
+                          }`}>
+                            {challenge.difficulty}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )
           default:
             return null
@@ -163,7 +269,22 @@ export default function ModuleViewerPage() {
       if (detailedData) {
         detailedData.days.forEach(day => {
           day.topics.forEach(topic => {
-            if (topic.title.toLowerCase().includes(query) || day.title.toLowerCase().includes(query)) {
+            let contentMatched = false
+            if (topic.content) {
+              contentMatched = topic.content.some(block => {
+                if (block.type === 'paragraph' && block.html.toLowerCase().includes(query)) return true
+                if (block.type === 'heading' && block.text.toLowerCase().includes(query)) return true
+                if (block.type === 'list' && block.items.some(item => item.toLowerCase().includes(query))) return true
+                if (block.type === 'code' && block.code.toLowerCase().includes(query)) return true
+                if (block.type === 'table') {
+                  if (block.headers.some(h => h.toLowerCase().includes(query))) return true
+                  if (block.rows.some(row => row.some(cell => cell.toLowerCase().includes(query)))) return true
+                }
+                return false
+              })
+            }
+
+            if (topic.title.toLowerCase().includes(query) || day.title.toLowerCase().includes(query) || contentMatched) {
               results.push({ moduleId: m.id, topicId: topic.id, title: topic.title, type: 'topic', moduleTitle: m.title })
             }
           })
@@ -189,6 +310,8 @@ export default function ModuleViewerPage() {
 
   const currentTopic = allTopics[currentTopicIndex]
   const currentDay = moduleData.days.find(d => d.id === currentTopic.dayId)
+
+  useDocumentTitle(moduleData?.title || course?.title || 'Module')
 
   // State for Navigation
   const [expandedDays, setExpandedDays] = useState<Record<string, boolean>>({
@@ -453,14 +576,14 @@ export default function ModuleViewerPage() {
     </div>
   )
 
-  const getTopicIcon = (type: string, isCompleted: boolean) => {
-    if (isCompleted) return <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
+  const getTopicIcon = (type: string, isCompleted: boolean, isActiveQuiz?: boolean) => {
+    if (isCompleted) return <CheckCircle className={`w-4 h-4 shrink-0 ${isActiveQuiz ? 'text-on-accent' : 'text-emerald-500'}`} />
     switch (type) {
-      case 'reading': return <FileText className="w-4 h-4 text-subtle shrink-0" />
-      case 'video': return <PlayCircle className="w-4 h-4 text-subtle shrink-0" />
-      case 'coding': return <Code className="w-4 h-4 text-subtle shrink-0" />
-      case 'quiz': return <ClipboardList className="w-4 h-4 text-accent shrink-0" />
-      default: return <FileText className="w-4 h-4 text-subtle shrink-0" />
+      case 'reading': return <FileText className={`w-4 h-4 shrink-0 ${isActiveQuiz ? 'text-on-accent/80' : 'text-subtle'}`} />
+      case 'video': return <PlayCircle className={`w-4 h-4 shrink-0 ${isActiveQuiz ? 'text-on-accent/80' : 'text-subtle'}`} />
+      case 'coding': return <Code className={`w-4 h-4 shrink-0 ${isActiveQuiz ? 'text-on-accent/80' : 'text-subtle'}`} />
+      case 'quiz': return <ClipboardList className={`w-4 h-4 shrink-0 ${isActiveQuiz ? 'text-on-accent' : 'text-accent'}`} />
+      default: return <FileText className={`w-4 h-4 shrink-0 ${isActiveQuiz ? 'text-on-accent/80' : 'text-subtle'}`} />
     }
   }
 
@@ -482,10 +605,9 @@ export default function ModuleViewerPage() {
           />
         )}
 
-        {/* Left Sidebar (Drawer on Mobile, Resizable on Desktop) */}
         <aside
           className={`
-            shrink-0 border-r border-line bg-panel overflow-x-hidden overflow-y-auto flex flex-col whitespace-nowrap
+            shrink-0 border-r border-line bg-panel overflow-x-hidden overflow-y-auto flex flex-col
             fixed inset-y-0 left-0 z-40 h-[100dvh] pt-14 w-[280px]
             md:relative md:z-auto md:h-auto md:pt-0 md:w-[var(--md-width)]
             ${isDragging ? '' : 'transition-all duration-300 ease-in-out'}
@@ -509,7 +631,7 @@ export default function ModuleViewerPage() {
 
                   {isExpanded && (
                     <div className="mt-1 pl-2 space-y-1">
-                      {day.topics.map(topic => {
+                      {day.topics.map((topic, topicIdx) => {
                         const isCurrent = currentTopic.id === topic.id
                         const isCompleted = completedTopics.has(topic.id)
                         const topicIndex = allTopics.findIndex(t => t.id === topic.id)
@@ -521,15 +643,22 @@ export default function ModuleViewerPage() {
                               goToTopic(topicIndex)
                               if (window.innerWidth < 768) setIsSidebarOpen(false)
                             }}
-                            className={`w-full flex items-start gap-3 p-2.5 rounded-lg transition-colors relative z-10 text-left group
-                              ${isCurrent ? 'bg-accent/10 text-accent' : 'hover:bg-raised text-subtle'}
+                            className={`w-full flex items-start gap-2.5 p-2 rounded-lg transition-colors relative z-10 text-left group
+                              ${['quiz', 'coding'].includes(topic.type) 
+                                ? (isCurrent ? 'bg-accent text-on-accent shadow-md' : 'border-2 border-accent/20 bg-accent/5 hover:bg-accent/10 hover:border-accent/40') 
+                                : (isCurrent ? 'bg-accent/10 text-accent' : 'hover:bg-raised text-subtle')
+                              }
                             `}
                           >
-                            <div className="mt-0.5 shrink-0 bg-panel group-hover:bg-raised transition-colors">
-                              {getTopicIcon(topic.type, isCompleted)}
+                            <div className={`mt-[3px] shrink-0 rounded transition-colors ${['quiz', 'coding'].includes(topic.type) && isCurrent ? 'bg-black/10' : 'bg-panel group-hover:bg-raised'}`}>
+                              {getTopicIcon(topic.type, isCompleted, isCurrent && ['quiz', 'coding'].includes(topic.type))}
                             </div>
-                            <span className={`text-sm font-semibold leading-tight ${isCurrent ? 'text-accent' : 'group-hover:text-strong'}`}>
-                              {topic.title}
+                            <span className={`text-[13px] leading-snug ${
+                              ['quiz', 'coding'].includes(topic.type) 
+                                ? (isCurrent ? 'text-on-accent font-bold' : 'text-strong font-bold') 
+                                : (isCurrent ? 'text-accent font-bold' : 'font-medium group-hover:text-strong')
+                            }`}>
+                              {topicIdx + 1}. {topic.title}
                             </span>
                           </button>
                         )
@@ -552,7 +681,7 @@ export default function ModuleViewerPage() {
 
         {/* Main Content Area (Scrollable) */}
         <div className="flex-1 overflow-y-auto bg-page" ref={scrollRef}>
-          <div className="max-w-4xl px-8 sm:px-12 lg:px-16 py-10 pb-32">
+          <div className="max-w-4xl px-8 sm:px-12 lg:px-16 pt-6 pb-32">
 
             {/* Dynamic Content Rendering */}
             {currentTopic.type === 'quiz' ? (
@@ -586,31 +715,59 @@ export default function ModuleViewerPage() {
                   </div>
                 </div>
               </div>
+            ) : currentTopic.type === 'coding' ? (
+              <div className="space-y-8">
+                {(() => {
+                  const heading = currentTopic.content.find(b => b.type === 'heading' && b.level === 1) as any;
+                  const paragraph = currentTopic.content.find(b => b.type === 'paragraph') as any;
+                  return (
+                    <div className="mb-4">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center border border-accent/20 shadow-sm shadow-accent/5 shrink-0">
+                          <Code className="w-6 h-6 text-accent" />
+                        </div>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-strong tracking-tight">
+                          {heading?.text || currentTopic.title}
+                        </h1>
+                      </div>
+                      {paragraph && (
+                        <p 
+                          className="text-body text-base max-w-3xl leading-relaxed"
+                          dangerouslySetInnerHTML={{ __html: parseMarkdown(paragraph.html) }}
+                        />
+                      )}
+                    </div>
+                  )
+                })()}
+                <ContentRenderer courseId={courseId} moduleId={moduleId} topicId={currentTopic.id} blocks={currentTopic.content.filter(b => b.type === 'challenge_list')} />
+              </div>
             ) : (
-              <ContentRenderer blocks={currentTopic.content} />
+              <ContentRenderer courseId={courseId} moduleId={moduleId} topicId={currentTopic.id} blocks={currentTopic.content.filter(b => !(b.type === 'heading' && b.level === 1))} />
             )}
 
             {/* Footer Actions */}
-            <div className="mt-16 pt-8 border-t border-line flex items-center justify-between">
-              {!(currentTopicIndex === 0 && course?.modules.findIndex(m => m.id === moduleId) === 0) ? (
-                <button
-                  onClick={handlePrevious}
-                  className="px-5 py-2.5 rounded-lg border border-line text-sm font-bold text-strong hover:bg-raised transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Previous
-                </button>
-              ) : (
-                <div />
-              )}
+            {!['quiz', 'coding'].includes(currentTopic.type) && (
+              <div className="mt-16 pt-8 border-t border-line flex items-center justify-between">
+                {!(currentTopicIndex === 0 && course?.modules.findIndex(m => m.id === moduleId) === 0) ? (
+                  <button
+                    onClick={handlePrevious}
+                    className="px-5 py-2.5 rounded-lg border border-line text-sm font-bold text-strong hover:bg-raised transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Previous
+                  </button>
+                ) : (
+                  <div />
+                )}
 
-              <button
-                onClick={markCompleteAndNext}
-                className="px-6 py-2.5 rounded-lg bg-accent text-on-accent text-sm font-extrabold hover:bg-accent-strong transition-all flex items-center gap-2 shadow-md shadow-accent/20 active:scale-95"
-              >
-                {completedTopics.has(currentTopic.id) ? 'Continue to Next' : 'Mark as Complete'}
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
+                <button
+                  onClick={markCompleteAndNext}
+                  className="px-6 py-2.5 rounded-lg bg-accent text-on-accent text-sm font-extrabold hover:bg-accent-strong transition-all flex items-center gap-2 shadow-md shadow-accent/20 active:scale-95"
+                >
+                  {completedTopics.has(currentTopic.id) ? 'Continue to Next' : 'Mark as Complete'}
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
 
           </div>
         </div>

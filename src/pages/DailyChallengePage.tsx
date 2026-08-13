@@ -9,6 +9,7 @@ import { useDailyProgress } from '../hooks/useDailyProgress'
 import { useProfile } from '../hooks/useProfile'
 import { endOfToday, getTodayChallenge } from '../lib/daily'
 import { cn } from '../lib/cn'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 /**
  * Challenge and archive on the left, calendar and scores in a sticky rail.
@@ -31,6 +32,7 @@ const DIFFICULTY_TONE = {
 } as const
 
 export default function DailyChallengePage() {
+  useDocumentTitle('Daily Challenge')
   // getTodayChallenge builds the date from local parts. The page previously
   // used toISOString(), which is UTC — in IST that returns yesterday's date
   // until 05:30, so early risers were shown the wrong challenge.

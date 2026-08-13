@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useParams } from 'react-router-dom'
 import { CheckCircle, AlertTriangle, Clock, ChevronRight, ChevronLeft, LayoutGrid, X, User } from 'lucide-react'
 import { cn } from '../lib/cn'
 import { currentUser } from '../data'
 
 // Mock Data for the Quiz
-const MOCK_QUESTIONS = [
+const JAVA_QUESTIONS = [
   {
     id: 'q1',
     text: 'Which of the following is correct about Java?',
@@ -24,9 +25,43 @@ const MOCK_QUESTIONS = [
   }))
 ]
 
+const AIML_QUESTIONS = [
+  {
+    id: 'q1',
+    text: 'What does a virtual environment do in Python?',
+    options: [
+      'Makes Python run faster',
+      'Isolates project dependencies',
+      'Compiles code into an executable',
+      'Installs Python globally'
+    ],
+    correctAnswer: 1
+  },
+  {
+    id: 'q2',
+    text: 'Which file is typically used to list Python project dependencies?',
+    options: [
+      'package.json',
+      'dependencies.txt',
+      'requirements.txt',
+      'Pipfile.lock'
+    ],
+    correctAnswer: 2
+  },
+  ...Array.from({ length: 18 }).map((_, i) => ({
+    id: `q${i + 3}`,
+    text: `Sample Question ${i + 3}: Which Python library is commonly used for data manipulation?`,
+    options: ['Django', 'Pandas', 'Flask', 'Requests'],
+    correctAnswer: 1
+  }))
+]
+
 type QuizState = 'instructions' | 'active' | 'results'
 
 export default function QuizEnginePage() {
+  const { courseId } = useParams<{ courseId: string }>()
+  const MOCK_QUESTIONS = courseId === 'ai-and-ml' ? AIML_QUESTIONS : JAVA_QUESTIONS
+
   const [quizState, setQuizState] = useState<QuizState>('instructions')
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<string, number>>({})

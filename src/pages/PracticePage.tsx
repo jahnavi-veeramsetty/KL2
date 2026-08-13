@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+
 import { ProblemSidebar } from '../components/practice/ProblemSidebar'
 import { PracticeStatsStrip } from '../components/practice/PracticeStatsStrip'
 import { ProblemTable } from '../components/practice/ProblemTable'
@@ -6,8 +7,10 @@ import { TopicFilterModal } from '../components/practice/TopicFilterModal'
 import { SearchInput, Select } from '../ui'
 import { problems as allProblems } from '../data'
 import type { Difficulty, ProblemStatus, Problem } from '../types'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 export default function PracticePage() {
+  useDocumentTitle('Practice Problems')
   const [search, setSearch] = useState('')
   const [selectedTopics, setSelectedTopics] = useState<string[]>([])
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | null>(null)

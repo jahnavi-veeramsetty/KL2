@@ -22,6 +22,7 @@ const ModuleViewerPage = lazy(() => import('./pages/ModuleViewerPage'))
 const QuizEnginePage = lazy(() => import('./pages/QuizEnginePage'))
 const PracticePage = lazy(() => import('./pages/PracticePage'))
 const ProblemPage = lazy(() => import('./pages/ProblemPage'))
+const CourseChallengeIDEPage = lazy(() => import('./pages/CourseChallengeIDEPage'))
 const CompetePage = lazy(() => import('./pages/CompetePage'))
 const HackathonsPage = lazy(() => import('./pages/HackathonsPage'))
 const ContestDetailPage = lazy(() => import('./pages/ContestDetailPage'))
@@ -137,6 +138,12 @@ function App() {
               <Route 
                 path="/lms/:courseId/quiz/:topicId" 
                 element={<Suspense fallback={<RouteFallback />}><QuizEnginePage /></Suspense>} 
+              />
+              
+              {/* Standalone layout for Course Challenges (IDE) */}
+              <Route 
+                path="/lms/:courseId/challenge/:challengeId" 
+                element={<Suspense fallback={<RouteFallback />}><CourseChallengeIDEPage /></Suspense>} 
               />
             </Route>
 

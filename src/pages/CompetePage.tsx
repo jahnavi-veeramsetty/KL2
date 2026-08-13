@@ -9,6 +9,7 @@ import { EmptyState } from '../ui'
 import { contests } from '../data'
 import type { ContestDifficulty } from '../types'
 import { cn } from '../lib/cn'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 /**
  * `difficulty` is really a division. It was on every contest and filterable
@@ -37,6 +38,7 @@ function SectionHead({ title, count, tone }: { title: string; count: number; ton
 }
 
 export default function CompetePage() {
+  useDocumentTitle('Coding Contests')
   const [division, setDivision] = useState<ContestDifficulty | 'All'>('All')
 
   const visible = useMemo(

@@ -12,6 +12,7 @@ import { ROUTES } from '../constants/routes'
 import { courses } from '../data'
 import { continueLearningItems } from '../data/continueLearning'
 import { ContinueLearning } from '../components/dashboard/ContinueLearning'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const DEFAULT_FILTERS: CatalogFiltersState = {
   search: '',
@@ -28,6 +29,7 @@ const SORT_OPTIONS: SortOption[] = [
 ]
 
 export default function CoursesPage() {
+  useDocumentTitle('Courses')
   const [filters, setFilters] = useState<CatalogFiltersState>(DEFAULT_FILTERS)
   
   const catalogCourses = useMemo(() => {

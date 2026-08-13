@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../constants/routes'
 import { useProfile } from '../hooks/useProfile'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 /**
@@ -226,6 +227,7 @@ function DonutChart({ segments, total }: { segments: { value: number; color: str
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function ProfilePage() {
+  useDocumentTitle('Profile')
   const { profile: p } = useProfile()
   const totalSolved = p.solveStats.easy.solved + p.solveStats.medium.solved + p.solveStats.hard.solved
   const [bannerUrl, setBannerUrl] = useState<string | null>(null)

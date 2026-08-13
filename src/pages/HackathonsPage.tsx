@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { HackathonHero } from '../components/compete/HackathonHero'
 import { HackathonCard } from '../components/compete/HackathonCard'
 import { CardGrid } from '../components/catalog/CardGrid'
@@ -17,6 +18,8 @@ function SectionHead({ title, count, tone, pulse }: { title: string; count: numb
 }
 
 export default function HackathonsPage() {
+  useDocumentTitle('Hackathons')
+
   const featuredEvent =
     hackathons.find(h => h.status === 'ongoing') || hackathons.find(h => h.status === 'upcoming')
 

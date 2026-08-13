@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { CatalogFilters, type CatalogFiltersState, type SortOption } from '../components/catalog/CatalogFilters'
 import { CardGrid } from '../components/catalog/CardGrid'
 import { ShelfList } from '../components/catalog/ShelfList'
@@ -38,6 +39,7 @@ function SectionHead({ title, count, tone, pulse }: { title: string; count: numb
 }
 
 export default function MasterclassesPage() {
+  useDocumentTitle('Masterclasses')
   const [filters, setFilters] = useState<CatalogFiltersState>(DEFAULT_FILTERS)
   const filtered = useCatalogFilter(masterclasses, filters)
 

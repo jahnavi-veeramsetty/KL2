@@ -12,6 +12,7 @@ import { TestCasePanel } from '../components/problem/TestCasePanel'
 import { ResultPanel } from '../components/problem/ResultPanel'
 import type { ProgrammingLanguage } from '../types'
 import { useSettings } from '../hooks/useSettings'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { padTwo } from '../lib/format'
 
 type ResultStatus = 'accepted' | 'wrong' | 'error' | null
@@ -26,6 +27,8 @@ const PANEL_TABS: TabItem[] = [
 export default function ProblemPage() {
   const { problemId } = useParams<{ problemId: string }>()
   const problem = problems.find(p => p.id === problemId || p.slug === problemId)
+
+  useDocumentTitle(problem?.title || 'Practice')
 
   // Seeded from Settings → Appearance, then owned locally — switching language
   // on one problem should not rewrite the account-wide default.

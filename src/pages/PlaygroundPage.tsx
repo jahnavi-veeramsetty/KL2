@@ -7,6 +7,7 @@ import { Button, IconButton } from '../ui'
 import { playgroundSnippets } from '../data/snippets'
 import type { ProgrammingLanguage } from '../types'
 import { useSettings } from '../hooks/useSettings'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const STORAGE_KEY = 'playground_code'
 
@@ -35,6 +36,7 @@ function simulateOutput(code: string): string[] {
 }
 
 export default function PlaygroundPage() {
+  useDocumentTitle('Playground')
   // Seeded from Settings → Appearance; switching here is a scratchpad choice,
   // not a change to the saved default.
   const { settings } = useSettings()

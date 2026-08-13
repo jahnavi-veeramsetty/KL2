@@ -1,6 +1,7 @@
 import { GlobalSearch } from '../components/layout/GlobalSearch'
 import { DashboardGreeting } from '../components/dashboard/DashboardGreeting'
 import { TodayChallenge } from '../components/dashboard/TodayChallenge'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { ContinueLearning } from '../components/dashboard/ContinueLearning'
 import { UpcomingEvents } from '../components/dashboard/UpcomingEvents'
 import { IDELinkBanner } from '../components/dashboard/IDELinkBanner'
@@ -20,7 +21,9 @@ import { ProductivityRail } from '../components/dashboard/ProductivityRail'
  *   below xl — rail hidden; one column, the grid owns the scroll
  *   xl and up — two columns; the grid is locked and each pane scrolls itself
  */
-export default function DashboardPage() {
+export default function Dashboard() {
+  useDocumentTitle('Dashboard')
+
   return (
     <div
       className="

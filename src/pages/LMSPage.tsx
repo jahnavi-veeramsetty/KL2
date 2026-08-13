@@ -1,26 +1,58 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, Navigate, Link } from 'react-router-dom'
 import {
   PlayCircle, CheckCircle, FileText, LayoutList, Clock, Trophy,
   Grid, List
 } from 'lucide-react'
 import { lmsCourses, type LmsModule } from '../data/lms/courseContent'
+import { moduleDataMap } from '../data/lms/moduleContent'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { ROUTES } from '../constants/routes'
 import { ProgressBar, Card } from '../ui'
 
 export default function LMSPage() {
   const { courseId } = useParams<{ courseId: string }>()
+  const course = lmsCourses[courseId || '']
+  
+  useDocumentTitle(course?.title || 'Course')
+
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [showAllModules, setShowAllModules] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(6)
+  const loaderRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount(prev => prev + 6)
+        }
+      },
+      { rootMargin: '100px' }
+    )
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current)
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current)
+      }
+    }
+  }, [loaderRef])
 
   if (!courseId || !lmsCourses[courseId]) {
     return <Navigate to={ROUTES.COURSES} replace />
   }
+  const displayedModules = course.modules.slice(0, visibleCount)
+  const hasMoreModules = course.modules.length > visibleCount
 
-  const course = lmsCourses[courseId]
-  const initialCount = viewMode === 'list' ? 4 : 6
-  const displayedModules = showAllModules ? course.modules : course.modules.slice(0, initialCount)
-  const hasMoreModules = course.modules.length > initialCount
+  const getLessonsCount = (module: LmsModule) => {
+    const detailedData = moduleDataMap[module.id]
+    const totalLessons = detailedData ? detailedData.days.length : 4
+    const completedLessons = Math.round((module.progress / 100) * totalLessons)
+    return `${completedLessons} / ${totalLessons} Lessons`
+  }
 
   const getIconForType = (type: string) => {
     switch (type) {
@@ -68,13 +100,23 @@ export default function LMSPage() {
             {course.description}
           </p>
 
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-4 flex-wrap mt-2">
             {getTags().map((tag, i) => (
               <span key={i} className="flex items-center gap-1.5 bg-panel border border-line px-4 py-1.5 rounded-full text-[13px] font-semibold text-strong">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                 {tag}
               </span>
             ))}
+
+            <Link 
+              to={`/lms/${courseId}/module/${course.modules.find(m => m.progress < 100)?.id || course.modules[0].id}`} 
+              className="w-full flex justify-center mt-3 sm:mt-0 sm:w-auto sm:ml-2 sm:block"
+            >
+              <button className="px-8 py-3 bg-accent text-on-accent font-extrabold text-base rounded-xl transition-all hover:bg-accent-strong active:scale-95 shadow-lg shadow-accent/30 flex items-center justify-center gap-2">
+                <PlayCircle className="w-5 h-5" />
+                Continue Learning
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -164,7 +206,7 @@ export default function LMSPage() {
                 <div className="mt-auto space-y-2.5">
                   <div className="flex items-center justify-between text-[10px] font-bold text-faint uppercase tracking-wider">
                     <div className="flex items-center gap-3.5">
-                      <span>{module.progress === 100 ? '4 / 4' : '2 / 4'} Lessons</span>
+                      <span>{getLessonsCount(module)}</span>
                       <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {module.durationMins} MIN</span>
                     </div>
                     <span className={`text-xs font-black ${module.progress === 100 ? 'text-emerald-500' : 'text-strong'}`}>
@@ -212,7 +254,7 @@ export default function LMSPage() {
                   </div>
                   <div className="flex flex-col gap-1.5 w-40 shrink-0 pt-1">
                     <div className="flex items-center justify-between text-[10px] font-bold text-faint uppercase tracking-wider">
-                       <span>{module.progress === 100 ? '4 / 4' : '2 / 4'} Lessons</span>
+                       <span>{getLessonsCount(module)}</span>
                        <span className={`text-xs font-black text-right ${module.progress === 100 ? 'text-emerald-500' : 'text-strong'}`}>
                          {module.progress}%
                        </span>
@@ -231,13 +273,8 @@ export default function LMSPage() {
         )}
 
         {hasMoreModules && (
-          <div className="mt-10 flex justify-center">
-            <button
-              onClick={() => setShowAllModules(!showAllModules)}
-              className="px-8 py-3 rounded-full border border-line bg-page text-sm font-bold text-strong hover:bg-raised transition-all shadow-sm active:scale-95"
-            >
-              {showAllModules ? 'Show Less Modules' : 'See More Modules'}
-            </button>
+          <div ref={loaderRef} className="mt-10 flex justify-center py-6">
+            <div className="w-8 h-8 border-4 border-line border-t-accent rounded-full animate-spin"></div>
           </div>
         )}
       </div>
