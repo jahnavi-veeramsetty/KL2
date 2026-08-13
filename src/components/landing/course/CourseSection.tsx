@@ -44,7 +44,7 @@ export default function CourseSection() {
   };
 
   return (
-    <section id="courses" className="relative z-10 w-full py-24 lg:py-32 flex flex-col justify-center overflow-hidden">
+    <section id="courses" className="relative z-10 w-full py-16 lg:py-20 flex flex-col justify-center overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         
         {/* Header */}
@@ -59,7 +59,7 @@ export default function CourseSection() {
             Curriculum
           </motion.div>
           <motion.h3 variants={itemVariants} className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4" style={{ fontFamily: "var(--font-plus-jakarta)" }}>
-            Industry-Grade <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-tertiary to-brand-primary drop-shadow-[0_0_15px_rgba(70,110,255,0.4)]">Courses</span>
+            Industry-Grade <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-tertiary to-brand-primary drop-shadow-[0_0_15px_rgba(70,110,255,0.4)]">Course Library</span>
           </motion.h3>
           <motion.p variants={itemVariants} className="text-brand-neutral/70 max-w-2xl mx-auto text-base md:text-lg">
             Curated programs designed by industry veterans to take you from a junior developer to a senior engineer.

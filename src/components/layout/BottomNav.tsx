@@ -14,7 +14,7 @@ import { cn } from '../../lib/cn'
  */
 const TABS = [
   { label: 'Home', to: ROUTES.DASHBOARD, icon: LayoutGrid },
-  { label: 'Courses', to: ROUTES.COURSES, icon: BookOpen },
+  { label: 'Course Library', to: ROUTES.COURSES, icon: BookOpen },
   { label: 'Classes', to: ROUTES.MASTERCLASSES, icon: MonitorPlay },
   { label: 'Problems', to: ROUTES.PRACTICE, icon: Puzzle },
   { label: 'Daily', to: ROUTES.DAILY_CHALLENGE, icon: Flame },

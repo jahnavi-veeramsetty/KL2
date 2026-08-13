@@ -595,3 +595,19 @@
 :root[data-theme="light"] :is(.on-dark, .theme-dark) .text-pink-400 { color: #f472b6; }
 :root[data-theme="light"] :is(.on-dark, .theme-dark) .text-pink-300 { color: #f9a8d4; }
 :root[data-theme="light"] :is(.on-dark, .theme-dark) .text-lime-400 { color: #a3e635; }
+
+/* ─── Custom Scrollbar ───────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-subtle);
+}

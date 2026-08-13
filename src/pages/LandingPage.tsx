@@ -2,7 +2,7 @@ import StarfieldBackground from "../components/landing/StarfieldBackground";
 import HeroSection from "../components/landing/hero/HeroSection";
 import AssociatedWithSection from "../components/landing/associated/AssociatedWithSection";
 import AboutUsSection from "../components/landing/about/AboutUsSection";
-import ParticleNetwork from "../components/landing/about/ParticleNetwork";
+import CollegeCollaborationsSection from "../components/landing/collaborations/CollegeCollaborationsSection";
 import CourseSection from "../components/landing/course/CourseSection";
 import PracticeSection from "../components/landing/practice/PracticeSection";
 import TutorialSection from "../components/landing/tutorial/TutorialSection";
@@ -31,13 +31,10 @@ export default function LandingPage() {
         <AssociatedWithSection />
 
         {/* 3. About Us / Our Ecosystem */}
-        <div className="w-full relative py-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#000511] via-[#000511]/80 to-[#000511] pointer-events-none" />
-          <div className="relative z-10 space-y-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <AboutUsSection />
-            <ParticleNetwork />
-          </div>
-        </div>
+        <AboutUsSection />
+
+        {/* 3.5. Regional Reach / Collaborations */}
+        <CollegeCollaborationsSection />
 
         {/* 4. Course Features */}
         <CourseSection />

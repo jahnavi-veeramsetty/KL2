@@ -10,7 +10,7 @@ import { ROUTES } from '../constants/routes'
  */
 export const PAGE_TITLES: Record<string, string> = {
   [ROUTES.DASHBOARD]:       'Dashboard',
-  [ROUTES.COURSES]:         'Courses',
+  [ROUTES.COURSES]:         'Course Library',
   [ROUTES.MASTERCLASSES]:   'Masterclasses',
   [ROUTES.PRACTICE]:        'Problems',
   [ROUTES.PLAYGROUND]:      'Playground',

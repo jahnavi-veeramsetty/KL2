@@ -63,7 +63,7 @@ const sections = [
   {
     label: 'LEARN',
     items: [
-      { label: 'Courses', to: ROUTES.COURSES, icon: Icon.courses },
+      { label: 'Course Library', to: ROUTES.COURSES, icon: Icon.courses },
       { label: 'Masterclasses', to: ROUTES.MASTERCLASSES, icon: Icon.masterclass },
     ],
   },

@@ -129,40 +129,49 @@ export function CourseCard({ course, className }: CourseCardProps) {
           {/* Price & Action — phones put the struck price inline beside the
               payable one; there is no room for the stacked treatment. */}
           <div className="sm:hidden">
-            <DiscountLine price={course.price} size="sm" className="mb-1" />
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-strong font-bold text-base tracking-tight tabular-nums">
-                {formatRupees(course.price)}
-              </span>
-              <span className={cn(
-                'text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg shrink-0',
-                inProgress
-                  ? 'bg-raised text-strong border border-line-strong'
-                  : 'bg-accent text-on-accent'
-              )}>
-                {inProgress ? 'Continue' : 'Enroll'}
-              </span>
-            </div>
+            {!inProgress && (
+              <>
+                <DiscountLine price={course.price} size="sm" className="mb-1" />
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-strong font-bold text-base tracking-tight tabular-nums">
+                    {formatRupees(course.price)}
+                  </span>
+                  <span className="bg-accent text-on-accent text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg shrink-0">
+                    Enroll
+                  </span>
+                </div>
+              </>
+            )}
+            {inProgress && (
+              <div className="flex items-center justify-end">
+                <span className="bg-raised text-strong border border-line-strong text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg shrink-0">
+                  Continue
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="hidden sm:flex pt-3 border-t border-line items-end justify-between gap-2">
-            <div className="flex flex-col min-w-0">
-              <DiscountLine price={course.price} size="sm" className="mb-1 @min-[20rem]:hidden" />
-              <DiscountLine price={course.price} className="mb-1 hidden @min-[20rem]:flex" />
-              <span className="text-strong font-bold text-base @min-[17rem]:text-lg @min-[20rem]:text-xl tracking-tight leading-none tabular-nums">
-                {formatRupees(course.price)}
-              </span>
-            </div>
-
-            {/* A span, not a button — the whole card is already a link. */}
-            <span className={cn(
-              'text-[10px] @min-[17rem]:text-[11px] @min-[20rem]:text-xs font-bold uppercase tracking-wide px-3 py-2 @min-[17rem]:px-4 @min-[20rem]:px-5 @min-[20rem]:py-2.5 rounded-lg transition-all duration-300 shrink-0',
-              inProgress
-                ? 'bg-raised text-strong group-hover:bg-line-strong border border-line-strong'
-                : 'bg-accent text-on-accent group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]'
-            )}>
-              {inProgress ? 'Continue' : 'Enroll'}
-            </span>
+            {!inProgress ? (
+              <>
+                <div className="flex flex-col min-w-0">
+                  <DiscountLine price={course.price} size="sm" className="mb-1 @min-[20rem]:hidden" />
+                  <DiscountLine price={course.price} className="mb-1 hidden @min-[20rem]:flex" />
+                  <span className="text-strong font-bold text-base @min-[17rem]:text-lg @min-[20rem]:text-xl tracking-tight leading-none tabular-nums">
+                    {formatRupees(course.price)}
+                  </span>
+                </div>
+                <span className="bg-accent text-on-accent group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] text-[10px] @min-[17rem]:text-[11px] @min-[20rem]:text-xs font-bold uppercase tracking-wide px-3 py-2 @min-[17rem]:px-4 @min-[20rem]:px-5 @min-[20rem]:py-2.5 rounded-lg transition-all duration-300 shrink-0">
+                  Enroll
+                </span>
+              </>
+            ) : (
+              <div className="flex w-full justify-end">
+                <span className="bg-raised text-strong group-hover:bg-line-strong border border-line-strong text-[10px] @min-[17rem]:text-[11px] @min-[20rem]:text-xs font-bold uppercase tracking-wide px-3 py-2 @min-[17rem]:px-4 @min-[20rem]:px-5 @min-[20rem]:py-2.5 rounded-lg transition-all duration-300 shrink-0">
+                  Continue
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </Card>

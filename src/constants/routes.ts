@@ -6,6 +6,7 @@ export const ROUTES = {
 
   COURSES: '/courses',
   COURSE_DETAIL: (courseId: string) => `/courses/${courseId}`,
+  LMS_COURSE: (courseId: string) => `/lms/${courseId}`,
   MASTERCLASSES: '/masterclasses',
   MASTERCLASS_DETAIL: (masterclassId: string) => `/masterclasses/${masterclassId}`,
 

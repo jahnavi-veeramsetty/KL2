@@ -7,7 +7,13 @@ import { GlobalSearch } from './GlobalSearch'
 import { NotificationBell } from './NotificationBell'
 import { ThemeToggle } from './ThemeToggle'
 
-export default function TopBar() {
+export default function TopBar({ 
+  hideSearch = false, 
+  centerContent 
+}: { 
+  hideSearch?: boolean, 
+  centerContent?: React.ReactNode 
+}) {
   const { profile } = useProfile()
   const { setMobileOpen } = useSidebar()
   const xp = profile.stats.totalXP.toLocaleString()
@@ -27,11 +33,17 @@ export default function TopBar() {
         <img src={logo} alt="Knowvation Learnings" className="h-9 lg:h-9 w-auto object-contain" />
       </Link>
 
-      {/* Search — desktop only, centred in the bar regardless of what flanks it.
-          On mobile it stays on the Dashboard. */}
-      <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 w-full max-w-md xl:max-w-xl px-4">
-        <GlobalSearch />
-      </div>
+      {/* Center Slot — Search or custom content like Breadcrumbs */}
+      {!hideSearch && !centerContent && (
+        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 w-full max-w-md xl:max-w-xl px-4">
+          <GlobalSearch />
+        </div>
+      )}
+      {centerContent && (
+        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 text-center">
+          {centerContent}
+        </div>
+      )}
 
       {/* Right — XP + Streak + Bell */}
       <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 ml-auto">

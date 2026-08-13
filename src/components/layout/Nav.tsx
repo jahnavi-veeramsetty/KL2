@@ -15,7 +15,7 @@ interface NavLink {
 }
 
 const NAV_LINKS: NavLink[] = [
-  { label: "Courses", to: "/#courses" },
+  { label: "Course Library", to: "/#courses" },
   { label: "Tutorials", to: "/#tutorials" },
   { label: "Practice", to: "/#practice" },
   { label: "Community", to: "/#community" },
@@ -29,7 +29,7 @@ function KLMLogo() {
     <Link
       to="/"
       aria-label="KLM — Go to homepage"
-      className="group flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 rounded-lg md:translate-y-2"
+      className="group flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 rounded-lg"
     >
       <img src={logo} alt="Knowvation Learnings Logo" className="h-8 md:h-10 w-auto object-contain" />
     </Link>

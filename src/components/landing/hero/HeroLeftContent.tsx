@@ -40,13 +40,13 @@ export default function HeroLeftContent({ className = "" }: HeroLeftContentProps
       {/* ── Main headline ── */}
       <div className="opacity-0-init animate-fade-slide-up delay-200">
         <h1
-          className="text-[27px] min-[400px]:text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.14] tracking-tight text-brand-neutral"
+          className="text-2xl min-[400px]:text-[28px] sm:text-3xl lg:text-4xl font-extrabold leading-[1.14] tracking-tight text-brand-neutral"
           style={{ fontFamily: "var(--font-plus-jakarta)" }}
         >
-          <span className="block">Ignite.</span>
-          <span className="relative inline-block">
+          <span>Learn from Experts. </span>
+          <span className="relative inline-block whitespace-nowrap">
             <span className="relative z-10 bg-gradient-to-r from-brand-tertiary via-[#C7D9FF] to-brand-tertiary bg-clip-text text-transparent">
-              Innovate.
+              Connect Beyond Classrooms.
             </span>
             {/* Glow behind gradient text */}
             <span
@@ -54,7 +54,7 @@ export default function HeroLeftContent({ className = "" }: HeroLeftContentProps
               aria-hidden="true"
             />
           </span>
-          <span className="block">Implement.</span>
+          <span className="whitespace-nowrap"> Shape Your Career.</span>
         </h1>
       </div>
 

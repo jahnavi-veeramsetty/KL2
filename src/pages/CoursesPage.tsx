@@ -10,6 +10,8 @@ import { useMediaQuery, SM_QUERY } from '../hooks/useMediaQuery'
 import { buildShelves } from '../lib/shelves'
 import { ROUTES } from '../constants/routes'
 import { courses } from '../data'
+import { continueLearningItems } from '../data/continueLearning'
+import { ContinueLearning } from '../components/dashboard/ContinueLearning'
 
 const DEFAULT_FILTERS: CatalogFiltersState = {
   search: '',
@@ -27,7 +29,18 @@ const SORT_OPTIONS: SortOption[] = [
 
 export default function CoursesPage() {
   const [filters, setFilters] = useState<CatalogFiltersState>(DEFAULT_FILTERS)
-  const filtered = useCatalogFilter(courses, filters)
+  
+  const catalogCourses = useMemo(() => {
+    return courses.map(course => {
+      const enrolled = continueLearningItems.find(item => item.courseId === course.id)
+      if (enrolled) {
+        return { ...course, progress: enrolled.progress }
+      }
+      return course
+    })
+  }, [])
+  
+  const filtered = useCatalogFilter(catalogCourses, filters)
 
   const isCompact = !useMediaQuery(SM_QUERY)
 
@@ -54,6 +67,11 @@ export default function CoursesPage() {
         searchPlaceholder="Search courses..."
         sortOptions={SORT_OPTIONS}
       />
+
+      <div className="mb-8">
+        <ContinueLearning />
+      </div>
+
       <div className="text-xs text-subtle mb-4">
         {filtered.length} {filtered.length === 1 ? 'course' : 'courses'} found
       </div>

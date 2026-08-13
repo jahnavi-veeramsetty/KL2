@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams, Navigate, useNavigate } from 'react-router-dom'
+import { useParams, Navigate } from 'react-router-dom'
 import {
   Award, BookOpen, ClipboardList, Clock, Globe, GraduationCap,
   HelpCircle, Layers, ListChecks, Star, Target,
@@ -23,7 +23,6 @@ import type { AccordionItem } from '../ui'
 export default function CourseDetailPage() {
   const { courseId } = useParams<{ courseId: string }>()
   const [showRegisterModal, setShowRegisterModal] = useState(false)
-  const navigate = useNavigate()
 
   const course = courses.find(c => c.id === courseId || c.slug === courseId)
   if (!course) return <Navigate to={ROUTES.COURSES} replace />
@@ -50,7 +49,7 @@ export default function CourseDetailPage() {
           backTo={ROUTES.COURSES}
         className="mb-6"
         items={[
-          { label: 'Courses', to: ROUTES.COURSES },
+          { label: 'Course Library', to: ROUTES.COURSES },
           { label: course.title },
         ]}
       />
@@ -150,7 +149,7 @@ export default function CourseDetailPage() {
                 </div>
               </div>
               {isEnrolled ? (
-                <Button className="w-full py-2" size="md" onClick={() => navigate(ROUTES.DASHBOARD)}>
+                <Button className="w-full py-2" size="md" onClick={() => window.open(ROUTES.LMS_COURSE(course.id), '_blank')}>
                   Go to course
                 </Button>
               ) : (
@@ -169,8 +168,8 @@ export default function CourseDetailPage() {
       {/* Mobile sticky Register CTA */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 bg-page/90 backdrop-blur-md border-t border-line-strong p-4 z-40">
         {isEnrolled ? (
-          <Button className="w-full" size="lg" onClick={() => navigate(ROUTES.DASHBOARD)}>
-            Go to Course
+          <Button className="w-full" size="lg" onClick={() => window.open(ROUTES.LMS_COURSE(course.id), '_blank')}>
+            Go to course
           </Button>
         ) : (
           <Button className="w-full" size="lg" onClick={() => setShowRegisterModal(true)}>

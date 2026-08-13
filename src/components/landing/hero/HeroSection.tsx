@@ -1,6 +1,5 @@
 import HeroLeftContent from "./HeroLeftContent";
 import HeroSignupForm from "./HeroSignupForm";
-
 /* ─────────────────────────────────────────────
    HeroSection.tsx
    Two-column hero layout composing the left
@@ -24,22 +23,24 @@ interface HeroSectionProps {
 export default function HeroSection({ className = "" }: HeroSectionProps) {
   return (
     <section
+      id="hero"
       aria-label="Hero — Get started with KLM"
       className={`relative z-10 flex flex-col
-        min-h-[100dvh] md:h-[100dvh]
-        pt-24 md:pt-[72px] pb-12 md:pb-0
-        justify-start md:justify-center
-        md:overflow-hidden ${className}`}
+        min-h-screen
+        pt-28 md:pt-32 pb-16 md:pb-20
+        justify-center ${className}`}
     >
       {/* Container padding */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-0 md:py-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 w-full">
 
           {/* ── Left column ── */}
-          <HeroLeftContent />
+          <div className="w-full lg:w-3/5 xl:w-[55%]">
+            <HeroLeftContent />
+          </div>
 
           {/* ── Right column ── */}
-          <div className="relative opacity-0-init animate-fade-slide-up delay-300">
+          <div className="w-full lg:w-2/5 xl:w-[45%] max-w-md lg:max-w-none relative opacity-0-init animate-fade-slide-up delay-300">
             {/* Removed the dimmer mask to keep the background completely transparent */}
             {/* Decorative star-glint accents */}
             <div

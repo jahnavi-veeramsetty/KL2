@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ROUTES } from './constants/routes'
 import ScrollToTop from './components/layout/ScrollToTop'
 import AppLayout from './components/layout/AppLayout'
+import LMSLayout from './components/layout/LMSLayout'
 import { RequireAuth, RedirectIfAuthed } from './components/auth/RouteGuards'
 import { ProfileProvider } from './contexts/ProfileContext'
 import { SidebarProvider } from './contexts/SidebarContext'
@@ -16,6 +17,9 @@ import LandingPage from './pages/LandingPage'
 const DashboardPage = lazy(() => import('./pages/Dashboard'))
 const CoursesPage = lazy(() => import('./pages/CoursesPage'))
 const CourseDetailPage = lazy(() => import('./pages/CourseDetailPage'))
+const LMSPage = lazy(() => import('./pages/LMSPage'))
+const ModuleViewerPage = lazy(() => import('./pages/ModuleViewerPage'))
+const QuizEnginePage = lazy(() => import('./pages/QuizEnginePage'))
 const PracticePage = lazy(() => import('./pages/PracticePage'))
 const ProblemPage = lazy(() => import('./pages/ProblemPage'))
 const CompetePage = lazy(() => import('./pages/CompetePage'))
@@ -113,6 +117,27 @@ function App() {
                 <Route path={ROUTES.PRACTICE} element={<PracticePage />} />
                 <Route path={ROUTES.PLAYGROUND} element={<PlaygroundPage />} />
               </Route>
+
+              {/* Standalone layout for LMS viewer */}
+              <Route element={<LMSLayout />}>
+                <Route path="/lms/:courseId" element={<LMSPage />} />
+              </Route>
+              
+              {/* Standalone layout for Module Viewer */}
+              <Route 
+                path="/lms/:courseId/module/:moduleId" 
+                element={<Suspense fallback={<RouteFallback />}><ModuleViewerPage /></Suspense>} 
+              />
+              <Route 
+                path="/lms/:courseId/module/:moduleId/topic/:topicId" 
+                element={<Suspense fallback={<RouteFallback />}><ModuleViewerPage /></Suspense>} 
+              />
+
+              {/* Standalone layout for Quiz Engine */}
+              <Route 
+                path="/lms/:courseId/quiz/:topicId" 
+                element={<Suspense fallback={<RouteFallback />}><QuizEnginePage /></Suspense>} 
+              />
             </Route>
 
             {/* Redirect old routes */}

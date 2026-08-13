@@ -47,8 +47,8 @@ function GlassInput({
   autoComplete,
 }: GlassInputProps) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-xs font-semibold tracking-wide text-brand-neutral/60 uppercase">
+    <div className="flex flex-col gap-1">
+      <label htmlFor={id} className="text-[10px] font-semibold tracking-wide text-brand-neutral/60 uppercase">
         {label}
       </label>
       <input
@@ -59,7 +59,7 @@ function GlassInput({
         placeholder={placeholder}
         required={required}
         autoComplete={autoComplete}
-        className="input-glass w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-medium text-sm placeholder:text-white/40 transition-all duration-200 ease-in-out focus:bg-white/10 focus:border-white/20"
+        className="input-glass w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white font-medium text-sm placeholder:text-white/40 transition-all duration-200 ease-in-out focus:bg-white/10 focus:border-white/20"
       />
     </div>
   );
@@ -79,8 +79,8 @@ interface GlassSelectProps {
 
 function GlassSelect({ id, label, value, onChange, options, required }: GlassSelectProps) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-xs font-semibold tracking-wide text-brand-neutral/60 uppercase">
+    <div className="flex flex-col gap-1">
+      <label htmlFor={id} className="text-[10px] font-semibold tracking-wide text-brand-neutral/60 uppercase">
         {label}
       </label>
       <div className="relative">
@@ -89,7 +89,7 @@ function GlassSelect({ id, label, value, onChange, options, required }: GlassSel
           value={value}
           onChange={onChange}
           required={required}
-          className="input-glass w-full px-3 py-2.5 pr-10 rounded-xl bg-white/5 border border-white/10 text-white font-medium text-sm appearance-none cursor-pointer transition-all duration-200 ease-in-out focus:bg-white/10 focus:border-white/20"
+          className="input-glass w-full px-3 py-2 pr-8 rounded-lg bg-white/5 border border-white/10 text-white font-medium text-sm appearance-none cursor-pointer transition-all duration-200 ease-in-out focus:bg-white/10 focus:border-white/20"
           style={{ colorScheme: "dark" }}
         >
           <option value="" disabled className="bg-[#001240]">
@@ -209,12 +209,11 @@ export default function HeroSignupForm() {
         </p>
       </div>
 
-      {/* Form body */}
-      <div className="px-5 py-4">
+      <div className="px-5 py-3">
         {submitted ? (
           <SuccessState name={form.name || "there"} />
         ) : (
-          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-3">
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-2.5">
             <GlassInput
               id="signup-name"
               label="Full name"
@@ -250,7 +249,7 @@ export default function HeroSignupForm() {
               id="hero-signup-submit"
               type="submit"
               disabled={loading}
-              className="relative mt-1 w-full h-11 flex items-center justify-center gap-2 rounded-xl text-sm font-bold tracking-wide text-white overflow-hidden group bg-gradient-to-r from-[#0A44B0] to-[#2563EB] border border-[#3B82F6]/40 hover:brightness-110 hover:scale-[1.015] hover:-translate-y-px hover:shadow-xl hover:shadow-[#2563EB]/40 active:scale-[0.98] active:brightness-100 transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:translate-y-0"
+              className="relative mt-1 w-full h-10 flex items-center justify-center gap-2 rounded-lg text-sm font-bold tracking-wide text-white overflow-hidden group bg-gradient-to-r from-[#0A44B0] to-[#2563EB] border border-[#3B82F6]/40 hover:brightness-110 hover:scale-[1.015] hover:-translate-y-px hover:shadow-xl hover:shadow-[#2563EB]/40 active:scale-[0.98] active:brightness-100 transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-tertiary/60 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:translate-y-0"
             >
               {/* Star glow overlay */}
               <span

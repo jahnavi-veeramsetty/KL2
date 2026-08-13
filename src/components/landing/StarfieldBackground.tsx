@@ -52,8 +52,16 @@ export default function StarfieldBackground() {
 
     function handleMouseMove(e: MouseEvent) {
       const target = e.target as HTMLElement;
-      // Disable mouse attraction when hovering over the form, inputs, navbar, or the Vision section
-      if (target.closest('form, input, select, button, header, [role="region"], #vision-section, #about-us-section, #associated-with-section')) {
+      
+      // If a hero section exists on this page, only react to mouse inside it
+      const heroSection = document.getElementById('hero');
+      if (heroSection && !target.closest('#hero')) {
+        mouseRef.current = { x: -1000, y: -1000 };
+        return;
+      }
+
+      // Disable mouse attraction when hovering over the form, inputs, or navbar
+      if (target.closest('form, input, select, button, header, [role="region"]')) {
         mouseRef.current = { x: -1000, y: -1000 };
       } else {
         mouseRef.current = { x: e.clientX, y: e.clientY };

@@ -1,7 +1,6 @@
 
 
 import { motion } from "framer-motion";
-import ParticleNetwork from "./ParticleNetwork";
 import EcosystemHub from "./EcosystemHub";
 
 export default function AboutUsSection() {
@@ -20,11 +19,8 @@ export default function AboutUsSection() {
 
 
   return (
-    <section id="about-us-section" className="relative z-10 w-full min-h-screen flex flex-col justify-center overflow-x-hidden bg-[#000918] py-24 lg:py-16">
+    <section id="about-us-section" className="relative z-10 w-full flex flex-col justify-center overflow-x-hidden bg-transparent py-16 lg:py-20">
       
-      {/* Background Interactive Particle Network */}
-      <ParticleNetwork />
-
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center h-full">
@@ -67,7 +63,7 @@ export default function AboutUsSection() {
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group flex items-center gap-3 text-white font-bold tracking-wider hover:text-brand-tertiary transition-colors relative overflow-hidden"
+              className="group flex items-center gap-3 text-white font-bold tracking-wider hover:text-brand-tertiary transition-colors relative overflow-hidden pr-4"
             >
               <span className="uppercase text-xs md:text-sm relative z-10">Join the Network</span>
               <span className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:border-brand-tertiary group-hover:translate-x-2 transition-all duration-300 relative z-10 bg-black/20 backdrop-blur-sm">
