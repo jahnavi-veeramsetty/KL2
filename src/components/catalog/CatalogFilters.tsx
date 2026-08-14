@@ -1,8 +1,9 @@
 import { SearchInput, Select, Chip } from '../../ui'
 import type { CourseCategory, CourseLevel } from '../../types'
 
-const CATEGORIES: { value: CourseCategory | 'All'; label: string }[] = [
+const CATEGORIES: { value: CourseCategory | 'All' | 'My Courses'; label: string }[] = [
   { value: 'All', label: 'All Categories' },
+  { value: 'My Courses', label: 'My Courses' },
   { value: 'AI/ML', label: 'AI/ML' },
   { value: 'Engineering', label: 'Engineering' },
   { value: 'Data', label: 'Data' },
@@ -22,7 +23,7 @@ export interface SortOption {
 
 export interface CatalogFiltersState {
   search: string
-  category: CourseCategory | 'All'
+  category: CourseCategory | 'All' | 'My Courses'
   level: CourseLevel | 'All'
   sort: string
 }

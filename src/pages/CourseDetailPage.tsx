@@ -8,7 +8,6 @@ import { Badge, Rating, Button, Accordion, Breadcrumbs } from '../ui'
 import {
   CheckList, DetailHero, DetailSection, MetaItem, NumberedList, PurchasePanel,
 } from '../components/detail/DetailKit'
-import { DiscountLine } from '../components/catalog/DiscountLine'
 import { CurriculumAccordion } from '../components/courses/CurriculumAccordion'
 import { InstructorCard } from '../components/courses/InstructorCard'
 import { ReviewSummary } from '../components/courses/ReviewSummary'
@@ -17,7 +16,7 @@ import { CourseCard } from '../components/courses/CourseCard'
 import { courses } from '../data'
 import { ROUTES } from '../constants/routes'
 import { continueLearningItems } from '../data/continueLearning'
-import { formatDuration, formatNumber, formatRupees } from '../lib/format'
+import { formatDuration, formatNumber } from '../lib/format'
 import type { AccordionItem } from '../ui'
 
 export default function CourseDetailPage() {
@@ -143,9 +142,11 @@ export default function CourseDetailPage() {
             </div>
             <div className="p-5 space-y-3">
               <div>
-                <DiscountLine price={course.price} className="mb-1" />
-                <div className="text-2xl font-bold text-strong tracking-tight tabular-nums">
-                  {formatRupees(course.price)}
+                <div className="text-xl font-bold text-strong tracking-tight">
+                  Full Access
+                </div>
+                <div className="text-sm text-subtle mt-1">
+                  Self-paced learning
                 </div>
               </div>
               {isEnrolled ? (
@@ -173,7 +174,7 @@ export default function CourseDetailPage() {
           </Button>
         ) : (
           <Button className="w-full" size="lg" onClick={() => setShowRegisterModal(true)}>
-            Register Now — ₹{course.price.toLocaleString('en-IN')}
+            Enroll Now
           </Button>
         )}
       </div>

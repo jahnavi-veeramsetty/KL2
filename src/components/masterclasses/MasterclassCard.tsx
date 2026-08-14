@@ -30,7 +30,6 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
             alt={course.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
 
           {/* Solid brand fills rather than a dark scrim — they read as labels
               on the artwork instead of another translucent panel. Shown at every

@@ -11,13 +11,13 @@ const realHackathons: Hackathon[] = [
     tagline: 'Build the Future, One Wave at a Time',
     theme: ['AI/ML', 'Web3', 'HealthTech', 'Climate'],
     banner: '/event_webinar.webp',
-    prizePool: '₹10,00,000',
+    prizePool: '₹1,00,000',
     prizes: [
-      { place: '1st Place', amount: '₹5,00,000', perks: ['AWS credits', 'Mentorship from VCs', 'Incubation opportunity'] },
-      { place: '2nd Place', amount: '₹2,50,000', perks: ['Google Cloud credits', 'Swag kit'] },
-      { place: '3rd Place', amount: '₹1,00,000', perks: ['Subscription bundles', 'Swag kit'] },
-      { place: 'Best AI Project', amount: '₹50,000', perks: ['NVIDIA GPU access for 3 months'] },
-      { place: 'Best First-Time Team', amount: '₹25,000', perks: ['Mentorship sessions'] }
+      { place: '1st Place', amount: '₹50,000', perks: ['AWS credits', 'Mentorship from VCs', 'Incubation opportunity'] },
+      { place: '2nd Place', amount: '₹25,000', perks: ['Google Cloud credits', 'Swag kit'] },
+      { place: '3rd Place', amount: '₹15,000', perks: ['Subscription bundles', 'Swag kit'] },
+      { place: 'Best AI Project', amount: '₹5,000', perks: ['NVIDIA GPU access for 3 months'] },
+      { place: 'Best First-Time Team', amount: '₹5,000', perks: ['Mentorship sessions'] }
     ],
     mode: 'hybrid',
     startDate: inDays(15),
@@ -68,7 +68,7 @@ const realHackathons: Hackathon[] = [
       { question: 'Is there a participation fee?', answer: 'No, BuildWave is completely free to participate in.' },
       { question: 'Can we use AI tools like ChatGPT?', answer: 'Yes, AI tools are permitted as long as the core logic is your own work.' },
       { question: 'What tech stack is allowed?', answer: 'Any tech stack! Use whatever you\'re comfortable with.' },
-      { question: 'Is accommodation provided?', answer: 'For in-person participants at the Bangalore venue, accommodation is provided for the hackathon duration.' }
+      { question: 'Is accommodation provided?', answer: 'For in-person participants at the Hyderabad venue, accommodation is provided for the hackathon duration.' }
     ]
   },
   {
@@ -78,11 +78,11 @@ const realHackathons: Hackathon[] = [
     tagline: 'Next-Gen Solutions for Real-World Chaos',
     theme: ['EdTech', 'FinTech', 'SaaS', 'Developer Tools'],
     banner: '/event_workshop.webp',
-    prizePool: '₹5,00,000',
+    prizePool: '₹75,000',
     prizes: [
-      { place: '1st Place', amount: '₹2,00,000', perks: ['YC application support', 'AWS credits'] },
-      { place: '2nd Place', amount: '₹1,00,000', perks: ['Azure credits'] },
-      { place: '3rd Place', amount: '₹50,000', perks: ['Swag kit'] }
+      { place: '1st Place', amount: '₹40,000', perks: ['YC application support', 'AWS credits'] },
+      { place: '2nd Place', amount: '₹25,000', perks: ['Azure credits'] },
+      { place: '3rd Place', amount: '₹10,000', perks: ['Swag kit'] }
     ],
     mode: 'online',
     startDate: inDays(30),
@@ -127,10 +127,10 @@ const realHackathons: Hackathon[] = [
     tagline: 'Design That Moves People',
     theme: ['UI/UX', 'Product Design', 'Motion', 'Accessibility'],
     banner: '/ui_ux_course.webp',
-    prizePool: '₹3,00,000',
+    prizePool: '₹50,000',
     prizes: [
-      { place: '1st Place', amount: '₹1,50,000', perks: ['Figma Pro annual', 'Portfolio feature'] },
-      { place: '2nd Place', amount: '₹75,000', perks: ['Design tools bundle'] }
+      { place: '1st Place', amount: '₹35,000', perks: ['Figma Pro annual', 'Portfolio feature'] },
+      { place: '2nd Place', amount: '₹15,000', perks: ['Design tools bundle'] }
     ],
     mode: 'offline',
     startDate: daysAgo(5),
@@ -173,13 +173,13 @@ type HackathonDemo = Pick<
 > & { startsIn: number; team: [number, number] }
 
 const demoVariants: HackathonDemo[] = [
-  { id: 'codestorm-24', title: 'CodeStorm 24', tagline: 'Forty-eight hours. One idea. Ship it.', theme: ['DevTools', 'Open Source'], banner: '/event_workshop.webp', prizePool: '₹4,00,000', mode: 'online', participantsCount: 1620, status: 'ongoing', startsIn: 0, team: [1, 4] },
-  { id: 'finhack-summit', title: 'FinHack Summit', tagline: 'Rebuild banking for the next billion users.', theme: ['FinTech', 'Security'], banner: '/react_course.webp', prizePool: '₹6,50,000', mode: 'offline', participantsCount: 940, status: 'upcoming', startsIn: 21, team: [2, 4] },
-  { id: 'devsprint-global', title: 'DevSprint Global', tagline: 'A worldwide sprint for developer tooling.', theme: ['DevTools', 'Cloud'], banner: '/ui_ux_course.webp', prizePool: '₹3,20,000', mode: 'online', participantsCount: 3110, status: 'upcoming', startsIn: 28, team: [1, 3] },
-  { id: 'greentech-challenge', title: 'GreenTech Challenge', tagline: 'Engineering answers to the climate crisis.', theme: ['Climate', 'IoT'], banner: '/event_webinar.webp', prizePool: '₹8,00,000', mode: 'hybrid', participantsCount: 1275, status: 'upcoming', startsIn: 35, team: [2, 5] },
-  { id: 'ai-frontier-jam', title: 'AI Frontier Jam', tagline: 'Push the limits of applied machine learning.', theme: ['AI/ML', 'Research'], banner: '/event_workshop.webp', prizePool: '₹12,00,000', mode: 'online', participantsCount: 4480, status: 'upcoming', startsIn: 42, team: [2, 4] },
-  { id: 'cybershield-ctf', title: 'CyberShield CTF', tagline: 'Capture the flag, defend the stack.', theme: ['Security', 'Systems'], banner: '/react_course.webp', prizePool: '₹2,75,000', mode: 'offline', participantsCount: 680, status: 'upcoming', startsIn: 49, team: [1, 3] },
-  { id: 'opensource-fest', title: 'OpenSource Fest', tagline: 'Ship your first meaningful contribution.', theme: ['Open Source', 'Community'], banner: '/ui_ux_course.webp', prizePool: '₹1,50,000', mode: 'hybrid', participantsCount: 2260, status: 'upcoming', startsIn: 56, team: [1, 2] },
+  { id: 'codestorm-24', title: 'CodeStorm 24', tagline: 'Forty-eight hours. One idea. Ship it.', theme: ['DevTools', 'Open Source'], banner: '/event_workshop.webp', prizePool: '₹60,000', mode: 'online', participantsCount: 1620, status: 'ongoing', startsIn: 0, team: [1, 4] },
+  { id: 'finhack-summit', title: 'FinHack Summit', tagline: 'Rebuild banking for the next billion users.', theme: ['FinTech', 'Security'], banner: '/react_course.webp', prizePool: '₹75,000', mode: 'offline', participantsCount: 940, status: 'upcoming', startsIn: 21, team: [2, 4] },
+  { id: 'devsprint-global', title: 'DevSprint Global', tagline: 'A worldwide sprint for developer tooling.', theme: ['DevTools', 'Cloud'], banner: '/ui_ux_course.webp', prizePool: '₹50,000', mode: 'online', participantsCount: 3110, status: 'upcoming', startsIn: 28, team: [1, 3] },
+  { id: 'greentech-challenge', title: 'GreenTech Challenge', tagline: 'Engineering answers to the climate crisis.', theme: ['Climate', 'IoT'], banner: '/event_webinar.webp', prizePool: '₹80,000', mode: 'hybrid', participantsCount: 1275, status: 'upcoming', startsIn: 35, team: [2, 5] },
+  { id: 'ai-frontier-jam', title: 'AI Frontier Jam', tagline: 'Push the limits of applied machine learning.', theme: ['AI/ML', 'Research'], banner: '/event_workshop.webp', prizePool: '₹1,00,000', mode: 'online', participantsCount: 4480, status: 'upcoming', startsIn: 42, team: [2, 4] },
+  { id: 'cybershield-ctf', title: 'CyberShield CTF', tagline: 'Capture the flag, defend the stack.', theme: ['Security', 'Systems'], banner: '/react_course.webp', prizePool: '₹55,000', mode: 'offline', participantsCount: 680, status: 'upcoming', startsIn: 49, team: [1, 3] },
+  { id: 'opensource-fest', title: 'OpenSource Fest', tagline: 'Ship your first meaningful contribution.', theme: ['Open Source', 'Community'], banner: '/ui_ux_course.webp', prizePool: '₹50,000', mode: 'hybrid', participantsCount: 2260, status: 'upcoming', startsIn: 56, team: [1, 2] },
 ]
 
 const demoHackathons: Hackathon[] = demoVariants.map(({ startsIn, team, ...variant }, i) => ({

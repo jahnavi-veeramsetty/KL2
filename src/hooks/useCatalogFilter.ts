@@ -17,6 +17,7 @@ export interface CatalogItem {
   studentsEnrolled: number
   rating: number
   isNew?: boolean
+  progress?: number
 }
 
 export function useCatalogFilter<T extends CatalogItem>(items: T[], filters: CatalogFiltersState): T[] {
@@ -33,7 +34,11 @@ export function useCatalogFilter<T extends CatalogItem>(items: T[], filters: Cat
     }
 
     if (filters.category !== 'All') {
-      result = result.filter(c => c.category === filters.category)
+      if (filters.category === 'My Courses') {
+        result = result.filter(c => c.progress !== undefined)
+      } else {
+        result = result.filter(c => c.category === filters.category)
+      }
     }
 
     if (filters.level !== 'All') {

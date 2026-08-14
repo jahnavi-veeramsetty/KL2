@@ -1,6 +1,6 @@
 export const currentUser = {
-  name: "Alex Chen",
-  username: "alex_codes",
+  name: "Swathi",
+  username: "swathi_codes",
   rating: 1610,
   streak: 12,
   solved: {

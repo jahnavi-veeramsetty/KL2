@@ -91,7 +91,7 @@ const generateHeatmap = (): ContributionDataPoint[] => {
     // Randomize activity. Less activity on weekends, some clusters.
     const isWeekend = date.getDay() === 0 || date.getDay() === 6
     const baseChance = isWeekend ? 0.3 : 0.7
-    
+
     let count = 0
     if (Math.random() < baseChance) {
       count = Math.floor(Math.random() * 5) + 1
@@ -99,7 +99,7 @@ const generateHeatmap = (): ContributionDataPoint[] => {
         count += Math.floor(Math.random() * 10)
       }
     }
-    
+
     data.push({
       date: date.toISOString().split('T')[0],
       count,
@@ -110,25 +110,24 @@ const generateHeatmap = (): ContributionDataPoint[] => {
 
 export const mockProfileData: UserProfile = {
   id: 'usr_001',
-  username: 'alex_codes',
-  fullName: 'Alex Chen',
-  email: 'alex.chen@example.com',
-  avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex&backgroundColor=b6e3f4',
-  title: 'Lvl 14 · Algorithm Adept',
+  username: 'swathi_codes',
+  fullName: 'Swathi',
+  email: 'swathi@example.com',
+  avatarUrl: 'https://api.dicebear.com/7.x/initials/svg?seed=Swathi&backgroundColor=0E7490&textColor=ffffff',
+  title: 'Senior Software Engineer',
   memberSince: '2024-02-15',
-  location: 'San Francisco, CA',
-  bio: `Hi, I'm Alex! 👋 
+  location: 'Bangalore, India',
+  bio: `Experienced Software Engineer specializing in scalable web applications and distributed systems architecture. 
 
-I'm a computer science student passionate about building scalable web applications and solving algorithmic puzzles. 
+Passionate about building robust infrastructure and optimizing backend performance.
 
-Currently learning **Rust** and exploring systems programming.
-- 🔭 Working on a distributed task queue
-- 🌱 Learning WebAssembly
-- ⚡ Fun fact: I use Vim for everything`,
+- 🔭 Currently architecting a highly available microservices platform
+- 🌱 Deepening expertise in Rust and Systems Programming
+- ⚡ Focused on delivering high-impact, performant engineering solutions`,
   links: {
     github: 'https://github.com',
     linkedin: 'https://linkedin.com',
-    website: 'https://alexcodes.dev'
+    website: 'https://swathicodes.dev'
   },
   stats: {
     globalRank: 4231,

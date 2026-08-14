@@ -11,7 +11,7 @@ import { buildShelves } from '../lib/shelves'
 import { ROUTES } from '../constants/routes'
 import { courses } from '../data'
 import { continueLearningItems } from '../data/continueLearning'
-import { ContinueLearning } from '../components/dashboard/ContinueLearning'
+
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const DEFAULT_FILTERS: CatalogFiltersState = {
@@ -69,10 +69,6 @@ export default function CoursesPage() {
         searchPlaceholder="Search courses..."
         sortOptions={SORT_OPTIONS}
       />
-
-      <div className="mb-8">
-        <ContinueLearning />
-      </div>
 
       <div className="text-xs text-subtle mb-4">
         {filtered.length} {filtered.length === 1 ? 'course' : 'courses'} found
