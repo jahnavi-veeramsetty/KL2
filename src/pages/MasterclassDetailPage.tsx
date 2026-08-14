@@ -12,8 +12,7 @@ import { InstructorCard } from '../components/courses/InstructorCard'
 import { masterclasses } from '../data'
 import { ROUTES } from '../constants/routes'
 import { continueLearningItems } from '../data/continueLearning'
-import { formatNumber, formatRupees } from '../lib/format'
-import { DiscountLine } from '../components/catalog/DiscountLine'
+import { formatNumber } from '../lib/format'
 import type { AccordionItem } from '../ui'
 
 export default function MasterclassDetailPage() {
@@ -131,13 +130,8 @@ export default function MasterclassDetailPage() {
               <img src={masterclass.thumbnail} alt="" className="w-full h-full object-cover" />
             </div>
             <div className="p-5 space-y-4">
-              <div>
-                <DiscountLine price={masterclass.price} className="mb-1" />
-                <div className="text-2xl font-bold text-strong tracking-tight tabular-nums">
-                  {formatRupees(masterclass.price)}
-                </div>
-              </div>
-
+              {/* No price line: the session date is what this panel is for now,
+                  so it leads instead of sitting under a figure. */}
               <div className="rounded-xl border border-line bg-raised p-3">
                 <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-faint">
                   <CalendarDays className="w-3 h-3" strokeWidth={2} aria-hidden /> Session date
@@ -176,7 +170,7 @@ export default function MasterclassDetailPage() {
           </Button>
         ) : (
           <Button className="w-full" size="lg" onClick={() => setShowRegisterModal(true)}>
-            Register Now — ₹{masterclass.price.toLocaleString('en-IN')}
+            Register now
           </Button>
         )}
       </div>
@@ -193,7 +187,7 @@ export default function MasterclassDetailPage() {
           >
             <h3 className="text-xl font-bold text-strong mb-2">Register for Masterclass</h3>
             <p className="text-subtle text-sm mb-6">
-              You're registering for <strong className="text-strong">{masterclass.title}</strong>. Payment gateway coming soon!
+              You're registering for <strong className="text-strong">{masterclass.title}</strong> on {masterclass.date}.
             </p>
             <div className="flex gap-3">
               <Button className="flex-1" onClick={() => setShowRegisterModal(false)}>

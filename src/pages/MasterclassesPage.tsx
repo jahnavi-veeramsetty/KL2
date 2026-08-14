@@ -98,8 +98,8 @@ export default function MasterclassesPage() {
               level={masterclass.level}
               rating={masterclass.rating}
               durationHours={masterclass.durationHours}
-              price={masterclass.price}
               date={masterclass.date}
+              ctaLabel="Register"
             />
           )}
         />

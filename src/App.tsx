@@ -32,6 +32,7 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const HackathonDetailPage = lazy(() => import('./pages/HackathonDetailPage'))
 const ArcadePage = lazy(() => import('./pages/ArcadePage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage'))
+const RoadmapPage = lazy(() => import('./pages/RoadmapPage'))
 const ProfileSettingsPage = lazy(() => import('./pages/ProfileSettingsPage'))
 const LoginPage = lazy(() => import('./pages/auth/LoginPage'))
 const SignupPage = lazy(() => import('./pages/auth/SignupPage'))
@@ -106,6 +107,7 @@ function App() {
 
                 <Route path={ROUTES.EVENTS} element={<EventsPage />} />
                 <Route path={ROUTES.ARCADE} element={<ArcadePage />} />
+                <Route path={ROUTES.ROADMAP} element={<RoadmapPage />} />
               </Route>
 
               {/* Full-height, non-scrolling shell */}

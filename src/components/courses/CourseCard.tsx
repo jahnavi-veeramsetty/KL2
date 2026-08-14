@@ -67,7 +67,8 @@ export function CourseCard({ course, className }: CourseCardProps) {
           </div>
 
           {/* Title */}
-          <h3 className="text-strong font-bold text-[17px] leading-snug line-clamp-2 mb-1.5">
+          {/* Sized against the card, not the page — see EnrolledCourseCard. */}
+          <h3 className="text-strong font-bold text-[clamp(0.875rem,6.4cqw,1.0625rem)] leading-snug line-clamp-2 mb-1.5">
             {course.title}
           </h3>
 

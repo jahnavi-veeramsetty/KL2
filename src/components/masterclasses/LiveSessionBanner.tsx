@@ -3,7 +3,7 @@ import { Radio, CalendarDays, Clock, User } from 'lucide-react'
 import type { Masterclass } from '../../types'
 import { ROUTES } from '../../constants/routes'
 import { useCountdown } from '../../hooks/useCountdown'
-import { formatDuration, formatRupees } from '../../lib/format'
+import { formatDuration } from '../../lib/format'
 import { parseSessionStart, sessionState } from '../../lib/masterclass'
 import { cn } from '../../lib/cn'
 
@@ -131,9 +131,6 @@ export function LiveSessionBanner({ masterclass }: { masterclass: Masterclass })
           </p>
 
           <div className="flex items-center gap-3 mt-4 lg:justify-end">
-            <span className="text-sm font-bold text-strong tabular-nums">
-              {formatRupees(masterclass.price)}
-            </span>
             <Link
               to={ROUTES.MASTERCLASS_DETAIL(masterclass.id)}
               className={cn(
@@ -143,7 +140,7 @@ export function LiveSessionBanner({ masterclass }: { masterclass: Masterclass })
                   : 'bg-accent text-on-accent hover:bg-accent/90 shadow-[0_0_22px_rgba(34,211,238,0.28)]'
               )}
             >
-              {isLive ? 'Join session' : 'Reserve seat'}
+              {isLive ? 'Join session' : 'Register now'}
             </Link>
           </div>
         </div>

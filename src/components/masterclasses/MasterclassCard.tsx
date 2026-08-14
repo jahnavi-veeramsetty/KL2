@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom'
 import type { Masterclass } from '../../types'
 import { Card } from '../../ui'
 import { ROUTES } from '../../constants/routes'
-import { DiscountLine } from '../catalog/DiscountLine'
-import { formatDuration, formatRupees } from '../../lib/format'
+import { formatDuration } from '../../lib/format'
 import { cn } from '../../lib/cn'
 
 interface MasterclassCardProps {
@@ -88,31 +87,13 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
           {/* Spacer */}
           <div className="mt-auto" />
 
-          {/* Price & Action — inline on phones, stacked from sm up */}
-          <div className="sm:hidden">
-            <DiscountLine price={course.price} size="sm" className="mb-1" />
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-strong font-bold text-base tracking-tight tabular-nums">
-                {formatRupees(course.price)}
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg bg-accent text-on-accent shrink-0">
-                Enroll
-              </span>
-            </div>
-          </div>
-
-          <div className="hidden sm:flex pt-3 border-t border-line items-end justify-between gap-2">
-            <div className="flex flex-col min-w-0">
-              <DiscountLine price={course.price} size="sm" className="mb-1 @min-[20rem]:hidden" />
-              <DiscountLine price={course.price} className="mb-1 hidden @min-[20rem]:flex" />
-              <span className="text-strong font-bold text-base @min-[17rem]:text-lg @min-[20rem]:text-xl tracking-tight leading-none tabular-nums">
-                {formatRupees(course.price)}
-              </span>
-            </div>
-
-            {/* A span, not a button — the whole card is already a link. */}
-            <span className="text-[10px] @min-[17rem]:text-[11px] @min-[20rem]:text-xs font-bold uppercase tracking-wide px-3 py-2 @min-[17rem]:px-4 @min-[20rem]:px-5 @min-[20rem]:py-2.5 rounded-lg transition-all duration-300 bg-accent text-on-accent group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] shrink-0">
-              Enroll
+          {/* Action. With no price to sit beside, the CTA takes the full width
+              rather than floating in a half-empty row — and it says Register,
+              because a masterclass is a seat at a live session, not a purchase.
+              A span, not a button: the whole card is already a link. */}
+          <div className="pt-2 sm:pt-3 sm:border-t sm:border-line">
+            <span className="block w-full text-center text-[10px] @min-[17rem]:text-[11px] @min-[20rem]:text-xs font-bold uppercase tracking-wide px-3 py-2 @min-[20rem]:py-2.5 rounded-lg transition-colors duration-300 bg-accent text-on-accent group-hover:bg-accent/90">
+              Register
             </span>
           </div>
         </div>

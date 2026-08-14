@@ -72,6 +72,14 @@ export interface UserProfile {
     medium: { solved: number; total: number }
     hard: { solved: number; total: number }
   }
+  /** What the learner has actually turned up to. The roadmap grades milestones
+      against these rather than against a hardcoded phase number, so a node
+      says how far off it is instead of only that it is shut. */
+  participation: {
+    contestsEntered: number
+    hackathonsJoined: number
+    talksGiven: number
+  }
   languages: LanguageStat[]
   badges: Badge[]
   contributions: ContributionDataPoint[]
@@ -141,6 +149,13 @@ Passionate about building robust infrastructure and optimizing backend performan
     easy: { solved: 145, total: 300 },
     medium: { solved: 89, total: 400 },
     hard: { solved: 23, total: 150 },
+  },
+  participation: {
+    // Matches the six entries in `ratings` below — a rated contest is what puts
+    // a point on that chart, so the two numbers must not drift apart.
+    contestsEntered: 6,
+    hackathonsJoined: 1,
+    talksGiven: 0,
   },
   languages: [
     { name: 'TypeScript', percentage: 42, color: '#3178c6' },

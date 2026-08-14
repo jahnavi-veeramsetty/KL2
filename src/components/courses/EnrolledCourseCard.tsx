@@ -28,8 +28,11 @@ export function EnrolledCourseCard({ item, className }: EnrolledCourseCardProps)
 
         {/* Content area */}
         <div className="flex flex-col flex-1 p-4">
-          {/* Title */}
-          <h3 className="text-strong font-bold text-[17px] leading-snug line-clamp-2 mb-4 flex-1">
+          {/* Title, sized in `cqw` against the card's own width rather than in
+              fixed px. These sit three-up in a column that loses ~160px the
+              moment the dashboard's activity rail opens, and a flat 17px broke
+              every longer title onto a second line at exactly that width. */}
+          <h3 className="text-strong font-bold text-[clamp(0.875rem,6.4cqw,1.0625rem)] leading-snug line-clamp-2 mb-4 flex-1">
             {item.title}
           </h3>
 

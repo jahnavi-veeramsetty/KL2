@@ -596,6 +596,54 @@
 :root[data-theme="light"] :is(.on-dark, .theme-dark) .text-pink-300 { color: #f9a8d4; }
 :root[data-theme="light"] :is(.on-dark, .theme-dark) .text-lime-400 { color: #a3e635; }
 
+/* ─── Roadmap milestone panels ───────────────────────────
+   Three surfaces, because the three states mean different things and one flat
+   panel for all of them said nothing. Cleared recedes, the live one is washed
+   with accent so the eye lands on the step you are on, and what is still ahead
+   sits *below* the page rather than above it.
+
+   Light gets the shadows: on paper an elevated card is a card because of the
+   shadow under it, not because it is a slightly different white. Dark gets
+   contrast instead — a shadow on near-black is invisible. */
+.milestone-panel-done {
+  background-color: var(--color-panel);
+  border-color: var(--color-line);
+}
+.milestone-panel-current {
+  background-color: color-mix(in oklab, var(--color-accent) 8%, var(--color-panel));
+  border-color: color-mix(in oklab, var(--color-accent) 38%, transparent);
+}
+.milestone-panel-upcoming {
+  background-color: var(--color-raised);
+  border-color: var(--color-line);
+}
+:root[data-theme="light"] :is(.milestone-panel-done, .milestone-panel-current) {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 10px 26px rgba(15, 23, 42, 0.06);
+}
+:root[data-theme="light"] .milestone-panel-upcoming {
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+:root[data-theme="light"] .milestone-panel-current {
+  border-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
+}
+
+/* ─── Roadmap trail ──────────────────────────────────────
+   The winding road's gradient. Dark theme lights it up; light theme takes the
+   same four hues down to ink weights, because a pastel cyan-to-pink ribbon on
+   white reads as decoration rather than as a path. */
+:root {
+  --road-0: #22D3EE;
+  --road-1: #60A5FA;
+  --road-2: #A78BFA;
+  --road-3: #F472B6;
+}
+:root[data-theme="light"] {
+  --road-0: #0E7490;
+  --road-1: #2563EB;
+  --road-2: #7C3AED;
+  --road-3: #BE185D;
+}
+
 /* ─── Custom Scrollbar ───────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;

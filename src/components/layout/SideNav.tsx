@@ -3,7 +3,7 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   PanelLeft, LayoutGrid, CalendarDays, BookOpen, MonitorPlay, Rocket, Swords,
-  Puzzle, Terminal, Flame, Gamepad2, Settings, CircleHelp, LogOut, User,
+  Puzzle, Terminal, Flame, Gamepad2, Settings, CircleHelp, LogOut, User, Signpost,
 } from 'lucide-react'
 import { ROUTES } from '../../constants/routes'
 import { useProfile } from '../../hooks/useProfile'
@@ -45,6 +45,7 @@ const Icon = {
   help:        <CircleHelp {...ICON_PROPS} />,
   logout:      <LogOut className="w-4 h-4" strokeWidth={1.8} />,
   profile:     <User className="w-4 h-4" strokeWidth={1.8} />,
+  roadmap:     <Signpost className="w-4 h-4" strokeWidth={1.8} />,
   /** Kept filled with its glow — it is a stat, not a nav glyph. */
   fire: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-orange-500 drop-shadow-[0_0_5px_rgba(249,115,22,0.8)]">
@@ -353,6 +354,17 @@ export default function SideNav() {
                 Profile
               </NavLink>
               <NavLink
+                to={ROUTES.ROADMAP}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-3.5 rounded-xl text-base font-medium transition-all duration-200 ${
+                    isActive ? 'bg-accent/15 text-accent' : 'text-subtle hover:text-strong hover:bg-raised'
+                  }`
+                }
+              >
+                <span className="w-5 flex items-center justify-center">{Icon.roadmap}</span>
+                Roadmap
+              </NavLink>
+              <NavLink
                 to={ROUTES.SETTINGS}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-3.5 rounded-xl text-base font-medium transition-all duration-200 ${
@@ -424,6 +436,13 @@ export default function SideNav() {
                     className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-body hover:bg-raised hover:text-strong transition-colors"
                   >
                     {Icon.profile} My Profile
+                  </NavLink>
+                  <NavLink
+                    to={ROUTES.ROADMAP}
+                    onClick={() => setProfileOpen(false)}
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-body hover:bg-raised hover:text-strong transition-colors"
+                  >
+                    {Icon.roadmap} Roadmap
                   </NavLink>
                   <NavLink
                     to={ROUTES.SETTINGS}

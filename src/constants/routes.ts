@@ -30,5 +30,6 @@ export const ROUTES = {
   ARCADE: '/arcade',
 
   PROFILE: '/profile',
+  ROADMAP: '/roadmap',
   SETTINGS: '/settings',
 } as const

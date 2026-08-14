@@ -47,10 +47,12 @@ export default function TopBar({
 
       {/* Right — XP + Streak + Bell */}
       <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 ml-auto">
-        {/* XP */}
+        {/* XP — a bolt, matching the profile's Experience panel and the
+            roadmap's XP pills. It was a star here and a bolt everywhere else,
+            which read as two different stats. */}
         <div className="hidden lg:flex items-center gap-1.5 text-sm font-semibold text-strong">
           <svg className="w-[18px] h-[18px] text-yellow-400 drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
           </svg>
           <span>{xp}</span>
         </div>

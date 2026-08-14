@@ -9,8 +9,8 @@ import { cn } from '../../lib/cn'
  * full-bleed — at 208px the 16:10 thumbnail is 130px, which keeps the artwork
  * legible while the shelves still stack.
  *
- * Carries the same commercial information as the desktop card: level, struck
- * list price, discount chip, and the scheduled date where there is one. Only
+ * Carries the same information as the desktop card: level, the scheduled date
+ * where there is one, and a price only where the caller still shows one. Only
  * genuinely secondary meta (instructor, enrolment count, marketing tags) is
  * dropped, because at 208px it would truncate rather than inform.
  */
@@ -22,7 +22,8 @@ interface CatalogTileProps {
   level?: string
   rating: number
   durationHours: number
-  price: number
+  /** Omitted where the catalogue does not price its items — masterclasses. */
+  price?: number
   /** Scheduled session date — masterclasses are live, so this is not optional information. */
   date?: string
   progress?: number
@@ -43,6 +44,7 @@ export function CatalogTile({
   ctaLabel,
 }: CatalogTileProps) {
   const started = progress !== undefined
+  const priced = price !== undefined
   const label = ctaLabel ?? (started ? 'Resume' : 'Enroll')
 
   return (
@@ -96,15 +98,20 @@ export function CatalogTile({
           </div>
         )}
 
-        <DiscountLine price={price} size="sm" className="mb-1" />
+        {priced && <DiscountLine price={price} size="sm" className="mb-1" />}
 
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-strong font-bold text-[15px] tracking-tight tabular-nums">
-            {formatRupees(price)}
-          </span>
+        {/* Unpriced tiles give the CTA the full width, so it does not sit alone
+            at the end of an otherwise empty row. */}
+        <div className={cn('flex items-center gap-2', priced && 'justify-between')}>
+          {priced && (
+            <span className="text-strong font-bold text-[15px] tracking-tight tabular-nums">
+              {formatRupees(price)}
+            </span>
+          )}
           {/* A span, not a button — the whole tile is already a link. */}
           <span className={cn(
-            'text-[9.5px] font-bold uppercase tracking-wide px-2.5 py-1.5 rounded-lg shrink-0 transition-colors',
+            'text-[9.5px] font-bold uppercase tracking-wide px-2.5 py-1.5 rounded-lg transition-colors',
+            priced ? 'shrink-0' : 'flex-1 text-center',
             started
               ? 'bg-raised text-strong border border-line-strong group-hover:bg-line-strong'
               : 'bg-accent text-on-accent group-hover:bg-accent/90'

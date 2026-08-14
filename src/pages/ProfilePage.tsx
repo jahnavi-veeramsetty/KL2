@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ROUTES } from '../constants/routes'
 import { useProfile } from '../hooks/useProfile'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { buildRoadmap, DEFAULT_PATH } from '../data/roadmap'
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 /**
@@ -57,9 +58,15 @@ const Icons = {
       <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
     </svg>
   ),
+  // Was a cloud-download path under the name Trophy, so the rank chip and the
+  // "Algorithm Master" badge both drew a download arrow.
   Trophy: () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/>
+      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+      <path d="M4 22h16"/>
+      <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+      <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
     </svg>
   ),
   Zap: () => (
@@ -230,6 +237,7 @@ export default function ProfilePage() {
   useDocumentTitle('Profile')
   const { profile: p } = useProfile()
   const totalSolved = p.solveStats.easy.solved + p.solveStats.medium.solved + p.solveStats.hard.solved
+  const roadmap = useMemo(() => buildRoadmap(DEFAULT_PATH, p), [p])
   const [bannerUrl, setBannerUrl] = useState<string | null>(null)
   const [showBannerMenu, setShowBannerMenu] = useState(false)
 
@@ -453,20 +461,78 @@ export default function ProfilePage() {
             <p style={{ margin: 0, fontSize: 14, color: 'var(--color-faint)' }}>@{p.username}</p>
           </div>
 
-          {/* Quick stat chips */}
+          {/* Quick stat chips. Each carries the same glyph the rest of the app
+              uses for that stat — bolt for XP, flame for streak — so they are
+              recognisable before the label is read. */}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             {[
-              { label: 'Rank',    value: `#${p.stats.globalRank.toLocaleString()}` },
-              { label: 'XP',      value: p.stats.totalXP.toLocaleString()          },
-              { label: 'Streak',  value: `${p.stats.currentStreak}d`               },
+              { label: 'Rank',   value: `#${p.stats.globalRank.toLocaleString()}`, icon: <Icons.Trophy />, tint: 'var(--color-accent)' },
+              { label: 'XP',     value: p.stats.totalXP.toLocaleString(),          icon: <Icons.Zap />,    tint: '#FACC15' },
+              { label: 'Streak', value: `${p.stats.currentStreak}d`,               icon: <Icons.Flame />,  tint: '#F97316' },
             ].map(s => (
-              <div key={s.label} style={{ textAlign: 'center', padding: '8px 16px', borderRadius: 8, background: 'var(--color-panel)', border: '1px solid var(--color-line)' }}>
-                <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--color-strong)' }}>{s.value}</div>
-                <div style={{ fontSize: 10, color: 'var(--color-subtle)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{s.label}</div>
+              <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 16px', borderRadius: 8, background: 'var(--color-panel)', border: '1px solid var(--color-line)' }}>
+                <span style={{ display: 'flex', color: s.tint, flexShrink: 0 }}>{s.icon}</span>
+                <div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--color-strong)', lineHeight: 1.15 }}>{s.value}</div>
+                  <div style={{ fontSize: 10, color: 'var(--color-subtle)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{s.label}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
+
+        {/* ── ROADMAP ENTRY ──
+            The way in to The Knowvation Path. Full width above the columns so
+            it is the first thing under the header — a roadmap buried in a
+            sidebar is a roadmap nobody opens. Carries live numbers rather than
+            a bare link, so it is worth glancing at even when you do not click. */}
+        <Link
+          to={ROUTES.ROADMAP}
+          className="group"
+          style={{
+            display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32,
+            padding: '18px 20px', borderRadius: 16, textDecoration: 'none',
+            background: 'var(--color-panel)', border: '1px solid var(--color-line)',
+          }}
+        >
+          <span style={{
+            width: 44, height: 44, borderRadius: 12, flexShrink: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'color-mix(in oklab, var(--color-accent) 12%, transparent)',
+            border: '1px solid color-mix(in oklab, var(--color-accent) 25%, transparent)',
+          }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+              <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+              <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+              <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+            </svg>
+          </span>
+
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-strong)' }}>
+                The Knowvation Path
+              </span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                {roadmap.completed} / {roadmap.total} milestones
+              </span>
+            </div>
+            <p style={{ margin: '3px 0 0', fontSize: 12.5, color: 'var(--color-subtle)' }}>
+              {roadmap.current ? `Up next — ${roadmap.current.title}` : 'Every milestone cleared'}
+            </p>
+            <span style={{ display: 'block', height: 4, borderRadius: 999, marginTop: 10, background: 'var(--color-raised)', overflow: 'hidden' }}>
+              <span style={{ display: 'block', height: '100%', borderRadius: 999, background: 'var(--color-accent)', width: `${roadmap.fraction * 100}%` }} />
+            </span>
+          </div>
+
+          <span style={{ display: 'flex', alignItems: 'center', gap: 7, flexShrink: 0, color: 'var(--color-accent)', fontSize: 13, fontWeight: 700 }}>
+            <span className="hidden sm:inline">View roadmap</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+            </svg>
+          </span>
+        </Link>
 
         {/* ── TWO COLUMN LAYOUT ─────────────────────────────────────────────── */}
         <div className="profile-grid" style={{ display: 'grid', gridTemplateColumns: '220px minmax(0,1fr)', gap: 32, alignItems: 'start' }}>
