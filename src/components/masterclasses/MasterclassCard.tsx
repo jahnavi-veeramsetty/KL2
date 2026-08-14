@@ -35,13 +35,13 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
               size now, so the content column carries no duplicate. */}
           <div className="flex absolute top-1.5 left-1.5 sm:top-2 sm:left-2 flex-wrap gap-1 sm:gap-1.5 z-10">
             {course.isBestseller && (
-              <span className="bg-amber-500 text-strong text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+              <span className="bg-amber-500 text-strong text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                 <span className="hidden sm:inline">Selling Fast</span>
                 <span className="sm:hidden">Hot</span>
               </span>
             )}
             {course.isNew && (
-              <span className="bg-accent-strong text-strong text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+              <span className="bg-accent-strong text-strong text-[8px] sm:text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                 New
               </span>
             )}
@@ -50,17 +50,16 @@ export function MasterclassCard({ course, className }: MasterclassCardProps) {
 
         {/* Content area */}
         <div className="flex flex-col flex-1 min-w-0 sm:p-4">
-          {/* Top row: Category, Level, Tags */}
-          <div className="flex items-center justify-between gap-3 sm:gap-4 mb-1 sm:mb-2">
-            <div className="flex flex-wrap items-center gap-2 min-w-0">
-              <span className="text-[10px] font-bold text-accent/90 uppercase tracking-wider truncate">
-                {course.category}
-              </span>
-              <span className="w-1 h-1 rounded-full bg-line-strong shrink-0" />
-              <span className="text-[10px] font-medium text-subtle shrink-0">
-                {course.level}
-              </span>
-            </div>
+          {/* Category · level, at the same weight CourseCard and HackathonCard
+              use — this was a size and opacity off from both. */}
+          <div className="flex items-center gap-2 mb-1 sm:mb-2 min-w-0">
+            <span className="text-[11px] font-bold text-accent uppercase tracking-wider truncate">
+              {course.category}
+            </span>
+            <span className="w-1 h-1 rounded-full bg-line-strong shrink-0" aria-hidden />
+            <span className="text-[11px] font-medium text-subtle shrink-0">
+              {course.level}
+            </span>
           </div>
 
           {/* Title */}

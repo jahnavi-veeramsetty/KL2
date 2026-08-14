@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 
 import { CatalogFilters, type CatalogFiltersState, type SortOption } from '../components/catalog/CatalogFilters'
 import { CardGrid } from '../components/catalog/CardGrid'
+import { SectionHead } from '../components/catalog/SectionHead'
 import { ShelfList } from '../components/catalog/ShelfList'
 import { CatalogTile } from '../components/catalog/CatalogTile'
 import { CourseCard } from '../components/courses/CourseCard'
@@ -61,6 +62,14 @@ export default function CoursesPage() {
   )
   const showShelves = shelves.length > 0
 
+  // A course you are part-way through and a course you have never opened are
+  // two different asks — one is "carry on", the other is "have a look". They
+  // were interleaved in one flat grid, so the only thing marking your own
+  // courses was a progress bar you had to hunt for.
+  const enrolled = useMemo(() => filtered.filter(c => c.progress !== undefined), [filtered])
+  const catalogue = useMemo(() => filtered.filter(c => c.progress === undefined), [filtered])
+  const splitBands = enrolled.length > 0 && catalogue.length > 0
+
   return (
     <>
       <CatalogFilters
@@ -93,6 +102,29 @@ export default function CoursesPage() {
             />
           )}
         />
+      ) : splitBands ? (
+        <div className="space-y-8">
+          <section>
+            <SectionHead title="Continue learning" count={enrolled.length} tone="text-accent" />
+            <CardGrid
+              items={enrolled}
+              renderCard={course => <CourseCard course={course} />}
+              emptyTitle="Nothing in progress"
+              density="compact"
+            />
+          </section>
+
+          <section>
+            <SectionHead title="Browse all courses" count={catalogue.length} />
+            <CardGrid
+              items={catalogue}
+              renderCard={course => <CourseCard course={course} />}
+              emptyTitle="No courses found"
+              onClearFilters={() => setFilters(DEFAULT_FILTERS)}
+              density="compact"
+            />
+          </section>
+        </div>
       ) : (
         <CardGrid
           items={filtered}

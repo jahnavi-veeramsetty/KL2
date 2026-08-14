@@ -1,19 +1,39 @@
 import type { Hackathon } from '../../types'
 import { Link } from 'react-router-dom'
 import { Trophy, Users, Calendar, Globe } from 'lucide-react'
-import { Badge, Card } from '../../ui'
+import { Card } from '../../ui'
 import { ROUTES } from '../../constants/routes'
 import { formatDate } from '../../lib/format'
+import { cn } from '../../lib/cn'
 
 interface HackathonCardProps {
   hackathon: Hackathon
 }
 
-const modeColors = {
-  online: 'accent',
-  offline: 'purple',
-  hybrid: 'orange',
+/**
+ * Tinted glass rather than a solid fill — the translucent treatment suits the
+ * banner artwork here in a way a flat block does not.
+ *
+ * What stopped it blending into the image is underneath, in BADGE_BASE: the
+ * backdrop is blurred *and* darkened before the tint goes on, so the chip
+ * always sits on a consistent dark ground whatever the banner is doing behind
+ * it. The old version tinted the raw image, so a bright photo swallowed it.
+ *
+ * The label is the 300 shade rather than 100. Near-white text on a light wash
+ * survives the darkened backdrop but arrives with the hue drained out of it,
+ * which reads as pale; a third of the way down the ramp keeps the colour while
+ * still clearing contrast against the ground beneath.
+ */
+const MODE_GLASS = {
+  online: 'bg-cyan-500/35 border-cyan-400/70 text-cyan-300',
+  offline: 'bg-purple-500/35 border-purple-400/70 text-purple-300',
+  hybrid: 'bg-orange-500/35 border-orange-400/70 text-orange-300',
 } as const
+
+const BADGE_BASE =
+  'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold ' +
+  'uppercase tracking-widest backdrop-blur-md backdrop-brightness-[0.4] ' +
+  'shadow-[0_2px_10px_rgba(0,0,0,0.45)]'
 
 /**
  * Unlike CourseCard and MasterclassCard, this keeps the full-bleed vertical
@@ -34,7 +54,7 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
   return (
     <Link
       to={ROUTES.HACKATHON_DETAIL(hackathon.id)}
-      className="block group focus-visible:outline-none h-full"
+      className="@container block group focus-visible:outline-none h-full"
     >
       <Card className="flex flex-col h-full overflow-hidden bg-page/80 border-line hover:border-accent/40 hover:bg-page transition-all duration-300 shadow-none hover:shadow-xl hover:shadow-accent/5">
 
@@ -48,27 +68,37 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
 
           {/* Status + mode badges */}
-          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex flex-wrap gap-1.5">
+          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex flex-wrap gap-1.5 z-10">
             {isOngoing && (
-              <span className="flex items-center gap-1.5 px-2 py-0.5 bg-green-500/20 border border-green-500/40 rounded-full text-[9px] font-bold text-green-400 uppercase tracking-widest backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" /> Live
+              <span className={cn(BADGE_BASE, 'bg-green-500/35 border-green-400/70 text-green-300')}>
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" aria-hidden />
+                Live
               </span>
             )}
-            <Badge color={modeColors[hackathon.mode]} size="sm">
+            <span className={cn(BADGE_BASE, MODE_GLASS[hackathon.mode])}>
               {hackathon.mode.charAt(0).toUpperCase() + hackathon.mode.slice(1)}
-            </Badge>
+            </span>
           </div>
         </div>
 
         {/* Details */}
         <div className="flex flex-col flex-1 p-3 sm:p-4">
-          {/* Theme tags */}
-          <div className="flex flex-wrap items-center gap-2 mb-1.5 sm:mb-2">
-            {hackathon.theme.slice(0, 2).map(t => (
-              <span key={t} className="text-[10px] font-bold text-accent/90 uppercase tracking-wider">
-                {t}
-              </span>
-            ))}
+          {/* Theme tags, in the same shape CourseCard and MasterclassCard use
+              for category · level — accent lead, dot, muted second. They were
+              two equal-weight accent words with no separator here, which read
+              as a different kind of label on an otherwise matching card. */}
+          <div className="flex items-center gap-2 mb-1.5 sm:mb-2 min-w-0">
+            <span className="text-[11px] font-bold text-accent uppercase tracking-wider truncate">
+              {hackathon.theme[0]}
+            </span>
+            {hackathon.theme[1] && (
+              <>
+                <span className="w-1 h-1 rounded-full bg-line-strong shrink-0" aria-hidden />
+                <span className="text-[11px] font-medium text-subtle truncate">
+                  {hackathon.theme[1]}
+                </span>
+              </>
+            )}
           </div>
 
           {/* Title + tagline */}
@@ -81,7 +111,9 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
               indigo is unused elsewhere on the card (cyan is themes, amber the
               prize, green the Live badge), so it separates from the grey meta
               without a chip around it. */}
-          <div className="grid grid-cols-2 gap-y-1.5 gap-x-2 text-[11px] text-subtle font-medium mb-2 sm:mb-3">
+          {/* Wrapping row, not a fixed 2-column grid — a half-width column at
+              the four-up card size clipped "Aug 29, 2026" to "Aug 29, 20…". */}
+          <div className="flex flex-wrap gap-y-1.5 gap-x-3 text-[11px] text-subtle font-medium mb-2 sm:mb-3">
             <div className="flex items-center gap-1.5 text-indigo-300 font-semibold" title={`${dateLabel} ${formatDate(hackathon.startDate)}`}>
               <Calendar className="w-3.5 h-3.5 shrink-0 text-indigo-400" />
               <span className="truncate">{formatDate(hackathon.startDate)}</span>
@@ -99,21 +131,25 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
           {/* Spacer */}
           <div className="mt-auto" />
 
-          {/* Prize + action. A span, not a button — the whole card is already a link. */}
+          {/* Prize + action. A span, not a button — the whole card is already a
+              link. The figure is sized in `cqw`: at a flat 20px a six-figure
+              prize pool no longer fitted beside the CTA once the grid went
+              four-up, and `truncate` was quietly cutting "₹1,00,000" to
+              "₹1,00,". */}
           <div className="pt-2.5 sm:pt-3 border-t border-line flex items-end justify-between gap-2">
             <div className="flex flex-col min-w-0">
               <span className="text-faint text-[10px] font-medium mb-0.5">Prize pool</span>
-              <span className="flex items-center gap-1.5 text-amber-400 font-bold text-lg sm:text-xl leading-none truncate">
+              <span className="flex items-center gap-1.5 text-amber-400 font-bold text-[clamp(0.8125rem,6.5cqw,1.25rem)] leading-none min-w-0">
                 <Trophy className="w-4 h-4 shrink-0" />
-                {hackathon.prizePool}
+                <span className="truncate">{hackathon.prizePool}</span>
               </span>
             </div>
 
             <span
               className={
                 isPast
-                  ? 'text-xs font-bold uppercase tracking-wide px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-raised text-faint border border-line-strong shrink-0'
-                  : 'text-xs font-bold uppercase tracking-wide px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-accent text-on-accent group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 shrink-0'
+                  ? 'text-[11px] @min-[19rem]:text-xs font-bold uppercase tracking-wide px-3 @min-[19rem]:px-5 py-2 @min-[19rem]:py-2.5 rounded-lg bg-raised text-faint border border-line-strong shrink-0'
+                  : 'text-[11px] @min-[19rem]:text-xs font-bold uppercase tracking-wide px-3 @min-[19rem]:px-5 py-2 @min-[19rem]:py-2.5 rounded-lg bg-accent text-on-accent group-hover:bg-accent/90 shadow-[0_0_15px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 shrink-0'
               }
             >
               {isPast ? 'Ended' : isOngoing ? 'Join' : 'Register'}
