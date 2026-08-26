@@ -3,14 +3,14 @@ import { Building2, Users } from "lucide-react";
 import telanganaMap from "../../../assets/telangana.png";
 
 const DISTRICTS = [
-  { id: "hyderabad", name: "Hyderabad", x: 42, y: 58 },
+  { id: "hyderabad", name: "Hyderabad", x: 45, y: 55 },
   { id: "warangal", name: "Warangal", x: 62, y: 45 },
-  { id: "karimnagar", name: "Karimnagar", x: 55, y: 30 },
-  { id: "nizamabad", name: "Nizamabad", x: 32, y: 25 },
-  { id: "khammam", name: "Khammam", x: 78, y: 62 },
-  { id: "nalgonda", name: "Nalgonda", x: 60, y: 72 },
-  { id: "mahbubnagar", name: "Mahbubnagar", x: 35, y: 78 },
-  { id: "adilabad", name: "Adilabad", x: 48, y: 12 },
+  { id: "karimnagar", name: "Karimnagar", x: 55, y: 32 },
+  { id: "nizamabad", name: "Nizamabad", x: 35, y: 30 },
+  { id: "khammam", name: "Khammam", x: 72, y: 60 },
+  { id: "nalgonda", name: "Nalgonda", x: 58, y: 64 },
+  { id: "mahbubnagar", name: "Mahbubnagar", x: 38, y: 72 },
+  { id: "adilabad", name: "Adilabad", x: 48, y: 26 },
 ];
 
 export default function CollegeCollaborationsSection() {

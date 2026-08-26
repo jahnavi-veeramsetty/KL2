@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Environment Best Practices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-page text-body font-sans antialiased relative">
+  
+  <div class="max-w-4xl mx-auto px-8 py-12 relative pt-20">
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="absolute top-6 right-8 p-2 rounded-xl bg-raised border border-line text-subtle hover:text-strong hover:border-line-strong transition-colors flex items-center justify-center shadow-sm">
+      <svg id="moon-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg id="sun-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  
+    <h1 class="text-3xl font-bold text-strong mb-8 border-b border-line pb-4">Python Environment Best Practices</h1>
+    <div class="space-y-6 text-body">
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">The 8 Professional Rules</h2>
+
+          <div class="flex flex-col gap-4 my-8">
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  1
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong class="block font-bold text-strong text-base mb-1 mt-0.5">Always Create a venv at the Start of Every Project.</strong> Before writing a single line of Python code, run <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">python -m venv venv</code> and activate it. This takes 10 seconds and prevents 95% of environment problems forever.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  2
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong class="block font-bold text-strong text-base mb-1 mt-0.5">Pin Exact Package Versions in requirements.txt.</strong> Use <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">requests==2.31.0</code> not just <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">requests</code>. Exact versions ensure your code works the same on every machine and every deployment. Use <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">pip freeze > requirements.txt</code> to capture exact versions automatically.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  3
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong class="block font-bold text-strong text-base mb-1 mt-0.5">Always Add venv to .gitignore.</strong> The venv folder is 50-200MB and OS-specific. It should never be committed to Git. Instead, commit requirements.txt and run <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">pip install -r requirements.txt</code> to recreate it.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  4
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong class="block font-bold text-strong text-base mb-1 mt-0.5">Keep pip Updated.</strong> Run <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">pip install --upgrade pip</code> regularly. Outdated pip can have security vulnerabilities and may fail to install newer packages.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  5
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong class="block font-bold text-strong text-base mb-1 mt-0.5">Use a .env File for Secrets, Never Hardcode Them.</strong> Never put API keys, database passwords, or tokens directly in your Python files. Use a <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">.env</code> file with python-dotenv and add <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">.env</code> to .gitignore.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  6
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong class="block font-bold text-strong text-base mb-1 mt-0.5">Use Python 3.11+ for New Projects.</strong> Never start a new project with Python 2.x (EOL in 2020) or Python 3.7 and below. Python 3.11 is significantly faster and has better error messages.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  7
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong class="block font-bold text-strong text-base mb-1 mt-0.5">Separate requirements Files for Dev and Production.</strong> Create <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">requirements.txt</code> for production (requests, pandas) and <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">requirements-dev.txt</code> for development tools (pytest, black, pylint). Production servers do not need test frameworks.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  8
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong class="block font-bold text-strong text-base mb-1 mt-0.5">Name Your venv Consistently.</strong> Use <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">venv</code> or <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">.venv</code> (the leading dot hides it on Mac/Linux) consistently across all projects. Avoid project-specific names like <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">myapp_env</code> — they confuse editors and CI/CD pipelines.</div>
+              </div>
+            
+          </div>
+        </div>
+
+  </div>
+
+  <script>
+    // --- Theme Toggle Logic ---
+    const htmlElement = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
+    
+    // Read theme from localStorage or system preference
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    
+    // Function to apply theme
+    const applyTheme = (theme) => {
+      htmlElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+      }
+    };
+    
+    // Initialize theme
+    applyTheme(currentTheme);
+    
+    // Toggle on click
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(currentTheme);
+    });
+
+    // --- Copy Code Logic ---
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.closest('.rounded-2xl').querySelector('.code-content').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          const copyText = btn.querySelector('.copy-text');
+          const checkText = btn.querySelector('.check-text');
+          
+          copyIcon.classList.add('hidden');
+          copyText.classList.add('hidden');
+          checkIcon.classList.remove('hidden');
+          checkText.classList.remove('hidden');
+          
+          setTimeout(() => {
+            copyIcon.classList.remove('hidden');
+            copyText.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+            checkText.classList.add('hidden');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choosing the Right IDE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-page text-body font-sans antialiased relative">
+  
+  <div class="max-w-4xl mx-auto px-8 py-12 relative pt-20">
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="absolute top-6 right-8 p-2 rounded-xl bg-raised border border-line text-subtle hover:text-strong hover:border-line-strong transition-colors flex items-center justify-center shadow-sm">
+      <svg id="moon-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg id="sun-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  
+    <h1 class="text-3xl font-bold text-strong mb-8 border-b border-line pb-4">Choosing the Right IDE</h1>
+    <div class="space-y-6 text-body">
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">IDE Comparison – Which One Is Right for You?</h2>
+
+        <div class="overflow-x-auto my-6 border border-line rounded-xl">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-panel text-strong font-bold border-b border-line">
+              <tr>
+                <th class="px-4 py-3">IDE</th><th class="px-4 py-3">Best For</th><th class="px-4 py-3">Cost</th><th class="px-4 py-3">Key Features</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line">
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">VS Code</td><td class="px-4 py-3">General Python, web, beginners</td><td class="px-4 py-3">Free</td><td class="px-4 py-3">Python extension, debugger, Git, terminal, lightweight</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">PyCharm Community</td><td class="px-4 py-3">Pure Python projects</td><td class="px-4 py-3">Free</td><td class="px-4 py-3">Best Python autocomplete, built-in venv, refactoring</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">PyCharm Professional</td><td class="px-4 py-3">Django, Flask, databases</td><td class="px-4 py-3">Paid (~$99/yr)</td><td class="px-4 py-3">Web frameworks, SQL, Django ORM support, profiler</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">Jupyter Notebook</td><td class="px-4 py-3">Data science, ML, exploration</td><td class="px-4 py-3">Free</td><td class="px-4 py-3">Cell-by-cell execution, plots inline, markdown</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">Jupyter Lab</td><td class="px-4 py-3">Data science (advanced)</td><td class="px-4 py-3">Free</td><td class="px-4 py-3">Multi-panel, better UI than Notebook, extensions</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">Thonny</td><td class="px-4 py-3">Absolute beginners (kids)</td><td class="px-4 py-3">Free</td><td class="px-4 py-3">Step-by-step debugger, extremely simple UI</td>
+                </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Setting Up VS Code for Python (Recommended)</h2>
+<h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">Setting up VS Code</h3>
+
+          <div class="flex flex-col gap-4 my-8">
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  1
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong>Download VS Code:</strong> Go to code.visualstudio.com &rarr; Download for your OS &rarr; Install</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  2
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong>Install the Python Extension:</strong> Open VS Code &rarr; Ctrl+Shift+X (Extensions) &rarr; Search "Python". Install "Python" by Microsoft.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  3
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong>Select your Python Interpreter:</strong> Ctrl+Shift+P &rarr; "Python: Select Interpreter" &rarr; Choose Python 3.11+ (or your venv if already created)</div>
+              </div>
+            
+          </div>
+        <h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">Essential Extensions for Python Development</h3>
+
+          <div class="flex flex-col gap-3 my-6">
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Python (Microsoft)</strong> - autocomplete, linting, debugging</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Pylance</strong> - advanced type checking and IntelliSense</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Black Formatter</strong> - auto-format code on save</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>GitLens</strong> - see git blame inline</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Python Test Explorer</strong> - run pytest tests visually</div>
+              </div>
+            
+          </div>
+        
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>json</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">{
+    "editor.fontSize": 14,
+    "editor.tabSize": 4,
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "terminal.integrated.shell.windows": "cmd.exe"
+}</code></pre>
+        </div>
+      
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content"># Step 6: Open integrated terminal
+# Ctrl+backtick (`) → opens terminal at project root
+# Now you can run all python, pip, venv commands without leaving VS Code!</code></pre>
+        </div>
+      </div>
+
+  </div>
+
+  <script>
+    // --- Theme Toggle Logic ---
+    const htmlElement = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
+    
+    // Read theme from localStorage or system preference
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    
+    // Function to apply theme
+    const applyTheme = (theme) => {
+      htmlElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+      }
+    };
+    
+    // Initialize theme
+    applyTheme(currentTheme);
+    
+    // Toggle on click
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(currentTheme);
+    });
+
+    // --- Copy Code Logic ---
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.closest('.rounded-2xl').querySelector('.code-content').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          const copyText = btn.querySelector('.copy-text');
+          const checkText = btn.querySelector('.check-text');
+          
+          copyIcon.classList.add('hidden');
+          copyText.classList.add('hidden');
+          checkIcon.classList.remove('hidden');
+          checkText.classList.remove('hidden');
+          
+          setTimeout(() => {
+            copyIcon.classList.remove('hidden');
+            copyText.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+            checkText.classList.add('hidden');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

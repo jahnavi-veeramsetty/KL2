@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Challenge + Complete Cheat Sheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-page text-body font-sans antialiased relative">
+  
+  <div class="max-w-4xl mx-auto px-8 py-12 relative pt-20">
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="absolute top-6 right-8 p-2 rounded-xl bg-raised border border-line text-subtle hover:text-strong hover:border-line-strong transition-colors flex items-center justify-center shadow-sm">
+      <svg id="moon-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg id="sun-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  
+    <h1 class="text-3xl font-bold text-strong mb-8 border-b border-line pb-4">Final Challenge + Complete Cheat Sheet</h1>
+    <div class="space-y-6 text-body">
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Final Challenge – Complete Professional Python Setup</h2>
+
+          <div class="flex flex-col gap-3 my-6">
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Python 3.11+ installed and verified (<code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">python --version</code>)</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">VS Code installed with Python extension and Pylance</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Project folder created with venv inside</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">venv activated (prompt shows <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">(venv)</code>)</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">pip upgraded to latest version</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">requests, pandas, python-dotenv installed</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">environment_check.py script runs and shows "In Virtual Env: YES"</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">requirements.txt generated with exact versions</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">.gitignore created excluding venv/, .env, __pycache__/</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Environment destroyed and recreated from requirements.txt successfully</div>
+              </div>
+            
+          </div>
+        <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Complete Cheat Sheet – Python Environment Setup</h2>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content"># INSTALLATION CHECK:
+python --version                     # should be 3.11+
+python3 --version                    # (Mac/Linux)
+pip --version                        # verify pip works
+
+# CREATE PROJECT ENVIRONMENT:
+mkdir my_project && cd my_project
+python -m venv venv                  # create environment
+python -m pip install --upgrade pip  # update pip
+
+# ACTIVATE:
+source venv/bin/activate             # macOS/Linux
+venv\Scripts\activate                # Windows CMD
+venv\Scripts\Activate.ps1            # Windows PowerShell
+# Prompt shows: (venv) $
+
+# VERIFY ACTIVATION:
+which python                         # Mac/Linux: should show venv/bin/python
+where python                         # Windows: should show venv\Scripts\python.exe
+python -c "import sys; print(sys.prefix)"  # shows venv path
+
+# INSTALL PACKAGES:
+pip install requests                 # latest
+pip install requests==2.31.0        # exact version
+pip install requests pandas numpy   # multiple at once
+pip install -r requirements.txt     # from file
+
+# VIEW PACKAGES:
+pip list                             # all packages
+pip show requests                    # details about one package
+pip list --outdated                  # packages with newer versions
+
+# FREEZE / REQUIREMENTS:
+pip freeze &gt; requirements.txt        # generate (exact versions)
+cat requirements.txt                 # view it
+pip install -r requirements.txt      # recreate environment
+
+# UPGRADE / REMOVE:
+pip install --upgrade requests       # upgrade
+pip uninstall requests               # remove
+
+# DEACTIVATE:
+deactivate                           # leave virtual environment
+
+# .gitignore MUST INCLUDE:
+# venv/
+# __pycache__/
+# *.pyc
+# .env</code></pre>
+        </div>
+      
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>python</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content"># VERIFY PYTHON VERSION IN SCRIPT:
+import sys
+print(sys.version)                  # 3.11.5 (main, ...)
+print(sys.version_info.major)       # 3
+in_venv = hasattr(sys, "real_prefix") or sys.base_prefix != sys.prefix
+print(in_venv)                      # True (if venv is active)</code></pre>
+        </div>
+      <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Top 8 Python Environment Bugs</h2>
+
+        <div class="overflow-x-auto my-6 border border-line rounded-xl">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-panel text-strong font-bold border-b border-line">
+              <tr>
+                <th class="px-4 py-3">#</th><th class="px-4 py-3">Bug</th><th class="px-4 py-3">Fix</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line">
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">1</td><td class="px-4 py-3"><code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">ModuleNotFoundError: No module named 'requests'</code></td><td class="px-4 py-3">venv not activated; run <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">source venv/bin/activate</code> then <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">pip install requests</code></td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">2</td><td class="px-4 py-3"><code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">python: command not found</code></td><td class="px-4 py-3">Python not in PATH; re-install with "Add to PATH" checked, or use <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">python3</code></td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">3</td><td class="px-4 py-3"><code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">pip: command not found</code></td><td class="px-4 py-3">Use <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">python -m pip install ...</code> instead; or <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">pip3</code> on Mac/Linux</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">4</td><td class="px-4 py-3">venv creation fails: <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">ensurepip is not available</code></td><td class="px-4 py-3">Install python3-venv: <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">sudo apt install python3.11-venv</code> (Ubuntu)</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">5</td><td class="px-4 py-3">PowerShell: "cannot be loaded, running scripts is disabled"</td><td class="px-4 py-3">Run: <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">6</td><td class="px-4 py-3">Wrong Python version runs despite installing 3.11</td><td class="px-4 py-3">Multiple Python versions on PATH; use pyenv or specify full path</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">7</td><td class="px-4 py-3">requirements.txt installs wrong versions</td><td class="px-4 py-3">Use <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">pip freeze</code> (exact <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">==</code>) not <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">pip list</code> (no versions)</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">8</td><td class="px-4 py-3"><code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">ImportError: cannot import name X from package Y</code></td><td class="px-4 py-3">Wrong package version; check requirements.txt and pin exact version</td>
+                </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Production Checklist – You Are Now a Python Environment Expert</h2>
+
+          <div class="flex flex-col gap-3 my-6">
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Python 3.11+ installed and verified with <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">python --version</code></div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">VS Code installed with Python and Pylance extensions</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Virtual environment created and activated (prompt shows <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">(venv)</code>)</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">pip upgraded to latest version</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Packages installed inside venv (not globally)</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">environment_check.py script shows "In Virtual Env: YES"</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">requirements.txt generated with <code class="bg-raised px-1.5 py-0.5 rounded text-sm text-accent font-mono border border-line">pip freeze</code></div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">.gitignore created with venv/, .env, __pycache__/ excluded</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Environment destroyed and recreated from requirements.txt</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Confirmed: every project gets its own isolated venv</div>
+              </div>
+            
+          </div>
+        <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Wrap-Up</h2>
+<p class="leading-relaxed">Congratulations. You started Day 1 with no Python setup. You now have a clean, isolated, professional Python workspace: Python 3.11+ installed, VS Code configured, a virtual environment activated, packages installed and locked, a requirements.txt that can recreate the environment on any machine, and a .gitignore that keeps your repository clean. This is exactly how professional Python developers set up every single project they build.<br><br>Next stop: <strong>Day 2 — Your First Python Program and Variables.</strong></p>
+</div>
+
+  </div>
+
+  <script>
+    // --- Theme Toggle Logic ---
+    const htmlElement = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
+    
+    // Read theme from localStorage or system preference
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    
+    // Function to apply theme
+    const applyTheme = (theme) => {
+      htmlElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+      }
+    };
+    
+    // Initialize theme
+    applyTheme(currentTheme);
+    
+    // Toggle on click
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(currentTheme);
+    });
+
+    // --- Copy Code Logic ---
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.closest('.rounded-2xl').querySelector('.code-content').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          const copyText = btn.querySelector('.copy-text');
+          const checkText = btn.querySelector('.check-text');
+          
+          copyIcon.classList.add('hidden');
+          copyText.classList.add('hidden');
+          checkIcon.classList.remove('hidden');
+          checkText.classList.remove('hidden');
+          
+          setTimeout(() => {
+            copyIcon.classList.remove('hidden');
+            copyText.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+            checkText.classList.add('hidden');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

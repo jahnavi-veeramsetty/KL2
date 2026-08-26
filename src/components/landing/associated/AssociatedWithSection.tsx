@@ -1,7 +1,9 @@
 
 
 import { motion, type Variants } from "framer-motion";
-import { Globe2, GraduationCap, TrendingUp } from "lucide-react";
+import taskImg from "../../../assets/task.png";
+import wehubImg from "../../../assets/wehub.png";
+import govImg from "../../../assets/gov.png";
 
 export default function AssociatedWithSection() {
   const containerVariants: Variants = {
@@ -18,9 +20,9 @@ export default function AssociatedWithSection() {
   };
 
   const associations = [
-    { id: 1, name: "Global Tech Corp", description: "Strategic Partner", icon: Globe2, color: "from-blue-500 to-cyan-400" },
-    { id: 2, name: "Innovate University", description: "Academic Partner", icon: GraduationCap, color: "from-amber-400 to-orange-500" },
-    { id: 3, name: "NextGen Ventures", description: "Investment Partner", icon: TrendingUp, color: "from-emerald-400 to-teal-500" },
+    { id: 1, name: "TASK", image: taskImg, color: "from-blue-500 to-cyan-400" },
+    { id: 2, name: "WE HUB", image: wehubImg, color: "from-amber-400 to-orange-500" },
+    { id: 3, name: "Government of Telangana", image: govImg, color: "from-emerald-400 to-teal-500" },
   ];
 
   return (
@@ -85,22 +87,12 @@ export default function AssociatedWithSection() {
               key={item.id}
               variants={cardVariants}
               whileHover={{ y: -4 }}
-              className="group relative h-48 md:h-56 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-2xl overflow-hidden flex flex-col items-center justify-center p-6 transition-all duration-500 shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:bg-white/[0.06] hover:border-white/20"
+              className="group relative h-48 md:h-56 rounded-2xl border border-[#1e293b] bg-[#0f172a]/40 overflow-hidden flex flex-col items-center justify-center p-3 sm:p-4 transition-all duration-300 hover:border-brand-primary/50 shadow-lg"
             >
-              {/* Soft background glow that matches the theme color */}
-              <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-gradient-to-b ${item.color} opacity-[0.04] group-hover:opacity-[0.08] blur-3xl transition-opacity duration-500 rounded-full pointer-events-none`} />
-              
-              {/* Icon Container - Glassmorphic */}
-              <div className="relative mb-5">
-                <div className="absolute inset-0 bg-white/10 rounded-2xl blur-md group-hover:bg-white/20 transition-colors duration-500" />
-                <div className="relative w-14 h-14 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center shadow-[inset_0_0_15px_rgba(255,255,255,0.05)] transition-colors duration-500">
-                   <item.icon className="w-7 h-7 text-white/70 group-hover:text-white transition-colors duration-500 drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]" />
-                </div>
+              {/* White Inner Card */}
+              <div className="w-full h-full bg-[#f8fafc] rounded-xl flex items-center justify-center p-6 md:p-8 transition-transform duration-500 group-hover:scale-[1.02]">
+                 <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
               </div>
-              
-              <h3 className="text-lg md:text-xl font-bold text-white/90 group-hover:text-white mb-1.5 transition-colors duration-300 relative z-10 text-center tracking-tight">{item.name}</h3>
-              <p className="text-sm text-brand-neutral/60 group-hover:text-brand-neutral/90 font-medium tracking-wide transition-colors duration-300 relative z-10 text-center">{item.description}</p>
-              
             </motion.div>
           ))}
         </motion.div>

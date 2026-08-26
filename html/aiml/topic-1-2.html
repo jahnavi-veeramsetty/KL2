@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Python Environment Setup Matters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-page text-body font-sans antialiased relative">
+  
+  <div class="max-w-4xl mx-auto px-8 py-12 relative pt-20">
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="absolute top-6 right-8 p-2 rounded-xl bg-raised border border-line text-subtle hover:text-strong hover:border-line-strong transition-colors flex items-center justify-center shadow-sm">
+      <svg id="moon-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg id="sun-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  
+    <h1 class="text-3xl font-bold text-strong mb-8 border-b border-line pb-4">Why Python Environment Setup Matters</h1>
+    <div class="space-y-6 text-body">
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">The Version Conflict Disaster – What Happens Without venv</h2>
+<h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">The Scenario</h3>
+<p class="leading-relaxed"><strong>PROJECT A (Web Scraper)</strong> needs: <code>requests==2.28.0</code><br><strong>PROJECT B (API Client)</strong> needs: <code>requests==2.31.0</code> (incompatible API!)</p>
+<h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">Without Virtual Environments</h3>
+<p class="leading-relaxed">You install requests for Project B: <code>pip install requests==2.31.0</code><br>Now Project A BREAKS because <code>requests==2.28.0</code> is gone!</p>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">pip install django==3.2   # -&gt; installs globally
+pip install django==4.2   # -&gt; overwrites! Django 3.2 project breaks!</code></pre>
+        </div>
+      <p class="leading-relaxed"><strong>RESULT:</strong> One working project, one broken project. No way to run both. "It works on my machine" &rarr; because YOUR machine has the wrong version.</p>
+<h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">With Virtual Environments</h3>
+
+          <div class="flex flex-col gap-3 my-6">
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><code>project_a/venv/</code> &rarr; has requests==2.28.0 in isolation</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><code>project_b/venv/</code> &rarr; has requests==2.31.0 in isolation</div>
+              </div>
+            
+          </div>
+        <p class="leading-relaxed">Both projects work simultaneously, forever.</p>
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Global vs. Isolated – Side-by-Side Comparison</h2>
+<p class="leading-relaxed"><strong>Without venv (Global Installation)</strong></p>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">pip install requests  # installs to system Python</code></pre>
+        </div>
+      <p class="leading-relaxed"><strong>Problems:</strong></p>
+
+          <div class="flex flex-col gap-3 my-6">
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">ALL projects share same requests version</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Updating for Project B breaks Project A</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Deploying to server: no idea which exact versions</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Collaborator runs your code: gets different versions</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">After 6 months: cannot tell which packages belong to which project</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">sudo/admin required on many systems</div>
+              </div>
+            
+          </div>
+        
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">python --version    # 3.11.5
+pip list            # 47 packages from ALL projects mixed together</code></pre>
+        </div>
+      <p class="leading-relaxed"><strong>With venv (Isolated Installation)</strong></p>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">python -m venv myproject_env
+source myproject_env/bin/activate  # enter isolation</code></pre>
+        </div>
+      <p class="leading-relaxed"><strong>Benefits:</strong></p>
+
+          <div class="flex flex-col gap-3 my-6">
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Only THIS project's packages exist here</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Other projects are completely unaffected</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><code>pip freeze > requirements.txt</code>: EXACT list for deploy</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Collaborator: <code>pip install -r requirements.txt</code> = identical!</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">No admin/sudo needed (user-owned folder)</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5">Clean slate: delete the env folder to start over</div>
+              </div>
+            
+          </div>
+        
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">python --version    # 3.11.5
+pip list            # only 3 packages: requests, certifi, urllib3</code></pre>
+        </div>
+      <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Why Python 3.11+ Specifically?</h2>
+
+          <div class="flex flex-col gap-3 my-6">
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Python 2.7:</strong> End of Life January 2020. DO NOT USE.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Python 3.6:</strong> f-strings added. Still common but old.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Python 3.8:</strong> Walrus operator (:=). Many servers use this.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Python 3.10:</strong> Pattern matching (match/case). Significant update.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Python 3.11:</strong> 10-60% FASTER than 3.10. Better error messages.</div>
+              </div>
+            
+              <div class="flex gap-4 items-start group">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-raised flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors border border-line group-hover:border-accent/30">
+                  <div class="w-2 h-2 rounded-full bg-subtle group-hover:bg-accent transition-colors"></div>
+                </div>
+                <div class="flex-1 leading-relaxed text-body pt-0.5"><strong>Python 3.12:</strong> Even faster, more improvements.</div>
+              </div>
+            
+          </div>
+        <p class="leading-relaxed"><strong>Python 3.11 improved error messages (huge for beginners):</strong></p>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content"># OLD Python error:
+AttributeError: 'NoneType' object has no attribute 'split'
+
+# NEW 3.11 error:
+AttributeError: 'NoneType' object has no attribute 'split'
+Hint: Did you forget to return a value from your function?</code></pre>
+        </div>
+      <p class="leading-relaxed"><strong>Check your current Python version:</strong></p>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">python --version       # may show Python 2.7 on old Macs
+python3 --version      # usually shows Python 3.x
+py --version            # Windows alternative</code></pre>
+        </div>
+      <p class="leading-relaxed"><strong>IMPORTANT:</strong> On macOS/Linux, use <code>python3</code> and <code>pip3</code>. On Windows (with Python 3 installed), use <code>python</code> and <code>pip</code>.</p>
+</div>
+
+  </div>
+
+  <script>
+    // --- Theme Toggle Logic ---
+    const htmlElement = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
+    
+    // Read theme from localStorage or system preference
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    
+    // Function to apply theme
+    const applyTheme = (theme) => {
+      htmlElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+      }
+    };
+    
+    // Initialize theme
+    applyTheme(currentTheme);
+    
+    // Toggle on click
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(currentTheme);
+    });
+
+    // --- Copy Code Logic ---
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.closest('.rounded-2xl').querySelector('.code-content').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          const copyText = btn.querySelector('.copy-text');
+          const checkText = btn.querySelector('.check-text');
+          
+          copyIcon.classList.add('hidden');
+          copyText.classList.add('hidden');
+          checkIcon.classList.remove('hidden');
+          checkText.classList.remove('hidden');
+          
+          setTimeout(() => {
+            copyIcon.classList.remove('hidden');
+            copyText.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+            checkText.classList.add('hidden');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Environment Setup: The Big Picture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-page text-body font-sans antialiased relative">
+  
+  <div class="max-w-4xl mx-auto px-8 py-12 relative pt-20">
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="absolute top-6 right-8 p-2 rounded-xl bg-raised border border-line text-subtle hover:text-strong hover:border-line-strong transition-colors flex items-center justify-center shadow-sm">
+      <svg id="moon-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg id="sun-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  
+    <h1 class="text-3xl font-bold text-strong mb-8 border-b border-line pb-4">Python Environment Setup: The Big Picture</h1>
+    <div class="space-y-6 text-body">
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Preparing a Professional Kitchen Before Cooking a Gourmet Meal</h2>
+<p class="leading-relaxed">Imagine two chefs cooking the same recipe. The first chef grabs whatever tools are lying around from everyone else's kitchen, uses old ingredients that may have expired, and discovers halfway through that someone else moved the salt. The result: a mess, a ruined dish, and two hours of cleanup.<br><br>The second chef has their own dedicated, organised kitchen. Every tool is where it should be. Every ingredient is fresh and labelled. Another chef can walk in and recreate the dish exactly using the same recipe (<code>requirements.txt</code>).<br><br>Python Environment Setup makes you the second chef. Here is the complete mapping:</p>
+
+        <div class="overflow-x-auto my-6 border border-line rounded-xl">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-panel text-strong font-bold border-b border-line">
+              <tr>
+                <th class="px-4 py-3">Real-World Concept</th><th class="px-4 py-3">Kitchen Equivalent</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line">
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">Python interpreter (3.11+)</td><td class="px-4 py-3">The stove, oven, and knives (the core tool)</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">Virtual environment (venv)</td><td class="px-4 py-3">Your private kitchen counter (isolated workspace)</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">pip</td><td class="px-4 py-3">The grocery delivery service (installs packages)</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">Packages (requests, pandas)</td><td class="px-4 py-3">Fresh ingredients (third-party libraries)</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">requirements.txt</td><td class="px-4 py-3">The exact shopping list (reproducible environment)</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">IDE (VS Code / PyCharm)</td><td class="px-4 py-3">Beautifully organised kitchen drawers (code editor)</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">.gitignore (venv excluded)</td><td class="px-4 py-3">Keeping your mess off the shared recipe book (GitHub)</td>
+                </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Without Setup vs. With Setup</h2>
+<h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">Without Setup (First Chef)</h3>
+<p class="leading-relaxed"><strong>Works today, breaks tomorrow</strong> when another project updates requests. "It works on MY machine" &rarr; the most dangerous phrase in software.</p>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">pip install requests   # -&gt; installs GLOBALLY, pollutes all projects</code></pre>
+        </div>
+      <h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">With Setup (Second Chef)</h3>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">python -m venv myenv             # -&gt; isolated kitchen
+source myenv/bin/activate        # -&gt; enter your kitchen
+pip install requests==2.31.0     # -&gt; fresh, version-locked ingredient
+pip freeze &gt; requirements.txt    # -&gt; write the shopping list</code></pre>
+        </div>
+      <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">The One Rule to Remember</h2>
+<p class="leading-relaxed"><strong>Never install Python packages globally. Always use a virtual environment for every project. This one habit prevents 95% of all Python environment problems you will ever encounter.</strong></p>
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">The Complete Python Ecosystem at a Glance</h2>
+
+        <div class="overflow-x-auto my-6 border border-line rounded-xl">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-panel text-strong font-bold border-b border-line">
+              <tr>
+                <th class="px-4 py-3">Tool</th><th class="px-4 py-3">Purpose</th><th class="px-4 py-3">Analogy</th><th class="px-4 py-3">When Used</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line">
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">Python 3.11+</td><td class="px-4 py-3">The interpreter that runs your code</td><td class="px-4 py-3">The stove</td><td class="px-4 py-3">Always — it IS Python</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">pip</td><td class="px-4 py-3">Package manager: install/uninstall/upgrade</td><td class="px-4 py-3">Grocery delivery</td><td class="px-4 py-3">Every time you need a library</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">venv</td><td class="px-4 py-3">Isolated environment per project</td><td class="px-4 py-3">Private kitchen</td><td class="px-4 py-3">Start of EVERY project</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">requirements.txt</td><td class="px-4 py-3">List of packages + versions</td><td class="px-4 py-3">Shopping list</td><td class="px-4 py-3">Sharing and deploying projects</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">VS Code / PyCharm</td><td class="px-4 py-3">Code editor with syntax highlighting</td><td class="px-4 py-3">Kitchen drawers</td><td class="px-4 py-3">Writing and running Python code</td>
+                </tr>
+              
+                <tr class="hover:bg-raised/30 transition-colors">
+                  <td class="px-4 py-3">Terminal</td><td class="px-4 py-3">Command-line interface</td><td class="px-4 py-3">The pass where orders come in</td><td class="px-4 py-3">All pip and venv commands</td>
+                </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Beginner Tip</h2>
+<p class="leading-relaxed"><em>Run <code>python --version</code> in your terminal right now. If it shows 3.11 or higher, great. If you see 2.7 or nothing, do not worry — Lesson 3 covers the exact installation steps for Windows, macOS, and Linux.</em></p>
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Your Learning Path for Today</h2>
+
+          <div class="flex flex-col gap-4 my-8">
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  1
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Understand why environment isolation matters (prevents version conflicts)</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  2
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Install Python 3.11+ and verify installation</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  3
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Choose and configure your IDE (VS Code recommended for beginners)</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  4
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Learn pip: install, upgrade, list, uninstall, freeze</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  5
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Create and activate a virtual environment with venv</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  6
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Install packages inside the virtual environment</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  7
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Write a Python script to verify Python version and modules</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  8
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Generate requirements.txt for reproducible environments</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  9
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Add venv to .gitignore so it is never committed to Git</div>
+              </div>
+            
+          </div>
+        <h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Core Concept Check</h2>
+<p class="leading-relaxed">A virtual environment is simply a folder on your computer that contains a complete, isolated Python installation with its own Python interpreter and packages. When you activate it, your terminal uses THAT Python instead of the system Python. When you deactivate it, everything returns to normal. Nothing is permanently changed on your system.</p>
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Learning Outcomes</h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
+            
+              <div class="bg-panel p-5 rounded-2xl border border-line shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 group">
+                <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <div class="flex-1 font-semibold text-strong self-center leading-relaxed">Master core concepts thoroughly</div>
+              </div>
+            
+              <div class="bg-panel p-5 rounded-2xl border border-line shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 group">
+                <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <div class="flex-1 font-semibold text-strong self-center leading-relaxed">Build real-world applications</div>
+              </div>
+            
+              <div class="bg-panel p-5 rounded-2xl border border-line shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 group">
+                <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <div class="flex-1 font-semibold text-strong self-center leading-relaxed">Write clean, maintainable code</div>
+              </div>
+            
+              <div class="bg-panel p-5 rounded-2xl border border-line shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 group">
+                <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <div class="flex-1 font-semibold text-strong self-center leading-relaxed">Debug like a professional</div>
+              </div>
+            
+          </div>
+        </div>
+
+  </div>
+
+  <script>
+    // --- Theme Toggle Logic ---
+    const htmlElement = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
+    
+    // Read theme from localStorage or system preference
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    
+    // Function to apply theme
+    const applyTheme = (theme) => {
+      htmlElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+      }
+    };
+    
+    // Initialize theme
+    applyTheme(currentTheme);
+    
+    // Toggle on click
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(currentTheme);
+    });
+
+    // --- Copy Code Logic ---
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.closest('.rounded-2xl').querySelector('.code-content').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          const copyText = btn.querySelector('.copy-text');
+          const checkText = btn.querySelector('.check-text');
+          
+          copyIcon.classList.add('hidden');
+          copyText.classList.add('hidden');
+          checkIcon.classList.remove('hidden');
+          checkText.classList.remove('hidden');
+          
+          setTimeout(() => {
+            copyIcon.classList.remove('hidden');
+            copyText.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+            checkText.classList.add('hidden');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

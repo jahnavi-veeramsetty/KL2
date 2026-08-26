@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { GraduationCap, Briefcase, Brain, Trophy, BookOpen, Rocket } from "lucide-react";
 import { useState } from "react";
+import noviImg from "../../../assets/novi.png";
 
 // The Nodes
 const nodes = [
@@ -99,26 +100,20 @@ export default function EcosystemHub() {
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute w-32 h-32 bg-blue-600/30 rounded-full blur-xl"
+          className="absolute w-40 h-40 bg-blue-600/20 rounded-full blur-xl"
         />
         
         {/* Rotating Outer Ring */}
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute w-24 h-24 rounded-full border border-blue-500/30 border-t-blue-400"
+          className="absolute w-32 h-32 rounded-full border border-blue-500/30 border-t-blue-400"
         />
 
-        {/* Core Glowing Circle */}
-        <div className="w-16 h-16 bg-slate-900 rounded-full border border-blue-600 shadow-[0_0_20px_rgba(37,99,235,0.5)] flex items-center justify-center relative">
-          <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-blue-400 to-blue-200">
-            N
-          </span>
+        {/* Core Image */}
+        <div className="w-28 h-28 flex items-center justify-center relative z-10">
+          <img src={noviImg} alt="Novi" className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(37,99,235,0.5)]" />
         </div>
-        
-        <span className="absolute -bottom-8 text-xs font-bold tracking-widest uppercase text-blue-200 drop-shadow-md">
-          Knowvation
-        </span>
       </div>
 
       {/* Ecosystem Nodes */}

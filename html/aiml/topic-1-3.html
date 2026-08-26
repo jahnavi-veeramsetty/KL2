@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installing Python 3.11+: The Foundation of Everything</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-page text-body font-sans antialiased relative">
+  
+  <div class="max-w-4xl mx-auto px-8 py-12 relative pt-20">
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="absolute top-6 right-8 p-2 rounded-xl bg-raised border border-line text-subtle hover:text-strong hover:border-line-strong transition-colors flex items-center justify-center shadow-sm">
+      <svg id="moon-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg id="sun-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  
+    <h1 class="text-3xl font-bold text-strong mb-8 border-b border-line pb-4">Installing Python 3.11+: The Foundation of Everything</h1>
+    <div class="space-y-6 text-body">
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">Installation Guide – All Platforms</h2>
+<h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">Windows</h3>
+<p class="leading-relaxed"><strong>Method 1: Official Installer (recommended for beginners)</strong></p>
+
+          <div class="flex flex-col gap-4 my-8">
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  1
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Go to python.org/downloads</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  2
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Click "Download Python 3.11.x" (the big yellow button)</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  3
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Run the installer</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  4
+                </div>
+                <div class="flex-1 leading-relaxed text-body"><strong>CRITICAL:</strong> Check "Add Python to PATH" checkbox at the bottom!</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  5
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Click "Install Now"</div>
+              </div>
+            
+          </div>
+        <p class="leading-relaxed">Verify installation (open Command Prompt or PowerShell):</p>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">python --version         # -&gt; Python 3.11.x
+pip --version             # -&gt; pip 23.x from C:\Users\...\python3.11</code></pre>
+        </div>
+      <p class="leading-relaxed"><em>If python command not found after install: Search "Environment Variables" in Windows &rarr; Path &rarr; Add Python folder</em></p>
+<h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">macOS</h3>
+<p class="leading-relaxed"><strong>Method 1: Official Installer</strong></p>
+
+          <div class="flex flex-col gap-4 my-8">
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  1
+                </div>
+                <div class="flex-1 leading-relaxed text-body">python.org/downloads &rarr; Download Python 3.11 for macOS</div>
+              </div>
+            
+              <div class="flex gap-4 items-start bg-raised/20 p-5 rounded-2xl border border-line/50 hover:border-line hover:bg-raised/40 transition-all shadow-sm">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-on-accent shadow-md shadow-accent/20 flex items-center justify-center font-bold text-sm mt-0.5">
+                  2
+                </div>
+                <div class="flex-1 leading-relaxed text-body">Open the .pkg file and follow instructions</div>
+              </div>
+            
+          </div>
+        <p class="leading-relaxed">Verify (open Terminal):</p>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">python3 --version        # -&gt; Python 3.11.x
+pip3 --version            # -&gt; pip 23.x</code></pre>
+        </div>
+      <h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">Linux (Ubuntu/Debian)</h3>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content">sudo apt update
+sudo apt install python3.11 python3.11-venv python3-pip
+python3.11 --version</code></pre>
+        </div>
+      <h3 class="font-bold text-strong first:mt-0 text-xl mt-6 mb-3">Common Issue: Multiple Python versions</h3>
+<p class="leading-relaxed">If "python" shows 2.7 but "python3" shows 3.11, always use <code>python3</code> and <code>pip3</code> on Mac/Linux.</p>
+<h2 class="font-bold text-strong first:mt-0 text-2xl mt-8 mb-4">pyenv – Managing Multiple Python Versions Like a Pro</h2>
+<p class="leading-relaxed"><code>pyenv</code> lets you install and switch between multiple Python versions. Perfect when you work on projects requiring different Python versions.</p>
+
+        <div class="rounded-2xl overflow-hidden border border-line bg-[#0d1117] my-10 shadow-lg relative">
+          <div class="bg-panel px-5 py-2.5 text-xs font-mono text-subtle border-b border-line flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-1.5 sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+              </div>
+              <span>bash</span>
+            </div>
+            <button class="copy-btn flex items-center gap-1.5 hover:text-strong transition-colors">
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg class="check-icon w-3.5 h-3.5 text-emerald-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span class="copy-text">Copy code</span>
+              <span class="check-text text-emerald-500 font-bold hidden">Copied!</span>
+            </button>
+          </div>
+          <pre class="p-6 text-[13px] sm:text-sm font-mono text-gray-300 overflow-x-auto leading-relaxed"><code class="code-content"># Install pyenv (macOS/Linux):
+curl https://pyenv.run | bash
+
+# Add to ~/.bashrc or ~/.zshrc:
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+
+# Install specific Python versions:
+pyenv install 3.11.5
+
+# Set global default:
+pyenv global 3.11.5
+
+# Set version for a specific project folder:
+cd my-project
+pyenv local 3.11.5       # creates .python-version file
+python --version          # -&gt; Python 3.11.5 in this folder only!</code></pre>
+        </div>
+      </div>
+
+  </div>
+
+  <script>
+    // --- Theme Toggle Logic ---
+    const htmlElement = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
+    
+    // Read theme from localStorage or system preference
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    
+    // Function to apply theme
+    const applyTheme = (theme) => {
+      htmlElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+      }
+    };
+    
+    // Initialize theme
+    applyTheme(currentTheme);
+    
+    // Toggle on click
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(currentTheme);
+    });
+
+    // --- Copy Code Logic ---
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.closest('.rounded-2xl').querySelector('.code-content').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          const copyText = btn.querySelector('.copy-text');
+          const checkText = btn.querySelector('.check-text');
+          
+          copyIcon.classList.add('hidden');
+          copyText.classList.add('hidden');
+          checkIcon.classList.remove('hidden');
+          checkText.classList.remove('hidden');
+          
+          setTimeout(() => {
+            copyIcon.classList.remove('hidden');
+            copyText.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+            checkText.classList.add('hidden');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
