@@ -7,6 +7,7 @@ import CourseSection from "../components/landing/course/CourseSection";
 import PracticeSection from "../components/landing/practice/PracticeSection";
 import TutorialSection from "../components/landing/tutorial/TutorialSection";
 import MilestonesSection from "../components/landing/milestones/MilestonesSection";
+import CommunitySection from "../components/landing/community/CommunitySection";
 import Nav from "../components/layout/Nav";
 import Footer from "../components/layout/Footer";
 
@@ -15,6 +16,18 @@ export default function LandingPage() {
     // on-dark: the marketing site keeps its own dark identity in both themes,
     // so anything shared with the app renders against dark tokens here.
     <div className="on-dark min-h-screen bg-[#000511] relative overflow-hidden font-sans text-slate-200">
+      <style>
+        {`
+          /* Hide scrollbar for the landing page */
+          ::-webkit-scrollbar {
+            display: none;
+          }
+          * {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}
+      </style>
       <StarfieldBackground />
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-0" />
@@ -41,6 +54,9 @@ export default function LandingPage() {
 
         {/* 5. Practice & Code Environments */}
         <PracticeSection />
+
+        {/* 5.5. Community Section */}
+        <CommunitySection />
 
         {/* 6. Tutorials & Roadmaps */}
         <TutorialSection />

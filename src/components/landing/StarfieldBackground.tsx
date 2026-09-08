@@ -24,7 +24,11 @@ interface Node {
   pulseSpeed: number;
 }
 
-export default function StarfieldBackground() {
+interface StarfieldBackgroundProps {
+  disableInteractive?: boolean;
+}
+
+export default function StarfieldBackground({ disableInteractive = false }: StarfieldBackgroundProps = {}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const nodesRef = useRef<Node[]>([]);
   const animFrameRef = useRef<number>(0);
@@ -51,6 +55,11 @@ export default function StarfieldBackground() {
     window.addEventListener("resize", resize);
 
     function handleMouseMove(e: MouseEvent) {
+      if (disableInteractive) {
+        mouseRef.current = { x: -1000, y: -1000 };
+        return;
+      }
+
       const target = e.target as HTMLElement;
       
       // If a hero section exists on this page, only react to mouse inside it

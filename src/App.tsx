@@ -14,6 +14,7 @@ import { OfflineBanner } from './components/system/OfflineBanner'
 import LandingPage from './pages/LandingPage'
 
 // Every other page is split into its own chunk and fetched on first visit.
+const SelectLandingPage = lazy(() => import('./pages/SelectLandingPage'))
 const DashboardPage = lazy(() => import('./pages/Dashboard'))
 const CoursesPage = lazy(() => import('./pages/CoursesPage'))
 const CourseDetailPage = lazy(() => import('./pages/CourseDetailPage'))
@@ -63,6 +64,7 @@ function App() {
           <Routes>
             {/* Public — the landing page decides for itself based on session */}
             <Route path={ROUTES.HOME} element={<RootPage />} />
+            <Route path="/select" element={<Suspense fallback={<RouteFallback />}><SelectLandingPage /></Suspense>} />
 
             {/* Auth pages — pointless once a session exists, so bounce to the app */}
             <Route element={<RedirectIfAuthed />}>

@@ -18,7 +18,7 @@ const NAV_LINKS: NavLink[] = [
   { label: "Course Library", to: "/#courses" },
   { label: "Tutorials", to: "/#tutorials" },
   { label: "Practice", to: "/#practice" },
-  { label: "Community", to: "/#community" },
+  { label: "Knowvation Select", to: "/select" },
 ];
 
 /* ─────────────────────────────────────────────
@@ -135,9 +135,8 @@ export default function Nav() {
   return (
     <header
       role="banner"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        scrolled ? "pt-2 md:pt-4" : "pt-4 md:pt-6"
-      } ${visible ? "translate-y-0" : "-translate-y-full"}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${scrolled ? "pt-2 md:pt-4" : "pt-4 md:pt-6"
+        } ${visible ? "translate-y-0" : "-translate-y-full"}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-18">
@@ -196,9 +195,8 @@ export default function Nav() {
       <div
         onClick={() => setMobileOpen(false)}
         aria-hidden="true"
-        className={`md:hidden fixed inset-0 bg-black/65 backdrop-blur-[2px] transition-opacity duration-300 ${
-          mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`md:hidden fixed inset-0 bg-black/65 backdrop-blur-[2px] transition-opacity duration-300 ${mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
       />
 
       {/* Drawer. Slides from the right, matching the signed-in app's SideNav —
